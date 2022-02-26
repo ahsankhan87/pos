@@ -15,6 +15,7 @@
 			<div class="details">
 				<div class="title">
 					 <?php echo lang('daily_sales'); ?>
+					 GIT Checking
 				</div>
 				<div class="numbers">
 					 <?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round($today_sale,3); ?>

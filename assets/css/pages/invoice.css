@@ -1,0 +1,57 @@
+/***
+Invoice page
+***/
+@media print {
+.nohead {
+  margin:140px 0;
+}
+}
+
+.invoice table {
+  margin:0px;
+}
+
+.invoice .invoice-logo {
+  margin-bottom1:20px;
+}
+
+.invoice .invoice-logo p {
+  padding:2px 0;
+  font-size:14px;
+  line-heights:8px;
+  text-align:right;
+}
+
+.invoice .invoice-logo p span {
+  display:block;
+  font-size:14px;
+}
+
+.invoice .invoice-logo-space {
+  margin-bottom:15px;
+}
+
+.invoice .invoice-payment strong {
+  margin-right:5px;
+}
+
+.invoice .invoice-block {
+  text-align:right;
+}
+
+.invoice .invoice-block .amounts {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+
+.invoice .invoice-right p {
+  padding:2px 0;
+  font-size:14px;
+  text-align:right;
+}
+
+.invoice .invoice-no p {
+  padding:2px 0;
+  font-size:14px;
+}

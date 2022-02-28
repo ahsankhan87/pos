@@ -403,7 +403,7 @@
 				<div id="site_statistics_content" class="display-none" style="display: block;">
                 <style>
                     #canvas-holder{width:100%;}                    
-                    #expense_chart tr{  }
+                    /* #expense_chart tr{  } */
                 </style>
 				    
                 <div id="canvas-holder" class="center-block">

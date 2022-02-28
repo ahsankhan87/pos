@@ -184,7 +184,7 @@ class C_entries extends MY_Controller
                 );
                 $this->db->insert('acc_entry_items', $data);
 
-                if (isset($isCust) && !empty($ref_id)) {
+                if ($isCust == 1 && $ref_id > 0) {
                     //POST IN cusmoter payment table
                     //$this->M_customers->addCustomerPaymentEntry($account,$account,$dr_amount,$cr_amount,$ref_id,$narration,$new_invoice_no,$tran_date,0,$entry_id);
 
@@ -205,7 +205,7 @@ class C_entries extends MY_Controller
 
                     ///
                 }
-                if (isset($isSupp) && !empty($ref_id)) {
+                if ($isSupp == 1 && $ref_id > 0) {
                     //POST IN cusmoter payment table
                     //$this->M_suppliers->addsupplierPaymentEntry($account,$account,$dr_amount,$cr_amount,$ref_id,$narration,$new_invoice_no,$tran_date,0,$entry_id);
 
@@ -227,7 +227,7 @@ class C_entries extends MY_Controller
 
                     ///
                 }
-                if (isset($isBank) && !empty($ref_id)) {
+                if ($isBank == 1 && $ref_id > 0) {
                     //POST IN cusmoter payment table
                     //$this->M_banking->addBankPaymentEntry($account,$account,$dr_amount,$cr_amount,$ref_id,$narration,$new_invoice_no,$tran_date,$entry_id);
                     //addBankPaymentEntry($account,$account,$dr_amount,$cr_amount,$ref_id='',$narration='',$new_invoice_no='',$tran_date=null,$entry_id=0)

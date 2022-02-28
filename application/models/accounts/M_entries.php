@@ -183,6 +183,71 @@ class m_entries extends CI_Model{
                
     }
     
+    function addEntriesFromReference($dr_ledger,$cr_ledger,$dr_amount,$cr_amount,$narration='',$invoice_no='',
+    $date=null,$entry_no=null,$ref_id=0,$is_cust=0,$is_supplier=0,$is_bank=0)
+    {
+        $data = array(
+        'date' => ($date == null ? date('Y-m-d') : $date),
+        'company_id'=> $_SESSION['company_id'],
+        //'invoice_no' => $invoice_no,
+        'entry_no' => $entry_no == null ? '' : $entry_no,
+        'narration' => $narration
+         );
+        
+        $this->db->insert('acc_entries', $data);
+        $entry_id = $this->db->insert_id();
+        
+           $data = array(
+                'entry_id' => $entry_id,
+                'employee_id'=>$_SESSION['user_id'],
+                'entry_no' => $entry_no == null ? '' : $entry_no,
+                //'name' => $name,
+                'account_code' => $dr_ledger,
+                'date' => ($date == null ? date('Y-m-d') : $date),
+                //'amount' => $dr_amount,
+                'dueTo_acc_code' => $cr_ledger,
+                'ref_account_id' => $ref_id,
+                //'dc' => 'D',
+                'debit'=>$dr_amount,
+                'credit'=>0.00,
+                'invoice_no' => $invoice_no,
+                'narration' => $narration,
+                'company_id'=> $_SESSION['company_id'],
+                'is_cust' => $is_cust,
+                'is_supp' => $is_supplier,
+                'is_bank' => $is_bank,
+
+                );
+                $this->db->insert('acc_entry_items', $data);      
+                     
+            $data1 = array(
+                'entry_id' => $entry_id,
+                'employee_id'=>$_SESSION['user_id'],
+                'entry_no' => $entry_no == null ? '' : $entry_no,
+                //'name' => $name,
+                'account_code' => $cr_ledger,
+                'date' => ($date == null ? date('Y-m-d') : $date),
+                //'amount' => $cr_amount,
+                'dueTo_acc_code' => $dr_ledger,
+                'ref_account_id' => $ref_id,
+                //'dc' => 'C',
+                'debit'=>0.00,
+                'credit'=>$cr_amount,
+                'invoice_no' => $invoice_no,
+                'narration' => $narration,
+                'company_id'=> $_SESSION['company_id'],
+                'is_cust' => $is_cust,
+                'is_supp' => $is_supplier,
+                'is_bank' => $is_bank,
+
+                );
+                
+                $this->db->insert('acc_entry_items', $data1);
+                
+               return $entry_id;
+               
+    }
+    
     function getMAXEntryInvoiceNo($invoice_prefix)
     {   
         $this->db->order_by('id','desc');
@@ -206,7 +271,7 @@ class m_entries extends CI_Model{
     function get_entry_by_invoiceNo_1($invoiceNo,$company_id,$limit=null)
     {
         $this->db->order_by('id','desc');
-        $this->db->select('ei.*,g.title,g.title_ur,g.title_ar, IFNULL(c.store_name,"") as customer_store_name,IFNULL(s.name,"") as supplier_name,IFNULL(b.bank_name,"") as bank_name');
+        $this->db->select('ei.*,g.title,g.title_ur,g.title_ar, IFNULL(IF(ei.is_cust,c.store_name,NULL),"") as customer_store_name,IFNULL(IF(ei.is_supp,s.name,NULL),"") as supplier_name,IFNULL(IF(ei.is_bank,b.bank_name,NULL),"") as bank_name');
         $this->db->join('acc_entries e','e.id=ei.entry_id');
         $this->db->join('acc_groups g','g.account_code=ei.account_code','left');
         $this->db->join('pos_customers c','c.id=ei.ref_account_id','left');

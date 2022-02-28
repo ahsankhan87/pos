@@ -88,6 +88,7 @@ if (count(@$entries)) {
                                 echo '<td class="text-right">' . number_format($list['credit'], 2) . '</td>';
                                 echo '<td>' . $list['narration'] . '</td>';
                                 echo '<td>';
+                                echo anchor($langs.'/accounts/C_entries/edit/' . $list['invoice_no'],'<i class="fa fa-pencil fa-fw"></i>',' title="Edit"');
                                 echo '<span class="required text-danger"><a href="' . site_url('accounts/C_entries/delete/' . $list['id'] . '/' . $list['entry_id']) . '" title="Delete" onclick="return confirm(\'Are you sure you want to permanent delete?\')"><i class="fa fa-trash-o fa-fw"></i></a></span>';
                                 echo '</td>';
 

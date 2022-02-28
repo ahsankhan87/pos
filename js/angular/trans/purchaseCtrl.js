@@ -60,7 +60,7 @@ app.controller('purchaseCtrl', function($scope,$http,$timeout) {
     
     //call the clear cart function to clear all product
     $scope.clearCart();
-    
+    var sno = 0;
    //add product by barcode in purchase form
     $scope.addItemByBarcode = function (barcode){
             $timeout(function () {
@@ -71,8 +71,9 @@ app.controller('purchaseCtrl', function($scope,$http,$timeout) {
         var returnData = $.grep($scope.products,function(element,index){
         return (element.barcode == barcode);
         })
-       
+        sno++;
         $scope.invoice.items.push({
+                sno:sno,
                 item_id: parseInt(returnData[0].item_id),
                 quantity: parseFloat(1),
                 //name: returnData[0].name + ' - '+ returnData[0].size,
@@ -102,8 +103,9 @@ app.controller('purchaseCtrl', function($scope,$http,$timeout) {
         var returnData = $.grep($scope.products,function(element,index){
         return (element.item_id == item_id && element.size_id == size_id);
         })
-       
+        sno++;
         $scope.invoice.items.push({
+                sno:sno,
                 item_id: parseInt(returnData[0].item_id),
                 quantity: parseFloat(1),
                 //name: returnData[0].name,

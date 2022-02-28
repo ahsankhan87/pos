@@ -169,6 +169,7 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
     //call the clear cart function to clear all product
     $scope.clearCart();
     
+    var sno = 0;
     //add product by barcode in sales form
     $scope.addItemByBarcode = function (barcode){
             $timeout(function () {
@@ -184,7 +185,9 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
             alert('Product is not in stock, Please Purchase Product');
        }else //ADD PR0DUCT TOTHE CART
        {
+        sno++;
         $scope.invoice.items.push({
+                sno:sno,
                 item_id: parseInt(returnData[0].item_id),
                 quantity: parseFloat(1),
                 item_qty:parseFloat(returnData[0].quantity),
@@ -214,7 +217,6 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
     //$scope.inventory_acc_amount = array();
    //$scope.inventory_acc_code = array();
     //Add product to Sales cart
-    
     $scope.addItem = function(item_id,size_id) {
                 
         //search product using product id
@@ -227,7 +229,10 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
             alert('Product is not in stock, Please Purchase Product');
        }else //ADD PR0DUCT TOTHE CART
        {
+         
+         sno++;
          $scope.invoice.items.push({
+                sno:sno,
                 item_id: parseInt(returnData[0].item_id),
                 quantity: parseFloat(1),
                 item_qty:parseFloat(returnData[0].quantity),

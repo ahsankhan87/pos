@@ -223,7 +223,7 @@
                 </thead>
                 <tbody>
 
-                    <tr ng:repeat="item in invoice.items" ng-init="subForm='cellForm'+$index">
+                    <tr ng:repeat="item in invoice.items | orderBy:'-sno'" ng-init="subForm='cellForm'+$index">
 
                         <td>
                             <input type="hidden" ng:model="item.name" class="form-control" readonly="" />

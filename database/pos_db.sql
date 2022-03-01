@@ -1039,7 +1039,8 @@ CREATE TABLE `pos_customers` (
   `passport_issue_date` date DEFAULT NULL,
   `passport_expiry_date` date DEFAULT NULL,
   `father_name` text COLLATE utf8_unicode_ci,
-  `emp_id` int(11) NOT NULL
+  `emp_id` int(11) NOT NULL,
+  `vat_no` varchar(100) NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------

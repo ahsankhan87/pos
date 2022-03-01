@@ -281,7 +281,9 @@ class C_customers extends MY_Controller{
            }else
            {
                
-               $entry_id = $this->M_entries->addEntries($dr_account,$cr_account,$amount,$amount,$narration,$new_invoice_no,$date,null,$customer_id,$is_customer);
+               //$entry_id = $this->M_entries->addEntries($dr_account,$cr_account,$amount,$amount,$narration,$new_invoice_no,$date,null,$customer_id,$is_customer);
+               $this->M_entries->add_debit_entry($dr_account,$cr_account,$amount,$amount,$narration,$new_invoice_no,$date);
+               $entry_id = $this->M_entries->add_credit_entry($dr_account,$cr_account,$amount,$amount,$narration,$new_invoice_no,$date,null,$customer_id,$is_customer);
                
                //POST IN cusmoter payment table
                $this->M_customers->addCustomerPaymentEntry($cr_account,$dr_account,0,$amount,$customer_id,$narration,$new_invoice_no,$date,1,$entry_id);
@@ -302,7 +304,10 @@ class C_customers extends MY_Controller{
            {
                $cr_dis_account = $posting_type_code[0]['receivable_acc_code'];//customer ledger id
                $dr_dis_account = $posting_type_code[0]['salesdis_acc_code'];//customer ledger id
-               $entry_id=$this->M_entries->addEntries($dr_dis_account,$cr_dis_account,$discount_amount,$discount_amount,$narration,$new_invoice_no,$date,null,$customer_id,$is_customer);
+               //$entry_id=$this->M_entries->addEntries($dr_dis_account,$cr_dis_account,$discount_amount,$discount_amount,$narration,$new_invoice_no,$date,null,$customer_id,$is_customer);
+               
+               $this->M_entries->add_debit_entry($dr_dis_account,$cr_dis_account,$discount_amount,$discount_amount,$narration,$new_invoice_no,$date);
+               $entry_id = $this->M_entries->add_credit_entry($dr_dis_account,$cr_dis_account,$discount_amount,$discount_amount,$narration,$new_invoice_no,$date,null,$customer_id,$is_customer);
                
                //for cusmoter payment table
                $this->M_customers->addCustomerPaymentEntry($cr_dis_account,$dr_dis_account,0,$discount_amount,$customer_id,$narration,$new_invoice_no,$date,1,$entry_id);

@@ -219,31 +219,7 @@ class m_entries extends CI_Model{
 
                 );
                 $this->db->insert('acc_entry_items', $data);      
-                     
-            $data1 = array(
-                'entry_id' => $entry_id,
-                'employee_id'=>$_SESSION['user_id'],
-                'entry_no' => $entry_no == null ? '' : $entry_no,
-                //'name' => $name,
-                'account_code' => $cr_ledger,
-                'date' => ($date == null ? date('Y-m-d') : $date),
-                //'amount' => $cr_amount,
-                'dueTo_acc_code' => $dr_ledger,
-                'ref_account_id' => $ref_id,
-                //'dc' => 'C',
-                'debit'=>0.00,
-                'credit'=>$cr_amount,
-                'invoice_no' => $invoice_no,
-                'narration' => $narration,
-                'company_id'=> $_SESSION['company_id'],
-                'is_cust' => $is_cust,
-                'is_supp' => $is_supplier,
-                'is_bank' => $is_bank,
-
-                );
-                
-                $this->db->insert('acc_entry_items', $data1);
-                
+           
                return $entry_id;
                
     }
@@ -262,29 +238,6 @@ class m_entries extends CI_Model{
         $this->db->insert('acc_entries', $data);
         $entry_id = $this->db->insert_id();
         
-           $data = array(
-                'entry_id' => $entry_id,
-                'employee_id'=>$_SESSION['user_id'],
-                'entry_no' => $entry_no == null ? '' : $entry_no,
-                //'name' => $name,
-                'account_code' => $dr_ledger,
-                'date' => ($date == null ? date('Y-m-d') : $date),
-                //'amount' => $dr_amount,
-                'dueTo_acc_code' => $cr_ledger,
-                'ref_account_id' => $ref_id,
-                //'dc' => 'D',
-                'debit'=>$dr_amount,
-                'credit'=>0.00,
-                'invoice_no' => $invoice_no,
-                'narration' => $narration,
-                'company_id'=> $_SESSION['company_id'],
-                'is_cust' => $is_cust,
-                'is_supp' => $is_supplier,
-                'is_bank' => $is_bank,
-
-                );
-                $this->db->insert('acc_entry_items', $data);      
-                     
             $data1 = array(
                 'entry_id' => $entry_id,
                 'employee_id'=>$_SESSION['user_id'],
@@ -392,6 +345,7 @@ class m_entries extends CI_Model{
         $this->db->join('pos_customers c','c.id=ei.ref_account_id','LEFT');
         $this->db->join('pos_supplier s','s.id=ei.ref_account_id','LEFT');
         $this->db->join('pos_banking b','b.id=ei.ref_account_id','LEFT');
+        $this->db->order_by('id','DESC');
         $query = $this->db->get_where('acc_entry_items ei',$options);
         $data = $query->result_array();
         return $data;

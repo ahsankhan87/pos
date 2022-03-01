@@ -87,6 +87,7 @@
                                         <th>Cr Amount</th>
                                         <th>Balance</th>
                                         <th width="20%">Narration</th>
+                                        <th></th>
                                     </tr>
                                 </thead>';
                                 
@@ -151,7 +152,8 @@
 //                                    
                                     echo '<td class="text-right">'.round($balance,2).'</td>';
                                     echo '<td>'.$list['narration'].'</td>';
-                                    //echo '<td>'.anchor('accounts/C_ledgers/edit/'.$list['id'],'Edit'). ' | ';
+                                    echo '<td><a href="'. site_url($langs.'/accounts/C_entries/edit/' . $list['invoice_no']) .'" title="Edit"><i class="fa fa-pencil fa-fw"></i></a> </td>';
+                        			//echo '<td>'.anchor('accounts/C_ledgers/edit/'.$list['id'],'Edit'). ' | ';
                                     //echo  anchor('accounts/C_ledgers/delete/'.$list['id'],' Delete'). '</td>';
                                     echo '</tr>';
                                 }
@@ -164,7 +166,7 @@
                                 <th class="text-right">'.round($dr_amount,2).'</th>
                                 <th class="text-right">'.round($cr_amount,2).'</th>
                                 <th class="text-right">'.round($balance,2).'</th>
-                                <th></th>
+                                <th></th><th></th>
                                 </tr>
                                 </tfoot>
                                 </table>';

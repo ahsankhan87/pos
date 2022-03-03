@@ -228,7 +228,7 @@
                 <td ng-if="!item.service">{{((item.quantity * item.cost_price) + (item.quantity * item.cost_price)*item.tax_rate/100) | currency:home_currency_symbol:2}}</td>
                 
                 <td>
-                    <a href ng:click="removeItem($index)" title="Remove"><i class="fa fa-trash-o fa-1x" style="color:red;"></i></a>
+                    <a href ng:click="removeItem(item)" title="Remove"><i class="fa fa-trash-o fa-1x" style="color:red;"></i></a>
                 </td>
             </tr>
             <tr>

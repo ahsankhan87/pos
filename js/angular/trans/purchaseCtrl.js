@@ -199,8 +199,9 @@ app.controller('purchaseCtrl', function($scope,$http,$timeout) {
     ///// end Purchase Products 
     
     //delete item from cart
-    $scope.removeItem = function(index) {
-        $scope.invoice.items.splice(index, 1);
+    $scope.removeItem = function(item) {
+        // $scope.invoice.items.splice(index, 1);
+        $scope.invoice.items.splice($scope.invoice.items.indexOf(item), 1);
     },
     
     //get discount of the cart products

@@ -265,7 +265,7 @@
                         </td>
                         <td>{{(((item.quantity * item.unit_price) - item.discount_value) + (((item.quantity * item.unit_price)- item.discount_value)*item.tax_rate/100)) | currency:home_currency_symbol}}</td>
                         <td>
-                            <a href ng:click="removeItem($index)"><i class="fa fa-trash-o fa-1x" style="color:red;"></i></a>
+                            <a href ng:click="removeItem(item)"><i class="fa fa-trash-o fa-1x" style="color:red;"></i></a>
                         </td>
 
                     </tr>

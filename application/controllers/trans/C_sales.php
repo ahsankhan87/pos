@@ -265,13 +265,13 @@ class C_sales extends MY_Controller{
          //ADD ITEM DETAIL IN INVENTORY TABLE    
           $data1= array(
             'trans_item'=>$posted_values->item_id,
-            'trans_comment'=>'KSPOS',
-            'trans_inventory' => -$posted_values->quantity,
+            'trans_comment'=>'Sales '.$register_mode,
             'company_id'=> $_SESSION['company_id'],
             'trans_user'=>$_SESSION['user_id'],
             'invoice_no' => $new_invoice_no,
-            'cost_price'=>$posted_values->cost_price,//actually its avg cost comming from sale from
-            'unit_price'=>$posted_values->unit_price,
+            'trans_inventory'=>($register_mode == 'sale' ? -$posted_values->quantity : $posted_values->quantity),//if sales return then insert amount in negative
+            'cost_price'=>($register_mode == 'sale' ? -$posted_values->cost_price : $posted_values->cost_price),//actually its avg cost comming from sale from
+            'unit_price'=>($register_mode == 'sale' ? -$posted_values->unit_price : $posted_values->unit_price),//if sales return then insert amount in negative
             
             );
             

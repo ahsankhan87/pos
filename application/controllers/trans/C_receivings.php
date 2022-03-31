@@ -133,11 +133,11 @@ class C_receivings extends MY_Controller{
             'account'=>$data_posted->purchaseType,
             'amount_due'=>$data_posted->amount_due,
             'description'=>$narration,
-            'discount_value'=>$discount,
+            'discount_value'=>($register_mode == 'receive' ? $discount : -$discount),
             'currency_id'=>$currency_id,
             'exchange_rate'=>$exchange_rate,
-            'total_amount'=>$total_amount,
-            'total_tax'=>$total_tax_amount,
+            'total_amount'=>($register_mode == 'receive' ? $total_amount : -$total_amount),
+            'total_tax'=>($register_mode == 'receive' ? $total_tax_amount : -$total_tax_amount),
             );
             
         $this->db->insert('pos_receivings', $data);
@@ -213,13 +213,14 @@ class C_receivings extends MY_Controller{
             $data1= array(
                 
                 'trans_item'=>$posted_values->item_id,
-                'trans_comment'=>'KSRECV',
-                'trans_inventory' =>$posted_values->quantity,
+                'trans_comment'=>'Purchase '.$register_mode,
                 'company_id'=> $_SESSION['company_id'],
                 'trans_user'=>$_SESSION['user_id'],
                 'invoice_no' => $new_invoice_no,
-                'cost_price'=>$posted_values->cost_price,
-                'unit_price'=>$posted_values->unit_price,
+                'trans_inventory'=>($register_mode == 'receive' ? $posted_values->quantity : -$posted_values->quantity),//if purchase return then insert amount in negative
+                'cost_price'=>($register_mode == 'receive' ? $posted_values->cost_price : -$posted_values->cost_price),//actually its avg cost comming from sale from
+                'unit_price'=>($register_mode == 'receive' ? $posted_values->unit_price : -$posted_values->unit_price),//if purchase return then insert amount in negative
+                
                 );
                 
             $this->db->insert('pos_inventory', $data1);

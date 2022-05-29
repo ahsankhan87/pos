@@ -10,7 +10,11 @@ var Transaction = function () {
                     "url": site_url+"/trans/C_sales/get_sales_JSON",
                     "dataSrc": ""
                 },
-            
+
+            "language": {
+                "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+            },
+
             "columns": [
                         { "data": "invoice_no" },
                         { "data": "sale_date" },
@@ -169,6 +173,10 @@ var sample_estimate = function () {
                     "dataSrc": ""
                 },
             
+            "language": {
+                "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+            },
+
             "columns": [
                         { "data": "invoice_no" },
                         { "data": "sale_date" },
@@ -327,6 +335,10 @@ var sample_purchaseorders = function () {
                 "dataSrc": ""
             },
         
+            "language": {
+                "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+            },
+
         "columns": [
             { "data": "invoice_no" },
             { "data": "receiving_date" },
@@ -481,6 +493,11 @@ var sample_purchaseorders = function () {
                     "url": site_url+"/trans/C_receivings/get_purchases_JSON",
                     "dataSrc": ""
                 },
+            
+                "language": {
+                    "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+                },
+    
             "columns": [
                         //{ "data": "receiving_id" },
                         { "data": "invoice_no" },
@@ -645,6 +662,10 @@ var sample_purchaseorders = function () {
 
     var oTable = table.dataTable({
         
+        "language": {
+            "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+        },
+
         //GET TOTAL AT FOOTER OF GRID
         "footerCallback": function ( row, data, start, end, display ) {
         var api = this.api(), data;
@@ -789,6 +810,11 @@ var expenses = function () {
                 "url": site_url+"/trans/C_expenses/get_expenses_JSON",
                 "dataSrc": ""
             },
+        
+            "language": {
+                "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+            },
+
         "columns": [
                     //{ "data": "receiving_id" },
                     { "data": "invoice_no" },

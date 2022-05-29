@@ -11,6 +11,10 @@ var TableAdvanced = function () {
                 [0, 'desc']
             ],
             
+            "language": {
+                "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+            },
+
             "lengthMenu": [
                 [20, 50, 100, -1],
                 [20, 50, 100, "All"] // change per page values here
@@ -93,6 +97,10 @@ var TableAdvanced = function () {
 
         var oTable = table.dataTable({
             
+            "language": {
+                "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+            },
+
             //GET TOTAL AT FOOTER OF GRID
             "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
@@ -486,7 +494,7 @@ var TableAdvanced = function () {
 
         var table = $('#sample_5');
 
-        /* Fixed header extension: http://datatables.net/extensions/scroller/ */
+        /* Fixed header extension: http://datatables.net/extensions/lang/scroller/ */
 
         var oTable = table.dataTable({
             "dom": "<'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // datatable layout without  horizobtal scroll
@@ -511,7 +519,7 @@ var TableAdvanced = function () {
 
         var table = $('#sample_6');
 
-        /* Fixed header extension: http://datatables.net/extensions/keytable/ */
+        /* Fixed header extension: http://datatables.net/extensions/lang/keytable/ */
 
         var oTable = table.dataTable({
             "order": [

@@ -7,6 +7,10 @@ var Reports = function () {
 
         var oTable = table.dataTable({
             
+            "language": {
+                "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+            },
+
             //GET TOTAL AT FOOTER OF GRID
             "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
@@ -165,6 +169,10 @@ var Reports = function () {
 
     var oTable = table.dataTable({
         
+        "language": {
+            "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+        },
+
         //GET TOTAL AT FOOTER OF GRID
         "footerCallback": function ( row, data, start, end, display ) {
         var api = this.api(), data;
@@ -302,6 +310,10 @@ var sales_report = function () {
         /* Set tabletools buttons and button container */
         var oTable = table.dataTable({
             
+            "language": {
+                "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+            },
+
             "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -429,6 +441,10 @@ var sales_summary = function () {
         /* Set tabletools buttons and button container */
         var oTable = table.dataTable({
             
+            "language": {
+                "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+            },
+
             "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -557,6 +573,10 @@ var category_sales_summary = function () {
         /* Set tabletools buttons and button container */
         var oTable = table.dataTable({
             
+            "language": {
+                "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+            },
+
             "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  

@@ -72,7 +72,7 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/plugins/bootstrap-editable/js/wysihtml5.js"></script>
 -->
 <!-- END PAGE LEVEL PLUGINS -->
-<script> var path = '<?php echo base_url(); ?>'; </script>
+<script> var path = '<?php echo base_url(); ?>'; var lang = '<?php echo $langs; ?>';</script>
 
 
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
@@ -95,6 +95,7 @@
 jQuery(document).ready(function() {    
    var site_url = '<?php echo site_url($langs); ?>';
    var path = '<?php echo base_url(); ?>';
+   var lang = '<?php echo $langs; ?>';
    
    // Display an info toast with no title
    //toastr.info('Are you the 6 fingered man?');

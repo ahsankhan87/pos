@@ -7,6 +7,10 @@ var Customers = function () {
 
         var oTable = table.dataTable({
             
+            "language": {
+                "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+            },
+
             "createdRow": function( nRow, aData, iDisplayIndex ) {
                 
                 $('td:eq(3)', nRow).css('text-align','right');
@@ -159,7 +163,11 @@ var Customers = function () {
         var table = $('#getAllCustomerWithBalance');
 
         var oTable = table.dataTable({
-            
+           
+            "language": {
+                "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+            },
+ 
             "ajax":site_url+"/pos/C_customers/getCustomersWithBalanceJSON",
             "deferRender": true,
             
@@ -315,6 +323,10 @@ var Customers = function () {
 
         var oTable = table.dataTable({
             
+            "language": {
+                "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+            },
+
             //Retrieve all Customers and populate
             //"ajax":site_url+"/pos/C_customers/getCustomersJSON",
             "ajax":{

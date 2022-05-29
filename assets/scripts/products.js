@@ -10,6 +10,10 @@ var initGetAllProducts = function () {
                     "url": site_url+"/pos/Items/get_items",
                     "dataSrc": ""
                 },
+            
+                "language": {
+                    "url": path+"/assets/plugins/datatables/extensions/lang/"+lang+".json"
+                },
             //"deferRender": true,
             "columns": [
                         { "data": "item_id" },

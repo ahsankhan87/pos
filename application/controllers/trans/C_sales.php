@@ -872,8 +872,7 @@ class C_sales extends MY_Controller{
         /////////////////////////////////
         if($data_posted->register_mode == 'sale')
         {
-            if($service !== 1)
-            {   
+              
                 foreach ($inventory_acc_code as $inventory_code => $amountt) {
                     
                     $inventory_dr_ledger_id = $posting_type_code[0]['cos_acc_code'];
@@ -883,12 +882,11 @@ class C_sales extends MY_Controller{
                     
                 }
 
-            }
+            
         }          
         if($data_posted->register_mode == 'return')
         {
-            if($service !== 1)
-            {   
+              
                 foreach ($inventory_acc_code as $inventory_code => $amountt) {
                     
                     $inventory_cr_ledger_id = $posting_type_code[0]['cos_acc_code'];
@@ -897,8 +895,7 @@ class C_sales extends MY_Controller{
                     $this->M_entries->addEntries($inventory_dr_ledger_id,$inventory_cr_ledger_id,$amountt,$amountt,ucwords($narration),$invoice_no,$sale_date);
                     
                 }
-                
-            }
+            
         }
         
         //  Cash Debit and Sales Credit

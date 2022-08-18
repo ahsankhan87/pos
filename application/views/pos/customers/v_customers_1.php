@@ -1,33 +1,3 @@
-<!-- <div class="row hidden-print">
-	<div class="col-md-12">
-		<div class="portlet">
-			<div class="portlet-title">
-				<div class="caption">
-					<i class="fa fa-reorder"></i> Advance Search
-				</div>
-				<div class="tools">
-					<a href="" class="collapse"></a>
-					<a href="#portlet-config" data-toggle="modal" class="config"></a>
-					<a href="" class="reload"></a>
-					<a href="" class="remove"></a>
-				</div>
-			</div>
-			<div class="portlet-body">
-				<form class="form-inline" method="post" action="<?php echo site_url('pos/C_customers/advance_search') ?>" role="form">
-        			<div class="form-group">
-        				<label for="city">City / Route</label>
-        				<input type="text" class="form-control" name="city" placeholder="City / Route">
-        			</div>
-        			
-        			<button type="submit" class="btn btn-default">Search</button>
-        		</form>
-			</div>
-		</div>
-		
-	</div>
-</div> -->
-<!-- END PAGE CONTENT-->
-
 <div class="row">
     <div class="col-sm-12">
         <?php

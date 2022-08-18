@@ -167,8 +167,7 @@ class M_customers extends CI_Model{
         {
             foreach ($query->result_array() as $row)
             {
-                 $data[$row['id']] = ucfirst($row['store_name']).', <span style="color:#999;">'.
-                 $row['address'].'</span>';
+                 $data[$row['id']] = ucfirst($row['store_name']);
             }
         }
         $query->free_result();

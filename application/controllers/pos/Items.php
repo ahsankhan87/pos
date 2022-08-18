@@ -336,7 +336,7 @@ class Items extends MY_Controller{
         
             $data['locationDDL'] = $this->M_locations->get_activelocationsDDL();
             $data['categoryDDL'] = $this->M_category->getCategoriesDropDown();
-            $data['sizesDDL'] = $this->M_sizes->get_activeSizesDDL();
+            //$data['sizesDDL'] = $this->M_sizes->get_activeSizesDDL();
             $data['Item'] = $this->M_items->get_itemDetail($id,$size_id);
             $data['unitsDDL'] = $this->M_units->get_activeunitsDDL();
             $data['taxesDDL'] = $this->M_taxes->gettaxDropDown();

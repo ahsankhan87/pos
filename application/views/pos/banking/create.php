@@ -28,7 +28,7 @@ echo form_open('pos/C_banking/create',$attributes);
 <div class="form-group">
   <label class="control-label col-sm-2" for="cash_acc_code">Cash Account:</label>
   <div class="col-sm-10">
-    <?php echo form_dropdown('cash_acc_code',$accountDDL,set_value('cash_acc_code'),'class="form-control select2me"'); ?>
+    <?php echo form_dropdown('cash_acc_code',$accountDDL,1001,'class="form-control select2me"'); ?>
     <?php echo anchor('accounts/C_groups','Add New <i class="fa fa-plus"></i>',''); ?>
     
   </div>
@@ -37,7 +37,7 @@ echo form_open('pos/C_banking/create',$attributes);
 <div class="form-group">
   <label class="control-label col-sm-2" for="bank_acc_code">Bank Account:</label>
   <div class="col-sm-10">
-    <?php echo form_dropdown('bank_acc_code',$accountDDL,set_value('bank_acc_code'),'class="form-control select2me"'); ?>
+    <?php echo form_dropdown('bank_acc_code',$accountDDL,1002,'class="form-control select2me"'); ?>
     
   </div>
 </div>
@@ -75,7 +75,7 @@ echo form_open('pos/C_banking/create',$attributes);
 <div class="form-group">
   <label class="control-label col-sm-2" for="bank_name">Bank Name:</label>
   <div class="col-sm-10">
-    <input type="text" class="form-control" id="bank_name" name="bank_name" value="<?php echo set_value('bank_name') ?>"  placeholder="Bank Name" />
+    <input type="text" class="form-control" id="bank_name" autofocus name="bank_name" value="<?php echo set_value('bank_name') ?>"  placeholder="Bank Name" />
   </div>
 </div>
  

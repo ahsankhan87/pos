@@ -65,7 +65,7 @@
         						<div class="form-group">
         							<label class="control-label col-md-3"><span class="required">* </span> Product Name </label>
         							<div class="col-md-9">
-        								<textarea name="name" class="form-control"><?php echo set_value('name') ?></textarea>
+        								<textarea name="name" autofocus class="form-control"><?php echo set_value('name') ?></textarea>
         							</div>
         						</div>
         					</div>
@@ -75,7 +75,7 @@
         						<div class="form-group">
                                   <label class="control-label col-sm-3"><span class="required">* </span>Opening Inventory Account:</label>
                                   <div class="col-sm-9">
-                                    <?php echo form_dropdown('inventory_acc_code',$accountDDL,set_value('inventory_acc_code'),'class="form-control select2me"'); ?>
+                                    <?php echo form_dropdown('inventory_acc_code',$accountDDL,1004,'class="form-control select2me"'); ?>
                                   </div>
                                 </div>
                             </div>
@@ -190,6 +190,18 @@
         							</div>
         						</div>
         					</div>
+        				</div>	
+						<!--/row-->
+        				<div class="row">
+        					<div class="col-md-6">
+        						<div class="form-group">
+        							<label class="control-label col-md-3">Expiry Date</label>
+        							<div class="col-md-9">
+										<input type="date" name="expiry_date" value="" autocomplete="off" class="form-control" />
+        							</div>
+        						</div>
+        					</div>
+
         				</div>	
                         <?php if(@$sizes){ ?>
         				<h3 class="form-section">Select Sizes and Enter Inital Quantity &amp; Barcode</h3>

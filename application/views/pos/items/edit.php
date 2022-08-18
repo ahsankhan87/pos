@@ -173,6 +173,15 @@
         							</div>
         						</div>
         					</div>
+
+							<div class="col-md-6">
+        						<div class="form-group">
+									<label class="control-label col-md-3">Expiry Date</label>
+        							<div class="col-md-9">
+										<input type="date" name="expiry_date" value="<?php echo $values['expiry_date'] ?>" autocomplete="off" class="form-control" />
+        							</div>
+        						</div>
+        					</div>
 						</div>
                     <!--    
         				<h3 class="form-section">Select Sizes and Enter Barcode</h3>

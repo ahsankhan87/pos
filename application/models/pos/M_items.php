@@ -179,7 +179,7 @@ class M_items extends CI_Model{
             $this->db->trans_start(); 
             
             $service = $this->input->post('service',true);
-            $brand = $this->input->post('brand',true);
+            $expiry_date = $this->input->post('expiry_date',true);
             $desc = $this->input->post('description',true);
             $unit_id = ($this->input->post('unit_id',true) == '' ? 0 : $this->input->post('unit_id',true));
             $tax_id = $this->input->post('tax_id',true);
@@ -287,7 +287,8 @@ class M_items extends CI_Model{
                     "picture" =>$_FILES['upload_pic']['name'],
                     'inventory_acc_code'=>$inventory_acc_code,
                     'wip_acc_code'=>$wip_acc_code,
-                    'item_type'=>$item_type
+                    'item_type'=>$item_type,
+                    'expiry_date'=>$expiry_date,
                     );
                     $this->db->insert('pos_items_detail', $option_data);
                     
@@ -332,7 +333,9 @@ class M_items extends CI_Model{
                     "picture" =>$_FILES['upload_pic']['name'],
                     'inventory_acc_code'=>$inventory_acc_code,
                     'wip_acc_code'=>$wip_acc_code,
-                    'item_type'=>$item_type
+                    'item_type'=>$item_type,
+                    'expiry_date'=>$expiry_date,
+
                     );
                     $this->db->insert('pos_items_detail', $option_data);
                     
@@ -398,6 +401,8 @@ class M_items extends CI_Model{
                     'tax_id' => $this->input->post('tax_id',true),
                     'unit_id' =>$this->input->post('unit_id',true),
                     'barcode'=>$this->input->post('item_id'),
+                    'expiry_date'=>$this->input->post('expiry_date'),
+
                     );
                 $this->db->update('pos_items_detail',$option_data,array('id'=>$this->input->post('id')));
                 ////
@@ -420,6 +425,8 @@ class M_items extends CI_Model{
                 'location_id' =>$this->input->post('location_id',true),
                 're_stock_level' => $this->input->post('reorder_level',true),
                 "picture" =>$new_picture,
+                'expiry_date'=>$this->input->post('expiry_date'),
+
                 );
                 $this->db->update('pos_items_detail',$option_data,array('id'=>$this->input->post('id')));
                 

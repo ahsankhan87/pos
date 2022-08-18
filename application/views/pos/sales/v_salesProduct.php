@@ -112,12 +112,12 @@
                     ?>
 
                     <label class="control-label col-sm-2" for=""><?php echo lang('customer'); ?></label>
-                    <div class="col-sm-4" ng-init="customer_id='<?php echo $customer_id; ?>'">
+                    <div class="col-sm-4" ng-init="customer_id='<?php echo 1; ?>'">
                         <!-- <select  id="cust" class="form-control <?php echo ($customer_id == '' ? 'select2me' : '') ?>" ng-change="getCustomerCurrency(customer_id)" ng:model="customer_id"> -->
-                        <select id="cust" class="form-control select2me" ng:model="customer_id" ng-change="getCustomer(customer_id)">
+                        <select id="cust" class="form-control select2me" ng:model="customer_id">
                             <?php
                             foreach ($customersDDL as $key => $values) :
-                                echo '<option value="' . $key . '">';
+                                echo '<option value="' . $key . '" '.($key == 1 ? "selected=''" : "").'>';
                                 echo $values;
                                 echo '</option>';
                             endforeach;

@@ -29,7 +29,7 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
         if(response.data.length > 0)
         {
             $scope.customer_vat_no = response.data[0].vat_no;
-            console.log(response.data);
+            //console.log(response.data);
         }
        
         $scope.curr_loader = false;//hide loader gif

@@ -49,7 +49,7 @@ echo form_open($langs.'/pos/Suppliers/create',$attributes);
 <div class="form-group">
   <label class="control-label col-md-3" for="store Name">Posting Type:<span class="required">* </span></label>
   <div class="col-md-4">
-    <?php echo form_dropdown('posting_type_id',$purchasePostingTypeDDL,set_value('posting_type_id'),'class="form-control" required=""'); ?>
+    <?php echo form_dropdown('posting_type_id',$purchasePostingTypeDDL,1,'class="form-control" required=""'); ?>
     <?php echo anchor('setting/PostingTypes/create_purchase','Add New <i class="fa fa-plus"></i>',''); ?>
     
   </div>
@@ -94,7 +94,7 @@ echo form_open($langs.'/pos/Suppliers/create',$attributes);
 <div class="form-group">
   <label class="control-label col-md-3" for="supplier Name">Full Name:<span class="required">* </span></label>
   <div class="col-md-4">
-    <input type="text" data-required="1" class="form-control" name="name" value="<?php echo set_value('name') ?>" required="" placeholder="Supplier Name"  />
+    <input type="text" data-required="1" class="form-control" autofocus name="name" value="<?php echo set_value('name') ?>" required="" placeholder="Supplier Name"  />
   </div>
 </div>
 

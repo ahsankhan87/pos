@@ -28,7 +28,7 @@ echo form_open('pos/C_customers/create',$attributes);
 <div class="form-group">
   <label class="control-label col-sm-2" for="Posting">Posting Type:</label>
   <div class="col-sm-10">
-    <?php echo form_dropdown('posting_type_id',$salesPostingTypeDDL,set_value('posting_type_id'),'class="form-control select2me" required=""'); ?>
+    <?php echo form_dropdown('posting_type_id',$salesPostingTypeDDL,1,'class="form-control select2me" required=""'); ?>
     <?php echo anchor('setting/PostingTypes/create','Add New <i class="fa fa-plus"></i>',''); ?>
     
   </div>
@@ -88,7 +88,7 @@ echo form_open('pos/C_customers/create',$attributes);
 <div class="form-group">
   <label class="control-label col-sm-2" for="customer Name">First Name:</label>
   <div class="col-sm-10">
-    <input type="text" class="form-control" id="first_name" name="first_name" value="<?php echo set_value('first_name') ?>" required=""placeholder="First Name" />
+    <input type="text" class="form-control" id="first_name" autofocus name="first_name" value="<?php echo set_value('first_name') ?>" required=""placeholder="First Name" />
   </div>
 </div>
 

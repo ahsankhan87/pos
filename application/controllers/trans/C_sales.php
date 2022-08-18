@@ -1198,8 +1198,8 @@ class C_sales extends MY_Controller{
         $data['Company'] = $this->M_companies->get_companies($company_id);
             
         $this->load->view('templates/header',$data);
-        $this->load->view('pos/sales/v_receipt_small',$data);
-        //  $this->load->view('pos/sales/v_receipt',$data);
+        // $this->load->view('pos/sales/v_receipt_small',$data);
+        $this->load->view('pos/sales/v_receipt',$data);
         $this->load->view('templates/footer');
     }
     

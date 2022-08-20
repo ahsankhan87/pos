@@ -122,7 +122,7 @@ var Customers = function () {
                     title: function(){
                              return $('#print_title').text(); 
                           },
-                    messageBottom: 'Powered by: <i>kasbook.com, Cell:03119809070</i>'
+                    messageBottom: 'Powered by: <i>khybersoft.com, Cell:03119809070</i>'
                 },
                 {
                     extend: 'print',
@@ -141,7 +141,7 @@ var Customers = function () {
                                 
                              return  header;
                           },
-                    messageBottom: '<span style="text-align:center;">Powered by: <i>kasbook.com, Cell:03119809070</i></span>',
+                    messageBottom: '<span style="text-align:center;">Powered by: <i>khybersoft.com, Cell:03119809070</i></span>',
                 },
                 'colvis'
             ],
@@ -281,7 +281,7 @@ var Customers = function () {
                     title: function(){
                              return $('#print_title').text(); 
                           },
-                    messageBottom: 'Powered by: <i>kasbook.com, Cell:03119809070</i>'
+                    messageBottom: 'Powered by: <i>khybersoft.com, Cell:03119809070</i>'
                 },
                 {
                     extend: 'print',
@@ -300,7 +300,7 @@ var Customers = function () {
                                 
                              return  header;
                           },
-                    messageBottom: '<span style="text-align:center;">Powered by: <i>kasbook.com, Cell:03119809070</i></span>',
+                    messageBottom: '<span style="text-align:center;">Powered by: <i>khybersoft.com, Cell:03119809070</i></span>',
                 },
                 'colvis'
             ],
@@ -393,7 +393,7 @@ var Customers = function () {
                     title: function(){
                              return $('#print_title').text(); 
                           },
-                    messageBottom: 'Powered by: <i>kasbook.com, Cell:03119809070</i>'
+                    messageBottom: 'Powered by: <i>khybersoft.com, Cell:03119809070</i>'
                 },
                 {
                     extend: 'print',
@@ -412,7 +412,7 @@ var Customers = function () {
                                 
                              return  header;
                           },
-                    messageBottom: '<span style="text-align:center;">Powered by: <i>kasbook.com, Cell:03119809070</i></span>',
+                    messageBottom: '<span style="text-align:center;">Powered by: <i>khybersoft.com, Cell:03119809070</i></span>',
                 },
                 'colvis'
             ],

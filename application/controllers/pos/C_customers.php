@@ -15,14 +15,20 @@ class C_customers extends MY_Controller{
         ini_set('max_execution_time', 0); 
         ini_set('memory_limit','10240M');
 
-        $data['title'] = lang('listof').' ' .lang('customers');
-        $data['main'] = lang('listof').' ' .lang('customers');
+        $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : FY_START_DATE);
+        $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : FY_END_DATE);
+
+        $from_date = date('d-m-Y',strtotime($data['from_date']));
+        $to_date = date('d-m-Y',strtotime($data['to_date']));
+
+        $data['title'] = lang('listof').' ' .lang('customers') .' ('.$from_date.' to '.$to_date.')';
+        $data['main'] = lang('listof').' ' .lang('customers').' ('.$from_date.' to '.$to_date.')';
         
-        //$data['cities'] = $this->M_city->get_city();
         $data['customers']= $this->M_customers->get_activeCustomers();
         
         $this->load->view('templates/header',$data);
-        $this->load->view('pos/customers/v_custWithBalance',$data);
+        //$this->load->view('pos/customers/v_custWithBalance',$data);
+        $this->load->view('pos/customers/v_customers_1',$data);
         // $this->load->view('pos/customers/v_customers',$data);
         $this->load->view('templates/footer');
     }

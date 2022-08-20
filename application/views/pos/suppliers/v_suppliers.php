@@ -1,4 +1,38 @@
 <div class="row">
+    <div class="col-md-12">
+		<!-- BEGIN SAMPLE FORM PORTLET-->
+		<div class="portlet">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-reorder"></i> Select From and To Dates
+				</div>
+				<div class="tools">
+					<a href="" class="collapse"></a>
+					<a href="#portlet-config" data-toggle="modal" class="config"></a>
+					<a href="" class="reload"></a>
+					<a href="" class="remove"></a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<form class="form-inline" method="post" action="<?php echo site_url('pos/Suppliers/index')?>" role="form">
+        			<div class="form-group">
+        				<label for="exampleInputEmail2">From Date</label>
+        				<input type="date" class="form-control" name="from_date" value="<?php echo date('Y-m-d');?>" placeholder="From Date">
+        			</div>
+        			<div class="form-group">
+        				<label for="exampleInputPassword2">To Date</label>
+        				<input type="date" class="form-control" name="to_date" value="<?php echo date('Y-m-d');?>" placeholder="To Date">
+        			</div>
+        			
+        			<button type="submit" class="btn btn-default">Submit</button>
+        		</form>
+			</div>
+		</div>
+		<!-- END SAMPLE FORM PORTLET-->
+	</div>
+
+<!-- END PAGE CONTENT-->
+
     <div class="col-sm-12">
         <?php
         if ($this->session->flashdata('message')) {
@@ -17,6 +51,7 @@
                 <?php echo anchor('pos/Suppliers/create', lang('add_new') . ' <i class="fa fa-plus"></i>', 'class="btn btn-success" id="sample_editable_1_new"'); ?>
                 <?php echo anchor('pos/Suppliers/SupplierImport', 'Import Suppliers', 'class="btn btn-success"'); ?>
             </div>
+            
         </div>
         <br>
         <?php
@@ -80,7 +115,7 @@
                                 $op_balance = (($op_balance_dr - $op_balance_cr) / $exchange_rate);
 
                                 //CURRENT BALANCES
-                                $cur_balance = $this->M_suppliers->get_supplier_total_balance($list['id'], FY_START_DATE, FY_END_DATE);
+                                $cur_balance = $this->M_suppliers->get_supplier_total_balance($list['id'], $from_date,$to_date);
                                 $balance_dr = ($cur_balance[0]['dr_balance'] / $exchange_rate);
                                 $balance_cr = ($cur_balance[0]['cr_balance'] / $exchange_rate);
 

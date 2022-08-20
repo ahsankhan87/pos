@@ -282,4 +282,44 @@ class M_dashboard extends CI_Model{
         $data = $query->result_array();
         return $data;
     }
+
+     
+    public function total_ac_receivable_amount($company_id)
+    {
+        $total=0;
+        $this->db->select('sum(debit-credit) as balance');
+        $options = array('company_id'=> $company_id);
+        $this->db->where('date >=', FY_START_DATE);
+        $this->db->where('date <=', FY_END_DATE);
+        
+        $query = $this->db->get_where('pos_customer_payments',$options);
+        $ledgers = $query->result_array();
+        
+        foreach($ledgers as $values)
+        {
+            $total = $values['balance'];
+            //$month_sale += $total_unit_price;
+        }
+        return  abs($total);
+    }
+     
+    public function total_ac_payable_amount($company_id)
+    {
+        $total=0;
+        $this->db->select('sum(debit-credit) as balance');
+        $options = array('company_id'=> $company_id);
+        $this->db->where('date >=', FY_START_DATE);
+        $this->db->where('date <=', FY_END_DATE);
+        
+        $query = $this->db->get_where('pos_supplier_payments',$options);
+        $ledgers = $query->result_array();
+        
+        foreach($ledgers as $values)
+        {
+            $total = $values['balance'];
+            //$month_sale += $total_unit_price;
+        }
+        return  abs($total);
+    }
+    
 }

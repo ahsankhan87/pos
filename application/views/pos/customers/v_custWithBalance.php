@@ -1,38 +1,4 @@
 <div class="row hidden-print">
-	<div class="col-md-12">
-		<!-- BEGIN SAMPLE FORM PORTLET-->
-		<div class="portlet">
-			<div class="portlet-title">
-				<div class="caption">
-					<i class="fa fa-reorder"></i> Select From and To Dates
-				</div>
-				<div class="tools">
-					<a href="" class="collapse"></a>
-					<a href="#portlet-config" data-toggle="modal" class="config"></a>
-					<a href="" class="reload"></a>
-					<a href="" class="remove"></a>
-				</div>
-			</div>
-			<div class="portlet-body">
-				<form class="form-inline" method="post" action="<?php echo site_url('pos/C_customers/')?>" role="form">
-        			<div class="form-group">
-        				<label for="exampleInputEmail2">From Date</label>
-        				<input type="date" class="form-control" name="from_date" placeholder="From Date">
-        			</div>
-        			<div class="form-group">
-        				<label for="exampleInputPassword2">To Date</label>
-        				<input type="date" class="form-control" name="to_date" placeholder="To Date">
-        			</div>
-        			
-        			<button type="submit" class="btn btn-default">Submit</button>
-        		</form>
-			</div>
-		</div>
-		<!-- END SAMPLE FORM PORTLET-->
-	</div>
-</div>
-<!-- END PAGE CONTENT-->
-
 <div class="row">
     <div class="col-sm-12">
         <?php

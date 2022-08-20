@@ -100,10 +100,10 @@
             -->
 			<div class="details">
 				<div class="title">
-					<?php echo lang('income'); ?>
+					<?php echo lang('stock'); ?>
 				</div>
 				<div class="numbers">
-					 <?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round(-$net_income,2); ?>
+					 <?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round($totalStock,2); ?>
 				</div>
 				<div class="progress">
 					<span style="width: 100%;" class="progress-bar progress-bar-danger" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100">
@@ -127,10 +127,10 @@
             -->
 			<div class="details">
 				<div class="title">
-					 <?php echo lang('stock'); ?>
+					 <?php echo ''; ?>
 				</div>
 				<div class="numbers">
-					 <?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round($totalStock,2); ?>
+					 <?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round($ac_payable_amount,2); ?>
 				</div>
 				<div class="progress">
 					<span style="width: 100%;" class="progress-bar progress-bar-success" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
@@ -155,10 +155,10 @@
             -->
 			<div class="details">
 				<div class="title">
-					<?php echo lang('cashonhand'); ?>
+					<?php echo ''; ?>
 				</div>
 				<div class="numbers">
-				<?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round($cash_hand,2); ?>
+				<?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round($ac_receivable_amount,2); ?>
 				</div>
 				<div class="progress">
 					<span style="width: 100%;" class="progress-bar progress-bar-warning" aria-valuenow="16" aria-valuemin="0" aria-valuemax="100">

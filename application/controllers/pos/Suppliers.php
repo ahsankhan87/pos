@@ -15,8 +15,12 @@ class Suppliers extends MY_Controller{
         ini_set('max_execution_time', 0); 
         ini_set('memory_limit','10240M');
 
-        $data['title'] = lang('listof').' ' .lang('suppliers');
-        $data['main'] = lang('listof').' ' .lang('suppliers');
+        $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : FY_START_DATE);
+        $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : FY_END_DATE);
+        
+        $data['title'] = lang('listof').' ' .lang('suppliers').' ('.$data['from_date'].' to '.$data['to_date'].')';
+        $data['main'] = lang('listof').' ' .lang('suppliers').' ('.$data['from_date'].' to '.$data['to_date'].')';
+        
         
         //$data['cities'] = $this->M_city->get_city();
         $data['suppliers']= $this->M_suppliers->get_activeSuppliers();

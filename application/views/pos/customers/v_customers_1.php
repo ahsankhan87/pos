@@ -56,7 +56,7 @@
         <div class="portlet">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-cogs"></i><span id="print_title"><?php echo $main; ?></span>
+                    <i class="fa fa-cogs"></i><span id="print_title"><?php echo $main.' '.$main_small; ?></span>
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse"></a>

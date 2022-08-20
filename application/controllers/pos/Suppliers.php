@@ -18,9 +18,12 @@ class Suppliers extends MY_Controller{
         $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : FY_START_DATE);
         $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : FY_END_DATE);
         
-        $data['title'] = lang('listof').' ' .lang('suppliers').' ('.$data['from_date'].' to '.$data['to_date'].')';
-        $data['main'] = lang('listof').' ' .lang('suppliers').' ('.$data['from_date'].' to '.$data['to_date'].')';
-        
+        $from_date = date('d-m-Y',strtotime($data['from_date']));
+        $to_date = date('d-m-Y',strtotime($data['to_date']));
+
+        $data['title'] = lang('listof').' ' .lang('customers') .' ('.$from_date.' to '.$to_date.')';
+        $data['main'] = lang('listof').' ' .lang('customers');
+        $data['main_small']= ' ('.$from_date.' to '.$to_date.')';
         
         //$data['cities'] = $this->M_city->get_city();
         $data['suppliers']= $this->M_suppliers->get_activeSuppliers();

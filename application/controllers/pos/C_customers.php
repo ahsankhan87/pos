@@ -22,7 +22,8 @@ class C_customers extends MY_Controller{
         $to_date = date('d-m-Y',strtotime($data['to_date']));
 
         $data['title'] = lang('listof').' ' .lang('customers') .' ('.$from_date.' to '.$to_date.')';
-        $data['main'] = lang('listof').' ' .lang('customers').' ('.$from_date.' to '.$to_date.')';
+        $data['main'] = lang('listof').' ' .lang('customers');
+        $data['main_small']= ' ('.$from_date.' to '.$to_date.')';
         
         $data['customers']= $this->M_customers->get_activeCustomers();
         

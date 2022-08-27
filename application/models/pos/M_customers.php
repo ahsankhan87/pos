@@ -153,6 +153,35 @@ class M_customers extends CI_Model{
         return $data;
     }
     
+    public function get_customer_total_balance_e_op_balance($customer_id,$fy_start_date,$fy_end_date)
+    {
+        $total_op = 0;
+        $balance=0;
+        $total = 0;
+        $options = array('id'=> $customer_id, 'company_id'=> $_SESSION['company_id']);
+        $this->db->select('(op_balance_dr-op_balance_cr) as OP_balance');
+        
+        $query = $this->db->get_where('pos_customers',$options);
+        
+        if($data = $query->row() )
+        {
+            $total_op = $data->OP_balance;
+        }
+
+        $this->db->select('SUM(debit-credit) AS balance')->from('pos_customer_payments sp')->where('sp.customer_id', $customer_id);
+        $this->db->where('sp.company_id', $_SESSION['company_id']);
+        $this->db->where('date >=', $fy_start_date);
+        $this->db->where('date <=', $fy_end_date);
+        $query_1 = $this->db->get();
+        
+        if($data_1 = $query_1->row() )
+        {
+            $balance = $data_1->balance;
+        }
+        
+        $total = ($total_op+$balance);
+        return $total;
+    }
     
     function getCustomerDropDown()
     {

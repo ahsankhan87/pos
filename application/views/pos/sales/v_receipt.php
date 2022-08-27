@@ -147,8 +147,8 @@
                     <strong><?php echo lang('grand') . ' ' . lang('total'); ?>:</strong> <?php echo $symbol . round(@$total - $discount + $total_tax_amount, 2); ?>
                 </li>
                 <li>
-                    <?php $balance = $this->M_customers->get_customer_total_balance(@$sales_items[0]['customer_id'],FY_START_DATE,FY_END_DATE); ?>
-                    <?php echo lang('balance'). ' ' . ($balance[0]['dr_balance']-$balance[0]['cr_balance']); ?>
+                    <?php $balance = $this->M_customers->get_customer_total_balance_e_op_balance(@$sales_items[0]['customer_id'],FY_START_DATE,FY_END_DATE); ?>
+                    <?php echo lang('balance'). ': ' . ((double)$balance); ?>
                 </li>
             </ul>
         </div>

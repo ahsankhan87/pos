@@ -1,7 +1,7 @@
 
   <div style="margin: 10%;">
   	<h2 class="text-center">BARCODE GENERATOR</h2>
-  	<form class="form-horizontal" method="post" action="<?php echo site_url('pos/items/print_barcode'); ?>" target="_blank">
+  	<form class="form-horizontal" method="post" action="<?php echo site_url('pos/Items/print_pdf'); ?>" target="_blank">
   	<div class="form-group">
       <label class="control-label col-sm-2" for="product">Product:</label>
       <div class="col-sm-10">

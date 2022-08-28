@@ -58,6 +58,85 @@ class Items extends MY_Controller{
         $this->load->view('templates/footer');
         
     }
+    function print_pdf()
+    {
+        $item_id = $this->input->post('item_id');
+        $Items = $this->M_items->get_itemDetail($item_id);
+        $Company = $this->M_companies->get_companies($_SESSION['company_id']);
+            // var_dump($Company);
+        $this->load->library('Pdf');
+        $pdf = new Pdf('P', 'mm', array(50.9, 30.2), true, 'UTF-8', false);
+        // $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        //$pdf->SetTitle('Pdf Example');
+        //$pdf->SetHeaderMargin(30);
+       // $pdf->SetTopMargin(20);
+        //$pdf->setFooterMargin(20);
+        //$pdf->SetAutoPageBreak(true);
+        //$pdf->SetAuthor('Author');
+        // $pdf->SetDisplayMode('real', 'default');
+        // $pdf->Write(5, 'Product Barcode');
+
+        $pdf->SetPrintHeader(false);
+        $pdf->SetPrintFooter(false);
+        
+        // set some language-dependent strings (optional)
+        if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+            require_once(dirname(__FILE__).'/lang/eng.php');
+            $pdf->setLanguageArray($l);
+        }
+        // set page format (read source code documentation for further information)
+        // MediaBox - width = urx - llx 210 (mm), height = ury - lly = 297 (mm) this is A4
+        $page_format = array(
+            //'MediaBox' => array ('llx' => 0, 'lly' => 0, 'urx' => 70, 'ury' => 50),
+            'CropBox' => array ('llx' => 0, 'lly' => 0, 'urx' => 210, 'ury' => 297),
+            //'BleedBox' => array ('llx' => 5, 'lly' => 5, 'urx' => 205, 'ury' => 292),
+            //'TrimBox' => array ('llx' => 10, 'lly' => 10, 'urx' => 200, 'ury' => 287),
+            //'ArtBox' => array ('llx' => 15, 'lly' => 15, 'urx' => 195, 'ury' => 282),
+            'Dur' => 3,
+            'trans' => array(
+                'D' => 1.5,
+                'S' => 'Split',
+                'Dm' => 'V',
+                'M' => 'O'
+            ),
+            //'Rotate' => 180,
+            'PZ' => 1,
+        );
+        $pdf->AddPage('P', $page_format, false, false);
+
+        // Set some content to print
+        $product = substr(@$Items[0]['name'],0,15);
+        $product_id = @$Items[0]['item_id'];
+        $rate = @$_SESSION['home_currency_code'].' '. number_format(@$Items[0]['unit_price']);
+                
+        //$html = "<p>".$product."</p>";
+        // $html += "<p>".$rate."</p>";
+        
+        // Print text using writeHTMLCell()
+        //$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+        if (!empty($Company[0]['image']) || $Company[0]['image'] != '') {
+            $html = '<img src="' . base_url('images/company/thumb/' . $Company[0]['image']) . '" width="60" height="60" class="img-rounded" alt="picture"/>';
+            $pdf->writeHTML($html, true, false, true, false, '');
+        }
+        
+        $pdf->Text(30, 3, $product);
+
+        $style = array(
+            'border' => 2,
+            'vpadding' => 'auto',
+            'hpadding' => 'auto',
+            'fgcolor' => array(0,0,0),
+            'bgcolor' => false, //array(255,255,255)
+            'module_width' => 1, // width of a single module in points
+            'module_height' => 1 // height of a single module in points
+        );
+        $pdf->write1DBarcode($product_id,"C128", 10, 8, 30,20, $style);
+        $pdf->Text(30, 32, $rate);
+        //ob_end_clean();
+
+        $pdf->Output('barcode.pdf', 'I'); 
+
+    }
     public function print_barcode()
     {
         $data = array('langs' => $this->session->userdata('lang'));

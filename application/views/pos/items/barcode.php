@@ -11,7 +11,7 @@
     <div class="form-group">
       <label class="control-label col-sm-2" for="print_qty">Barcode Print Quantity</label>
       <div class="col-sm-10">          
-        <input autocomplete="OFF" type="print_qty" value="1" class="form-control" id="print_qty"  name="print_qty">
+        <input autocomplete="OFF" type="number" value="1" class="form-control" id="print_qty"  name="print_qty">
       </div>
     </div>
 

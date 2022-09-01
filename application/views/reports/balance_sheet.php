@@ -1,4 +1,4 @@
-<div class="note note-warning">
+<div class="note note-warning hidden-print">
     <p>
         - If you want to distribute the profit among multiple partners then press below button and run Retained Earning Report.<br />
         - All Profit or Loss will be credted or debited accordingly to Retained Earning Account.<br />
@@ -42,13 +42,18 @@
 <!-- END PAGE CONTENT-->
 
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-8 col-sm-offset-2 border">
+        <div class="text-center">
+            <h3><?php echo ucfirst($this->session->userdata("company_name")); ?></h3>
+            <h4 style="margin-bottom:2px;"><?php echo $main; ?></h4>
+            <p><?php echo date('d-m-Y',strtotime($from_date)) .' to '.date('d-m-Y',strtotime($to_date)); ?></p>
+        </div>
         <h3>Assets</h3>
-        <table class="table table-bordered table-striped">
+        <table class="table table-condensed">
             <thead>
                 <tr>
                     <th><?php echo lang('account') ?></th>
-                    <th><?php echo lang('total') ?></th>
+                    <th class="text-right"><?php echo lang('total') ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -73,11 +78,11 @@
 
                         if ($balance != 0) {
                             echo '<tr><td>';
-                            echo '&nbsp;&nbsp;--';
+                            echo '&nbsp;&nbsp;';
                             echo ($langs == 'en' ? $values['title'] : $values['title_ur']);
                             echo '</td>';
 
-                            echo '<td>';
+                            echo '<td class="text-right">';
                             echo number_format($balance, 2);
                             echo '</td>';
 
@@ -96,7 +101,7 @@
                 <tr>
                     <td><strong>TOTAL</strong></td>
 
-                    <td><?php echo '<small>' . $_SESSION['home_currency_symbol'] . '</small>'; ?><strong><?php echo number_format($asset_total, 2); ?></strong></td>
+                    <td class="text-right"><?php echo '<small>' . $_SESSION['home_currency_symbol'] . '</small>'; ?><strong><?php echo number_format($asset_total, 2); ?></strong></td>
                 </tr>
             </tfoot>
 
@@ -104,13 +109,13 @@
 
     </div>
     <!-- /.col-sm-6 -->
-    <div class="col-sm-12">
-        <h3>Liability / Owner Equity</h3>
-        <table class="table table-bordered table-striped">
+    <div class="col-sm-8 col-sm-offset-2 border">
+        <h3>Liabilities and Equity</h3>
+        <table class="table table-condensed">
             <thead>
                 <tr>
                     <th><?php echo lang('account') ?></th>
-                    <th><?php echo lang('total') ?></th>
+                    <th class="text-right"><?php echo lang('total') ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -134,11 +139,11 @@
 
                         if ($balance != 0) {
                             echo '<tr><td>';
-                            echo '&nbsp;&nbsp;--';
+                            echo '&nbsp;&nbsp;';
                             echo ($langs == 'en' ? $values['title'] : $values['title_ur']);
                             echo '</td>';
 
-                            echo '<td>';
+                            echo '<td class="text-right">';
                             echo number_format($balance, 2);
                             echo '</td>';
 
@@ -152,11 +157,11 @@
                 }
 
                 echo '<tr><td>';
-                echo 'Net Income / (-)Loss';
+                echo 'Net Income';
                 echo '</td>';
 
-                echo '<td>';
-                echo -number_format($net_income);
+                echo '<td class="text-right">';
+                echo -number_format($net_income,2);
                 echo '</td>';
 
                 //echo '<td>';
@@ -170,7 +175,7 @@
                 <tr>
                     <td><strong>TOTAL</strong></td>
 
-                    <td><?php echo '<small>' . $_SESSION['home_currency_symbol'] . '</small>'; ?><strong><?php echo number_format($total, 2); ?></strong></td>
+                    <td class="text-right"><?php echo '<small>' . $_SESSION['home_currency_symbol'] . '</small>'; ?><strong><?php echo number_format($total, 2); ?></strong></td>
                 </tr>
             </tfoot>
 

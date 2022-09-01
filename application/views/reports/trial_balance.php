@@ -39,14 +39,20 @@ if (count(@$trialBalance)) {
 ?>
 
     <div class="row">
-        <div class="col-sm-12">
-            <table class="table table-bordered table-striped">
+        <div class="col-sm-8 col-sm-offset-2 border">
+            <div class="text-center">
+                <h3><?php echo ucfirst($this->session->userdata("company_name")); ?></h3>
+                <h4 style="margin-bottom:2px;"><?php echo $main; ?></h4>
+                <p><?php echo date('d-m-Y', strtotime($from_date)) . ' to ' . date('d-m-Y', strtotime($to_date)); ?></p>
+            </div>
+
+            <table class="table table-condensed">
                 <thead>
                     <tr>
                         <th><?php echo lang('account') . ' ' . lang('code') ?></th>
                         <th><?php echo lang('title') ?></th>
-                        <th><?php echo lang('debit') . ' ' . lang('amount') ?></th>
-                        <th><?php echo lang('credit') . ' ' . lang('amount') ?></th>
+                        <th class="text-right"><?php echo lang('debit') . ' ' . lang('amount') ?></th>
+                        <th class="text-right"><?php echo lang('credit') . ' ' . lang('amount') ?></th>
                     </tr>
                 </thead>
 
@@ -71,21 +77,21 @@ if (count(@$trialBalance)) {
                     echo '<td>' . $list['account_code'] . '</td>';
 
                     //echo '<td><a href="'.site_url('accounts/C_groups/accountDetail/'. $list['account_code']).'">'.($langs == 'en' ? $list['title'] : $list['title_ur']).'</a></td>';
-                    // echo '<td>'.($langs == 'en' ? $list['title'] : $list['title_ur']) .'</td>';
-                    echo '<td><a href="' . site_url('accounts/C_groups/accountDetail/' . $list['account_code']) . '">' . ($langs == 'en' ? $list['title'] : $list['title_ur']) . '</a></td>';
+                    echo '<td>' . ($langs == 'en' ? $list['title'] : $list['title_ur']) . '</td>';
+                    //echo '<td><a href="' . site_url('accounts/C_groups/accountDetail/' . $list['account_code']) . '">' . ($langs == 'en' ? $list['title'] : $list['title_ur']) . '</a></td>';
 
                     //if balance is greater than zero it will be debit. else will be credit balance
                     if ($balance > 0) {
-                        echo '<td>' . number_format(abs($balance), 2) . '</td>';
-                        echo '<td>0.00</td>';
+                        echo '<td class="text-right">' . number_format(abs($balance), 2) . '</td>';
+                        echo '<td class="text-right">0.00</td>';
                         $dr_amount += $balance;
                     } elseif ($balance < 0) {
-                        echo '<td>0.00</td>';
-                        echo '<td>' . number_format(abs($balance), 2) . '</td>';
+                        echo '<td class="text-right">0.00</td>';
+                        echo '<td class="text-right">' . number_format(abs($balance), 2) . '</td>';
                         $cr_amount +=  $balance;
                     } else {
-                        echo '<td>0.00</td>';
-                        echo '<td>0.00</td>';
+                        echo '<td class="text-right">0.00</td>';
+                        echo '<td class="text-right">0.00</td>';
                     }
 
 
@@ -94,8 +100,8 @@ if (count(@$trialBalance)) {
                 }
                 echo '<tr><td></td>';
                 echo '<td><strong>Total</strong></td>';
-                echo '<td>' . '<small>' . $_SESSION['home_currency_symbol'] . '</small>' . '<strong>' . number_format(abs($dr_amount), 2) . '</strong></td>';
-                echo '<td>' . '<small>' . $_SESSION['home_currency_symbol'] . '</small>' . '<strong>' . number_format(abs($cr_amount), 2) . '</strong></td>';
+                echo '<td class="text-right">' . '<strong><small>' . $_SESSION['home_currency_symbol'] . '</small>' .  number_format(abs($dr_amount), 2) . '</strong></td>';
+                echo '<td class="text-right">' . '<strong><small>' . $_SESSION['home_currency_symbol'] . '</small>' .  number_format(abs($cr_amount), 2) . '</strong></td>';
 
                 echo '</tr>';
                 echo '</tbody>';

@@ -204,6 +204,11 @@ class C_estimate extends MY_Controller{
       //sale the projuct angularjs
     public function editSaleProducts()
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $total_amount =0;
         $total_cost_amount=0;
         $discount =0;
@@ -758,7 +763,11 @@ class C_estimate extends MY_Controller{
     
     public function delete($invoice_no,$redirect = true)
     {
-        
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->db->trans_start();
           
         $this->M_estimate->delete($invoice_no);

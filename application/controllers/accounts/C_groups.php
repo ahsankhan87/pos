@@ -73,7 +73,7 @@ class C_groups extends MY_Controller{
             $this->form_validation->set_rules('type', 'type', 'required');
             $this->form_validation->set_rules('level', 'Level', 'required');
             $this->form_validation->set_rules('account_type_id', 'Account Type', 'required');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">ï¿½</a><strong>', '</strong></div>');
             
             //after form Validation run
             if($this->form_validation->run())
@@ -134,7 +134,11 @@ class C_groups extends MY_Controller{
      public function edit($id=NULL)
     {
         $data = array('langs' => $this->session->userdata('lang'));
-        
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         if($this->input->server('REQUEST_METHOD') === 'POST')
         {
             //form validation
@@ -146,7 +150,7 @@ class C_groups extends MY_Controller{
             $this->form_validation->set_rules('type', 'type', 'required');
             $this->form_validation->set_rules('level', 'Level', 'required');
             $this->form_validation->set_rules('account_type_id', 'Account Type', 'required');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">ï¿½</a><strong>', '</strong></div>');
             
             //after form Validation run
             if($this->form_validation->run())
@@ -202,6 +206,11 @@ class C_groups extends MY_Controller{
     
     function delete($account_code)
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $chk_entry = $this->M_groups->account_has_entry($account_code);
         
         if(!$chk_entry)
@@ -219,7 +228,6 @@ class C_groups extends MY_Controller{
             $this->session->set_flashdata('error','Account not deleted because it has entries');
         }
         
-                    
         redirect('accounts/C_groups/index','refresh');
         
     }

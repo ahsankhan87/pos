@@ -144,10 +144,14 @@
                     <strong><?php echo lang('total') . ' ' . lang('tax'); ?>:</strong> <?php echo $symbol . round($total_tax_amount, 2); ?>
                 </li>
                 <li>
-                    <strong><?php echo lang('grand') . ' ' . lang('total'); ?>:</strong> <?php echo $symbol . round(@$total - $discount + $total_tax_amount, 2); ?>
+                    <?php $net_amount = (@$total - $discount + $total_tax_amount); ?>
+                    <strong><?php echo lang('grand') . ' ' . lang('total'); ?>:</strong> <?php echo $symbol . round($net_amount, 2); ?>
                 </li>
                 <li>
                     <?php $balance = $this->M_customers->get_customer_total_balance_e_op_balance(@$sales_items[0]['customer_id'],FY_START_DATE,FY_END_DATE); ?>
+                    <?php echo "Prev: ".lang('balance'). ': ' . ((double)$balance-$net_amount); ?>
+                </li>
+                <li>
                     <?php echo lang('balance'). ': ' . ((double)$balance); ?>
                 </li>
             </ul>

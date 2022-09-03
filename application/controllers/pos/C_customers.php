@@ -591,7 +591,11 @@ class C_customers extends MY_Controller{
     public function edit($id=NULL)
     {
         $data = array('langs' => $this->session->userdata('lang'));
-        
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         if($this->input->server('REQUEST_METHOD') === 'POST')
         {
             //form Validation
@@ -821,7 +825,11 @@ class C_customers extends MY_Controller{
     function delete($id,$op_balance_dr=0,$op_balance_cr=0)
     {
         $this->M_customers->deleteCustomer($id,$op_balance_dr,$op_balance_cr);
-        
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->session->set_flashdata('message','Customer Deleted');
         redirect('pos/C_customers/index','refresh');
     }
@@ -829,13 +837,21 @@ class C_customers extends MY_Controller{
     function inactivate($id,$op_balance_dr,$op_balance_cr) // it will inactive the page
     {
         $this->M_customers->inactivate($id,$op_balance_dr,$op_balance_cr);
-        
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->session->set_flashdata('message','Customer Deleted');
         redirect('pos/C_customers/index','refresh');
     }
     
     function activate($id) // it will active 
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
         $this->M_customers->activate($id);
         $this->session->set_flashdata('message','Customer Activated');
         redirect('pos/C_customers/index','refresh');

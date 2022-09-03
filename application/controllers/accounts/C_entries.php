@@ -299,6 +299,10 @@ class C_entries extends MY_Controller
     function edit($invoice_no = null)
     {
         $data = array('langs' => $this->session->userdata('lang'));
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
 
         if ($this->input->post('dr_ledger') || $this->input->post('amount')) {
             //GET PREVIOISE INVOICE NO  
@@ -356,6 +360,11 @@ class C_entries extends MY_Controller
 
     function delete($id, $entry_id)
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->db->trans_start();
 
         $this->M_customers->delete_entry_by_id($entry_id);
@@ -371,6 +380,11 @@ class C_entries extends MY_Controller
 
     function delete_by_invoice_no($invoice_no)
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->db->trans_start();
 
         $this->M_customers->delete_entry_by_invoice_no($invoice_no);

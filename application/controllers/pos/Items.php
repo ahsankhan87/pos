@@ -376,6 +376,7 @@ class Items extends MY_Controller
             $this->M_items->updateItems($new_picture);
             $this->session->set_flashdata('message', 'Product Updated');
             redirect('pos/Items/index', 'refresh');
+            
         } else {
             $data['title'] = lang('update') . ' ' . lang('product');
             $data['main'] = lang('update') . ' ' . lang('product');
@@ -435,6 +436,10 @@ class Items extends MY_Controller
 
     function delete($id, $inventory_acc_code, $total_cost = 0, $size_id = 0)
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
         $this->db->trans_start();
         $this->M_items->deleteItem($id, $inventory_acc_code, $total_cost, $size_id);
         $this->db->trans_complete();

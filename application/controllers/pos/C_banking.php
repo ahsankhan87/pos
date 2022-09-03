@@ -30,6 +30,11 @@ class C_banking extends MY_Controller{
     
     function withDrawCash()
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $bank_id = $this->input->post('bank_id',true);
         $cash_acc_code = $this->input->post('cash_acc_code',true);
         $bank_acc_code = $this->input->post('bank_acc_code',true);
@@ -69,14 +74,12 @@ class C_banking extends MY_Controller{
          
     }
     
-  
     function create()
     {
         $data = array('langs' => $this->session->userdata('lang'));
         
         if($this->input->server('REQUEST_METHOD') === 'POST')
         {
-            
             //form Validation
             $this->form_validation->set_rules('cash_acc_code', 'Cash Account Code', 'required');
             $this->form_validation->set_rules('bank_acc_code', 'Bank Account Code', 'required');
@@ -85,7 +88,7 @@ class C_banking extends MY_Controller{
             //$this->form_validation->set_rules('bank_account_no', 'bank_account_no', 'required');
             $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">�</a><strong>', '</strong></div>');
            
-           $this->db->trans_start();
+            $this->db->trans_start();
             
             //after form Validation run
             if($this->form_validation->run())
@@ -116,13 +119,13 @@ class C_banking extends MY_Controller{
                     $op_balance_cr = $this->input->post('op_balance_cr', true)/$exchange_rate;
                     
                     $bank_account = $this->M_groups->get_groups($bank_acc_code,$_SESSION['company_id']);
-                       $bank_dr_balance = abs($bank_account[0]['op_balance_dr']);
-                       $bank_cr_balance = abs($bank_account[0]['op_balance_cr']);
-                       
-                       $dr_balance = ($bank_dr_balance+$op_balance_dr);
-                       $cr_balance = ($bank_cr_balance+$op_balance_cr);
-                       
-                       $this->M_groups->editGroupOPBalance($bank_acc_code,$dr_balance,$cr_balance);
+                    $bank_dr_balance = abs($bank_account[0]['op_balance_dr']);
+                    $bank_cr_balance = abs($bank_account[0]['op_balance_cr']);
+                    
+                    $dr_balance = ($bank_dr_balance+$op_balance_dr);
+                    $cr_balance = ($bank_cr_balance+$op_balance_cr);
+                    
+                    $this->M_groups->editGroupOPBalance($bank_acc_code,$dr_balance,$cr_balance);
                        
                     $this->session->set_flashdata('message','Bank Created');
                 }else{
@@ -152,7 +155,11 @@ class C_banking extends MY_Controller{
     public function edit($id=NULL)
     {
         $data = array('langs' => $this->session->userdata('lang'));
-        
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+   
         if($this->input->server('REQUEST_METHOD') === 'POST')
         {
             //form Validation
@@ -251,6 +258,11 @@ class C_banking extends MY_Controller{
     }
     function delete($id,$op_balance_dr,$op_balance_cr,$bank_acc_code)
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->db->trans_start();
            
         $this->M_banking->deletebank($id,$op_balance_dr,$op_balance_cr,$bank_acc_code);
@@ -263,6 +275,11 @@ class C_banking extends MY_Controller{
     
     function inactivate($id,$op_balance_dr,$op_balance_cr,$bank_acc_code) // it will inactive the page
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->db->trans_start();
         $this->M_banking->inactivate($id,$op_balance_dr,$op_balance_cr,$bank_acc_code);
         $this->db->trans_complete();   
@@ -273,6 +290,11 @@ class C_banking extends MY_Controller{
     
     function activate($id) // it will active 
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->M_banking->activate($id);
         $this->session->set_flashdata('message','bank Activated');
         redirect('pos/C_banking/index','refresh');

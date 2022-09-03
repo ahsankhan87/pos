@@ -652,7 +652,11 @@ class Suppliers extends MY_Controller{
     }
     function delete($id,$op_balance_dr=0,$op_balance_cr=0)
     {
-        
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->M_suppliers->deleteSupplier($id,$op_balance_dr,$op_balance_cr);
         
         $this->session->set_flashdata('message','Supplier Deleted');
@@ -661,6 +665,11 @@ class Suppliers extends MY_Controller{
     
     function inactivate($id,$op_balance_dr,$op_balance_cr) // it will inactive the page
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->db->trans_start();
             $this->M_suppliers->inactivate($id,$op_balance_dr,$op_balance_cr);
         $this->db->trans_complete();   
@@ -671,6 +680,11 @@ class Suppliers extends MY_Controller{
     
     function activate($id) // it will active 
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->M_suppliers->activate($id);
         $this->session->set_flashdata('message','Supplier Activated');
         redirect('pos/Suppliers/index','refresh');

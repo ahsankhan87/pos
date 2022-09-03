@@ -39,7 +39,7 @@ class C_currencies extends MY_Controller{
             $this->form_validation->set_rules('name', 'Namw', 'required');
             $this->form_validation->set_rules('symbol', 'Currency Symbol', 'required');
             //$this->form_validation->set_rules('currency_account_no', 'currency_account_no', 'required');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">ï¿½</a><strong>', '</strong></div>');
             
             //after form Validation run
             if($this->form_validation->run())
@@ -82,13 +82,17 @@ class C_currencies extends MY_Controller{
     public function edit($id=NULL)
     {
         $data = array('langs' => $this->session->userdata('lang'));
-        
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         if($this->input->server('REQUEST_METHOD') === 'POST')
         {
             //form Validation
             $this->form_validation->set_rules('name', 'Namw', 'required');
             $this->form_validation->set_rules('symbol', 'Currency Symbol', 'required');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><a class="close" data-dismiss="alert">ï¿½</a><strong>', '</strong></div>');
             
             //after form Validation run
             if($this->form_validation->run())
@@ -145,6 +149,11 @@ class C_currencies extends MY_Controller{
     }
     function delete($id)
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->M_currencies->deletecurrency($id);
         $this->session->set_flashdata('message','currency Deleted');
         redirect('pos/C_currencies/index','refresh');
@@ -152,6 +161,11 @@ class C_currencies extends MY_Controller{
     
     function inactivate($id) // it will inactive the page
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->M_currencies->inactivate($id);
         $this->session->set_flashdata('message','currency in-activated');
         redirect('pos/C_currencies/index','refresh');
@@ -159,6 +173,11 @@ class C_currencies extends MY_Controller{
     
     function activate($id) // it will active 
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->M_currencies->activate($id);
         $this->session->set_flashdata('message','currency Activated');
         redirect('pos/C_currencies/index','refresh');

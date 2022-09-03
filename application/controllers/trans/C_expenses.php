@@ -217,6 +217,11 @@ class C_expenses extends MY_Controller{
     
     public function delete($invoice_no)
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->db->trans_start();
         $this->M_payments->delete($invoice_no);
         $this->db->trans_complete();

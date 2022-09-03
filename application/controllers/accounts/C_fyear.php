@@ -54,7 +54,11 @@ class C_fyear extends MY_Controller{
     public function edit($id=NULL)
     {
         $data = array('langs' => $this->session->userdata('lang'));
-        
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         if($this->input->post('fy_start_date'))
         {
             $this->M_fyear->editFyear();
@@ -76,6 +80,11 @@ class C_fyear extends MY_Controller{
     
     function delete($id)
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->M_fyear->deleteFyear($id);
         $this->session->set_flashdata('message','Fiscal Year  Deleted / inactive');
         redirect('accounts/C_fyear/index','refresh');

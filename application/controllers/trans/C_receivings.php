@@ -567,6 +567,11 @@ class C_receivings extends MY_Controller{
     
     public function delete($invoice_no)
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         //if entry deleted then all item qty will be reversed
         $this->db->trans_start();
         

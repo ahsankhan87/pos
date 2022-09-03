@@ -55,7 +55,7 @@ class MY_Controller extends CI_Controller {
                 //var_dump($module_chk);
                 if(!$module_chk)
                 {   
-                    if($_SESSION['role'] !== 'admin')
+                    if($this->session->userdata('role') != 'admin')
                     {
                         redirect('No_access','refresh');    
                     }

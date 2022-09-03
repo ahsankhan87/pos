@@ -167,6 +167,11 @@ class C_companies extends MY_Controller{
     
     function delete($id)
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->M_companies->deleteCompany($id);
         $this->session->set_flashdata('message','Company Deleted');
         redirect('companies/C_companies/index','refresh');
@@ -174,6 +179,11 @@ class C_companies extends MY_Controller{
     
     function inactivate($id) // it will inactive the page
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->M_companies->inactivate($id);
         $this->session->set_flashdata('message','Company Inactivated');
         redirect('companies/C_companies/index','refresh');
@@ -181,6 +191,11 @@ class C_companies extends MY_Controller{
     
     function activate($id) // it will active 
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->M_companies->activate($id);
         $this->session->set_flashdata('message','Company Activated');
         redirect('companies/C_companies/index','refresh');

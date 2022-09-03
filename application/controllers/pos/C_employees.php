@@ -8,7 +8,6 @@ class C_employees extends MY_Controller{
        $this->lang->load('index');
     } 
     
-
     function index()
     {
         $data = array('langs' => $this->session->userdata('lang'));
@@ -330,6 +329,11 @@ class C_employees extends MY_Controller{
     
     function delete($id)
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+        
         $this->M_employees->deleteEmployee($id);
         $this->session->set_flashdata('message','Employee Deleted');
         
@@ -343,6 +347,11 @@ class C_employees extends MY_Controller{
     
     function inactivate($id) // it will inactive the page
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+        
         $this->M_employees->inactivate($id);
         $this->session->set_flashdata('message','Employee Deleted');
         
@@ -356,6 +365,11 @@ class C_employees extends MY_Controller{
     
     function activate($id) // it will active 
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->M_employees->activate($id);
         $this->session->set_flashdata('message','Employee Activated');
         

@@ -46,7 +46,11 @@ class PostingTypes extends MY_Controller{
     function edit($id = NULL)
     {
         $data = array('langs' => $this->session->userdata('lang'));
-        
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         if($this->input->post('name'))
         {
             $this->M_postingTypes->update_salespostingType();
@@ -67,6 +71,11 @@ class PostingTypes extends MY_Controller{
     
     function delete($id)
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->M_postingTypes->delete_postingType($id);
         $this->session->set_flashdata('message','salespostingType Deleted');
         redirect('pos/PostingTypes/index','refresh');
@@ -110,7 +119,11 @@ class PostingTypes extends MY_Controller{
     function edit_purchase($id = NULL)
     {
         $data = array('langs' => $this->session->userdata('lang'));
-        
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         if($this->input->post('name'))
         {
             $this->M_postingTypes->update_purchasepostingType();
@@ -131,6 +144,11 @@ class PostingTypes extends MY_Controller{
     
     function delete_purchase($id)
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $this->M_postingTypes->delete_purchasepostingType($id);
         $this->session->set_flashdata('message','purchasepostingType Deleted');
         redirect('pos/PostingTypes/purchasePostingTypes','refresh');

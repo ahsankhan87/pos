@@ -5,7 +5,7 @@
 			 500
 		</div>
 		<div class=" details">
-			<h3>Oops! Something went wrong.</h3>
+			<h3>Permission Restricted.</h3>
 			<p>
 				 You are not allowed to access this module.<br/>
 				Please contact your administrator if any issue.<br/><br/>

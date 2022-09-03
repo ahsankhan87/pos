@@ -686,6 +686,11 @@ class C_sales extends MY_Controller{
       //sale the projuct angularjs
     public function editSaleProducts()
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         $total_amount =0;
         $total_cost_amount=0;
         $discount =0;
@@ -1220,6 +1225,11 @@ class C_sales extends MY_Controller{
     
     public function delete($invoice_no,$redirect = true)
     {
+        if($this->session->userdata('role') != 'admin')
+        {
+            redirect('No_access','refresh');    
+        }
+
         //if entry deleted then all item qty will be reversed
         $sales_items = $this->M_sales->get_sales_items($invoice_no);
         

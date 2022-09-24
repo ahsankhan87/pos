@@ -92,7 +92,7 @@ var Customers = function () {
         ///////////////////////////
         
             "order": [
-                [1, 'desc']
+                [1, 'asc']
             ],
             "lengthMenu": [
                 [20, 50, 100, -1],

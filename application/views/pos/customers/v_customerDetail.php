@@ -100,10 +100,9 @@
                                 
                                 //initialize
                                 $sno = 1;
-                                $dr_amount = 0.00;
-                                $cr_amount = 0.00;
-                                $balance = 0.00;
-                                $exchange_rate = $customer[0]['exchange_rate'] == 0 ? 1 : $customer[0]['exchange_rate'];
+                                (double) $dr_amount = 0.00;
+                                (double) $cr_amount = 0.00;
+                                (double) $balance = 0.00;
                                 
                                 echo '<tbody>';
                                 
@@ -113,13 +112,13 @@
                                     echo '<td></td>';
                                     
                                     echo '<td>Opening Balance</td>';
-                                    echo '<td>'.round($customer[0]['op_balance_dr']/$exchange_rate,2).'</td>';
-                                    echo '<td>'.round($customer[0]['op_balance_cr']/$exchange_rate,2).'</td>';
+                                    echo '<td>'.round($customer[0]['op_balance_dr'],2).'</td>';
+                                    echo '<td>'.round($customer[0]['op_balance_cr'],2).'</td>';
                             
-                                    $dr_amount += $customer[0]['op_balance_dr']/$exchange_rate;
-                                    $cr_amount += $customer[0]['op_balance_cr']/$exchange_rate;
+                                    $dr_amount = (double) $customer[0]['op_balance_dr'];
+                                    $cr_amount = (double) $customer[0]['op_balance_cr'];
                                     
-                                    $balance = ($dr_amount - $cr_amount);
+                                    $balance1 = (double) ($dr_amount - $cr_amount);
                                     
                                     //if($dr_amount > $cr_amount){
 //                                        $account = 'Dr'; 
@@ -130,7 +129,7 @@
 //                                    }
 //                                    else{ $account = '';}
                                     
-                                    echo '<td>'.round($balance,2).'</td>';
+                                    echo '<td>'.round($balance1,2).'</td>';
                                     echo '<td></td>';
                                     echo '<td></td>';
                                     //echo '<td>'.anchor('accounts/C_ledgers/edit/'.$list['id'],'Edit'). ' | ';
@@ -172,8 +171,8 @@
                                     echo '<td>'.round($list['debit'],2).'</td>';
                                     echo '<td>'.round($list['credit'],2).'</td>';
                             
-                                    $dr_amount += $list['debit'];
-                                    $cr_amount += $list['credit'];
+                                    $dr_amount += (double) $list['debit'];
+                                    $cr_amount += (double) $list['credit'];
                                     
                                     $balance = ($dr_amount - $cr_amount);
                                     
@@ -186,7 +185,7 @@
 //                                    }
 //                                    else{ $account = '';}
 //                                    
-                                    echo '<td>'.round($balance,2).'</td>';
+                                    echo '<td>'.($balance).'</td>';
                                    	echo '<td>'.$list['narration'].'</td>';
 								   	echo '<td><a href="'. site_url($langs.'/accounts/C_entries/edit/' . $list['invoice_no']) .'" title="Edit"><i class="fa fa-pencil fa-fw"></i></a> </td>';
                         			

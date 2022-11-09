@@ -123,6 +123,7 @@ class Items extends MY_Controller
         }
         $pdf->Output('barcode.pdf', 'I');
     }
+    
     public function print_barcode()
     {
         $data = array('langs' => $this->session->userdata('lang'));

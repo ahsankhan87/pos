@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class C_trial_balance extends MY_Controller{
+class C_accountPayable extends MY_Controller{
     
     public function __construct()
     {
@@ -15,37 +15,38 @@ class C_trial_balance extends MY_Controller{
         ini_set('max_execution_time', 0); 
         ini_set('memory_limit','10240M');
 
-        $data['title'] = lang('trial_balance');
-        $data['main'] = lang('trial_balance');
+        $data['title'] = lang('account_payable');
+        $data['main'] = lang('account_payable');
         
         $data['from_date'] = ($this->input->post('from_date') ? $this->input->post('from_date') : FY_START_DATE);
         $data['to_date'] = ($this->input->post('to_date') ? $this->input->post('to_date') : FY_END_DATE);
         
         $data['main_small'] = '<br />'.date('d-m-Y',strtotime($data['from_date'])).' To '.date('d-m-Y',strtotime($data['to_date']));
+        $data['suppliers']= $this->M_suppliers->get_suppliers();
         
         //if($data['from_date'] && $data['to_date'])
         //{
-          $data['trialBalance']= $this->M_groups->get_detail_accounts(FALSE,$_SESSION['company_id']);
-          //$data['trialBalance']= $this->M_reports->get_trial_balance($_SESSION['company_id'],$data['from_date'],$data['to_date']);
+        //   $data['account_payable']= $this->M_groups->get_detail_accounts(FALSE,$_SESSION['company_id']);
+          //$data['trialBalance']= $this->M_reports->get_account_payable($_SESSION['company_id'],$data['from_date'],$data['to_date']);
        // }
         
         //for logging
                     $msg = '';
-                    $this->M_logs->add_log($msg,"Trail Balance Report","Retrieved","Accounts");
+                    $this->M_logs->add_log($msg,"Account Payable Report","Retrieved","Accounts");
                     // end logging
                     
         $this->load->view('templates/header',$data);
-        $this->load->view('reports/trial_balance',$data);
+        $this->load->view('reports/v_account_payable',$data);
         $this->load->view('templates/footer');
         
     }
+
     //Print Invoice in PDF
     function printPDF($from_date, $to_date)
     {
         $company_name = ucfirst($this->session->userdata("company_name"));
-        $trialBalance = $this->M_groups->get_detail_accounts(FALSE,$_SESSION['company_id']);
-        $langs = $this->session->userdata('lang');
-
+        $suppliers= $this->M_suppliers->get_activeSuppliers();
+        
         $this->load->library('Pdf_f');
         $pdf = new Pdf_f("P", 'mm', 'A4');
 
@@ -59,7 +60,7 @@ class C_trial_balance extends MY_Controller{
         $pdf->SetY(22);
         $pdf->SetX(80);
         $pdf->SetFont('Arial', '', 12);
-        $pdf->Cell(50, 10, "Trial Balance", 0, 1,"C");
+        $pdf->Cell(50, 10, "Account Payable Report", 0, 1,"C");
         
         $pdf->SetY(28);
         $pdf->SetX(80);
@@ -72,53 +73,50 @@ class C_trial_balance extends MY_Controller{
         $pdf->SetY(45);
         $pdf->SetX(10);
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(80, 9, "ACCOUNT", 1, 0);
-        $pdf->Cell(40, 9, "", 1, 0, "C");
-        $pdf->Cell(30, 9, "DEBIT", 1, 0, "C");
-        $pdf->Cell(40, 9, "CREDIT", 1, 1, "C");
+        $pdf->Cell(80, 9, "Suppliers", 1, 0);
+        $pdf->Cell(40, 9, "TYPE", 1, 0, "C");
+        $pdf->Cell(30, 9, "", 1, 0, "C");
+        $pdf->Cell(40, 9, "TOTAL", 1, 1, "C");
         $pdf->SetFont('Arial', '', 12);
         
-        $dr_net_total = 0;
-        $cr_net_total = 0;
+        $net_total = 0;
+        $total_cost = 0;
         $total = 0;
         //Display table product rows
         
-        foreach ($trialBalance as $key => $list) {
+        foreach ($suppliers as $key => $list) {
            
-            $dr_amount = $this->M_entries->balanceByAccount($list['account_code'], $from_date, $to_date)[0]['debit'];
-            $cr_amount = $this->M_entries->balanceByAccount($list['account_code'], $from_date, $to_date)[0]['credit'];
+            $op_balance_dr = ($list['op_balance_dr']);
+            $op_balance_cr = ($list['op_balance_cr']);
+            $op_balance = (($op_balance_dr - $op_balance_cr));
 
-            $dr_balance = ($dr_amount + $list['op_balance_dr']) - ($list['op_balance_cr'] + $cr_amount);
-            $cr_balance = ($list['op_balance_cr'] + $cr_amount)-($dr_amount + $list['op_balance_dr']) ;
+            //CURRENT BALANCES
+            $cur_balance = $this->M_suppliers->get_supplier_total_balance($list['id'], $from_date, $to_date);
+            $balance_dr = ($cur_balance[0]['dr_balance']);
+            $balance_cr = ($cur_balance[0]['cr_balance']);
             
-            //if ($dr_balance > 0) {
-                $dr_net_total += ($dr_balance > 0 ? $dr_balance : 0);
-            // } elseif ($balance < 0) {
-                $cr_net_total += ($cr_balance > 0 ? $cr_balance : 0);
-
-            // } 
+            $balance = (($op_balance_cr + $balance_cr)-($op_balance_dr + $balance_dr));
+            $net_total += $balance;
             
-            $pdf->Cell(80, 9, ($langs == 'en' ? $list['title'] : $list['title_ur']), "LR", 0);
-            $pdf->Cell(40, 9, '', "R", 0, "C");
-            $pdf->Cell(30, 9, ($dr_balance > 0 ? number_format($dr_balance,2) : 0), "R", 0, "R");
-            $pdf->Cell(40, 9, ($cr_balance > 0 ? number_format($cr_balance,2) : 0), "R", 1, "R");
+            
+            $pdf->Cell(80, 9, $list["name"], "LR", 0);
+            $pdf->Cell(40, 9, "Bill", "R", 0, "C");
+            $pdf->Cell(30, 9, "", "R", 0, "C");
+            $pdf->Cell(40, 9, number_format($balance,2), "R", 1, "R");
         }
        
         //Display table empty rows
-        for ($i = 0; $i < 20 - count($trialBalance); $i++) {
+        for ($i = 0; $i < 20 - count($suppliers); $i++) {
             $pdf->Cell(80, 9, "", "LR", 0);
             $pdf->Cell(40, 9, "", "R", 0, "L");
-            $pdf->Cell(30, 9, "", "R", 0, "R");
+            $pdf->Cell(30, 9, "", "R", 0, "C");
             $pdf->Cell(40, 9, "", "R", 1, "R");
         }
         
         //Display table total row
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(120, 9, "TOTAL", 1, 0, "");
-        $pdf->Cell(30, 9, number_format($dr_net_total,2), 1, 0, "R");
-        $pdf->Cell(40, 9, number_format($cr_net_total,2), 1, 1, "R");
-        
-        //$pdf->Cell(150, 9, "TOTAL", 1, 0, "R");
+        $pdf->Cell(150, 9, "TOTAL", 1, 0, "R");
+        $pdf->Cell(40, 9, number_format($net_total,2), 1, 1, "R");
 
         ///body
 
@@ -126,10 +124,10 @@ class C_trial_balance extends MY_Controller{
         $pdf->SetY(-60);
         //$pdf->SetFont('helvetica', 'B', 12);
         //$pdf->Cell(0, 10, "for ABC COMPUTERS", 0, 1, "R");
-        // $pdf->Ln(15);
-        // $pdf->SetFont('helvetica', '', 12);
-        // $pdf->Cell(0, 10, "Authorized Signature", 0, 1, "R");
-        // $pdf->SetFont('helvetica', '', 10);
+        $pdf->Ln(15);
+        $pdf->SetFont('helvetica', '', 12);
+        $pdf->Cell(0, 10, "Authorized Signature", 0, 1, "R");
+        $pdf->SetFont('helvetica', '', 10);
 
         //Display Footer Text
         $pdf->Cell(0, 10, "This is a computer generated report", 0, 1, "C");

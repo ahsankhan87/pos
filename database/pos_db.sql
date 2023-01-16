@@ -2606,3 +2606,11 @@ ALTER TABLE `users`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+ALTER TABLE `companies` ADD `forgot_pass_identity` TEXT NULL AFTER `tax_no`;
+ALTER TABLE `users` ADD `email` varchar(200) NULL AFTER `forgot_pass_identity`;
+
+INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar`, `icon`, `path`, `sort`, `status`) VALUES ('0', '5', 'C_accountReceivable', 'Account Receivable ', 'اکاؤنٹ وصولی', 'حساب العميل', '', 'C_accountReceivable', '42', 'active');
+INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar`, `icon`, `path`, `sort`, `status`) VALUES ('0', '5', 'C_accountPayable', 'Account Payable ', 'قابل ادائیگی اکاؤنٹ', 'حساب المستحق', '', 'C_accountPayable', '43', 'active');
+ALTER TABLE `pos_customer_payments` ADD `due_date` DATE NULL AFTER `entry_id`;
+ALTER TABLE `pos_supplier_payments` ADD `due_date` DATE NULL AFTER `entry_id`;

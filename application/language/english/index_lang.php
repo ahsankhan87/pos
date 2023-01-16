@@ -44,6 +44,9 @@ $lang['trial_balance']='Trial Balance';
 $lang['income_exp']='Income & Expenditure';
 $lang['balance_sheet']='Balance Sheet';
 $lang['annual_report']='Annual Report';
+$lang['account_receivable']='Account Receivable';
+$lang['account_payable']='Account Payable';
+
 $lang['jan']='January';
 $lang['feb']='February';
 $lang['mar']='March';

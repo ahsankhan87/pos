@@ -45,6 +45,9 @@ $lang['trial_balance']='ميزان المراجعة';
 $lang['income_exp']='الإيرادات والمصروفات';
 $lang['balance_sheet']='ورقة التوازن';
 $lang['annual_report']='تقرير سنوي';
+$lang['account_receivable']='حساب العميل';
+$lang['account_payable']='حساب المستحق';
+
 $lang['jan']='جنوری';
 $lang['feb']='فروری';
 $lang['mar']='مارچ';
@@ -91,8 +94,8 @@ $lang['number'] = 'عدد';
 //POS
 $lang['customer']='عميل';
 $lang['customers']='عملاء';
-$lang['supplier']='المورد';
-$lang['suppliers']='الموردين';
+$lang['vendor']='المورد';
+$lang['vendors']='الموردين';
 $lang['bank']='مصرف';
 $lang['banks']='البنوك';
 $lang['employee']='الموظف';

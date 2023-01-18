@@ -37,7 +37,7 @@ class M_pos_reports extends CI_Model{
         }
     }
     
-    public function sales_reports($from_date=null,$to_date=null,$company_id,$customer_id=null,$product_id=null,$emp_id=null,$register_mode='sale',$sale_type='cash'){
+    public function sales_reports($from_date=null,$to_date=null,$company_id=0,$customer_id=null,$product_id=null,$emp_id=null,$register_mode='sale',$sale_type='cash'){
     
         if($customer_id != null && $customer_id != 0){
             $this->db->where('A.customer_id',$customer_id);
@@ -72,7 +72,7 @@ class M_pos_reports extends CI_Model{
        
     }
     
-    public function customer_wise_sales($from_date=null,$to_date=null,$company_id,$emp_id=null,$register_mode='sale',$sale_type='cash'){
+    public function customer_wise_sales($from_date=null,$to_date=null,$company_id=0,$emp_id=null,$register_mode='sale',$sale_type='cash'){
     
         if($from_date != null && $to_date != null){
             $this->db->where("A.sale_date BETWEEN '$from_date' AND '$to_date'");
@@ -103,7 +103,7 @@ class M_pos_reports extends CI_Model{
        
     }
     
-    public function product_wise_sales($from_date=null,$to_date=null,$company_id,$emp_id=null,$register_mode='sale',$sale_type='cash'){
+    public function product_wise_sales($from_date=null,$to_date=null,$company_id=0,$emp_id=null,$register_mode='sale',$sale_type='cash'){
     
         if($from_date != null && $to_date != null){
             $this->db->where("A.sale_date BETWEEN '$from_date' AND '$to_date'");
@@ -136,7 +136,7 @@ class M_pos_reports extends CI_Model{
     }
     
     
-    public function category_wise_sales($from_date=null,$to_date=null,$company_id,$emp_id=null,$register_mode='sale',$sale_type='cash'){
+    public function category_wise_sales($from_date=null,$to_date=null,$company_id=0,$emp_id=null,$register_mode='sale',$sale_type='cash'){
     
         if($from_date != null && $to_date != null){
             $this->db->where("A.sale_date BETWEEN '$from_date' AND '$to_date'");
@@ -170,7 +170,7 @@ class M_pos_reports extends CI_Model{
        return $data;
        
     }
-    public function receivings_report($from_date=null,$to_date=null,$company_id,$supplier_id=null,$product_id=null,$emp_id=null,$register_mode='receive',$sale_type='cash'){
+    public function receivings_report($from_date=null,$to_date=null,$company_id=0,$supplier_id=null,$product_id=null,$emp_id=null,$register_mode='receive',$sale_type='cash'){
     
         if($supplier_id != null && $supplier_id != 0){
             $this->db->where('A.supplier_id',$supplier_id);
@@ -206,7 +206,7 @@ class M_pos_reports extends CI_Model{
        
     }
     
-    public function receivings_reports_by_invoice_no($from_date=null,$to_date=null,$company_id,$invoice_no){
+    public function receivings_reports_by_invoice_no($from_date=null,$to_date=null,$company_id=0,$invoice_no=''){
     
         $this->db->where('A.invoice_no',$invoice_no);
         
@@ -223,7 +223,7 @@ class M_pos_reports extends CI_Model{
        
     }
     
-    public function sales_reports_by_invoice_no($from_date=null,$to_date=null,$company_id,$invoice_no){
+    public function sales_reports_by_invoice_no($from_date=null,$to_date=null,$company_id=0,$invoice_no=''){
     
         $this->db->where('A.invoice_no',$invoice_no);
         

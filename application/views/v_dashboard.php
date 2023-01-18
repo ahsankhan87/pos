@@ -18,7 +18,7 @@
 					 
 				</div>
 				<div class="numbers">
-					 <?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round($today_sale,3); ?>
+					 <?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round((float)$today_sale,3); ?>
 				</div>
 				<div class="progress">
 					<span style="width: 100%;" class="progress-bar progress-bar-success" aria-valuenow="16" aria-valuemin="0" aria-valuemax="100">
@@ -46,7 +46,7 @@
 					 <?php echo lang('monthly_sales'); ?>
 				</div>
 				<div class="numbers">
-					 <?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round($cur_month,3); ?>
+					 <?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round((float)$cur_month,3); ?>
 				</div>
 				<div class="progress">
 					<span style="width: 100%;" class="progress-bar progress-bar-warning" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100">
@@ -74,12 +74,12 @@
 					 <?php echo lang('expenses'); ?>
 				</div>
 				<div class="numbers">
-					 <?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round($total_expenses,2); ?>
+					 <?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round((float)$total_expenses,2); ?>
                      
 				</div>
 			</div>
 			<div class="progress">
-				<span style="width: <?php echo round($total_expenses,2); ?>%;" class="progress-bar progress-bar-info" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
+				<span style="width: <?php echo round((float)$total_expenses,2); ?>%;" class="progress-bar progress-bar-info" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
 				<span class="sr-only">
 				66% Complete </span>
 				</span>
@@ -103,7 +103,7 @@
 					<?php echo lang('stock'); ?>
 				</div>
 				<div class="numbers">
-					 <?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round($totalStock,2); ?>
+					 <?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round((float)$totalStock,2); ?>
 				</div>
 				<div class="progress">
 					<span style="width: 100%;" class="progress-bar progress-bar-danger" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100">
@@ -130,7 +130,7 @@
 					 <?php echo ''; ?>
 				</div>
 				<div class="numbers">
-					 <?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round($ac_payable_amount,2); ?>
+					 <?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round((float)$ac_payable_amount,2); ?>
 				</div>
 				<div class="progress">
 					<span style="width: 100%;" class="progress-bar progress-bar-success" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
@@ -158,7 +158,7 @@
 					<?php echo ''; ?>
 				</div>
 				<div class="numbers">
-				<?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round($ac_receivable_amount,2); ?>
+				<?php echo '<small>'.$_SESSION['home_currency_symbol'].'</small>'.round((float)$ac_receivable_amount,2); ?>
 				</div>
 				<div class="progress">
 					<span style="width: 100%;" class="progress-bar progress-bar-warning" aria-valuenow="16" aria-valuemin="0" aria-valuemax="100">

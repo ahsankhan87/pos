@@ -8,7 +8,7 @@ class M_groups extends CI_Model{
     }
     
     //get all products and also only one product and active and inactive too.
-    public function get_groups($account_code = FALSE,$company_id)
+    public function get_groups($account_code = FALSE,$company_id=0)
     {
         if($account_code === FALSE)
         {
@@ -30,7 +30,7 @@ class M_groups extends CI_Model{
         return $data;
     }
     
-    public function get_groupsByID($id = FALSE,$company_id)
+    public function get_groupsByID($id = FALSE,$company_id=0)
     {
         if($id  === FALSE)
         {
@@ -49,7 +49,7 @@ class M_groups extends CI_Model{
         return $data;
     }
     
-    public function get_detail_accounts($account_code = FALSE,$company_id)
+    public function get_detail_accounts($account_code = FALSE,$company_id=0)
     {
         if($account_code != FALSE)
         {

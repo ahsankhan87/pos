@@ -53,7 +53,7 @@ class M_dashboard extends CI_Model{
         return $data;
     }
     
-    public function get_ExpensesAccounts($group_name = '',$fy_start_date,$fy_end_date,$LIMIT=null)
+    public function get_ExpensesAccounts($group_name = '',$fy_start_date='',$fy_end_date='',$LIMIT=null)
     {
         //$this->db->order_by('item_id','asc');
         $this->db->select('account_code,id, name');//select from groups
@@ -83,7 +83,7 @@ class M_dashboard extends CI_Model{
         return false;
     }
     
-    public function get_level2_account_balance($group_name = '',$fy_start_date,$fy_end_date,$LIMIT=null)
+    public function get_level2_account_balance($group_name = '',$fy_start_date='',$fy_end_date='',$LIMIT=null)
     {
         $total=0;
         //$this->db->order_by('item_id','asc');
@@ -160,7 +160,7 @@ class M_dashboard extends CI_Model{
     }
     
     //get the month sale whatever month is given in parameter.
-    public function today_sale($today = "yyyy-mm-dd",$company_id,$ledger_name='sales')
+    public function today_sale($today = "yyyy-mm-dd",$company_id=0,$ledger_name='sales')
     {
         $total=0;
         $this->db->select('sum(debit-credit)as balance');
@@ -184,7 +184,7 @@ class M_dashboard extends CI_Model{
         return  abs($total);
     }
 
-    public function today_sale_1($today = "yyyy-mm-dd",$company_id)
+    public function today_sale_1($today = "yyyy-mm-dd",$company_id=0)
     {
         $total=0;
         $this->db->select('SUM(total_amount) as today_sale');
@@ -204,7 +204,7 @@ class M_dashboard extends CI_Model{
         return 0;
     }
     
-    public function cur_month_sale($month = "yyyy-mm",$company_id)
+    public function cur_month_sale($month = "yyyy-mm",$company_id=0)
     {
         $total=0;
         $this->db->select('SUM(total_amount) as today_sale');
@@ -226,7 +226,7 @@ class M_dashboard extends CI_Model{
     }
     
     //get the month sale whatever month is given in parameter.
-    public function month_sale($month = "yyyy-mm",$company_id,$ledger_name='sales')
+    public function month_sale($month = "yyyy-mm",$company_id=0,$ledger_name='sales')
     {
         $total=0;
         $this->db->select('sum(debit-credit)as balance');

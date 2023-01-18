@@ -114,7 +114,7 @@ class M_taxes extends CI_Model{
             return ($this->db->affected_rows() != 1) ? false : true;
         }
         
-     function updatetax($data = array(),$id)
+     function updatetax($data = array(),$id=0)
         {
             //$file_name = $this->upload->data();
             

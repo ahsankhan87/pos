@@ -8,7 +8,7 @@ class M_payments extends CI_Model{
         $this->load->database();
     }
     
-    function get_paymentByInvoice($payment_id = FALSE,$invoice_no)
+    function get_paymentByInvoice($payment_id = FALSE,$invoice_no='')
     {
         if($payment_id == FALSE)
         {

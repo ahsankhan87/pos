@@ -28,7 +28,7 @@ class M_logs extends CI_Model{
            
         }
         
-     public function add_log($id='', $section='', $action='', $module_name)
+     public function add_log($id='', $section='', $action='', $module_name='')
      {
         date_default_timezone_set($_SESSION['time_zone']);
         

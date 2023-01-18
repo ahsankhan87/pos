@@ -9,7 +9,7 @@ class M_fyear extends CI_Model{
     }
     
     //get all products and also only one product and active and inactive too.
-    public function get_Fyear($id = FALSE,$company_id)
+    public function get_Fyear($id = FALSE,$company_id=0)
     {
         if($id === FALSE)
         {

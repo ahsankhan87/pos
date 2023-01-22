@@ -1113,6 +1113,15 @@ class C_sales extends MY_Controller
         $this->load->view('templates/footer');
     }
 
+    public function xml_receipt()
+    {
+
+        $data['title'] =  'Sales';
+        $data['main'] = ''; //($sales_items[0]['register_mode'] == 'sale' ? 'Sales' : 'Return').' Invoice #'.$new_invoice_no;
+        
+        $this->load->view('pos/sales/receipt_ubl_xml', $data);
+    }
+
 
     function get_sales_JSON()
     {

@@ -1377,13 +1377,13 @@ class C_sales extends MY_Controller
         $pdf->Cell(0, 10, "This is a computer generated invoice", 0, 1, "C");
         ///////////////
 
-        $pdf->Output();
+        $pdf->Output('I','INV#-'.$new_invoice_no,true);
     }
 
     function send_email_inv($customer_id, $invoice_no)
     {
         //////////
-        /////////
+        /////////Output PDF agains for email invoice
         $sales_items = $this->M_sales->get_sales_items($invoice_no);
         //$sales_items = $data['sales_items'];
 
@@ -1494,13 +1494,13 @@ class C_sales extends MY_Controller
         $pdf->Cell(0, 10, "This is a computer generated invoice", 0, 1, "C");
         ///////////////
 
-        //$pdf_invoice = $pdf->Output();
+        $pdf_invoice = $pdf->Output('S');
         ///////// pdf creation end
         ////////
 
-        $customer = $this->M_customers->get_customers($customer_id);
-        $company_id = $_SESSION['company_id'];
-        $Company = $this->M_companies->get_companies($company_id);
+        //$customer = $this->M_customers->get_customers($customer_id);
+        //$company_id = $_SESSION['company_id'];
+        //$Company = $this->M_companies->get_companies($company_id);
 
         if ($customer[0]['email'] !== '') {
             if ($Company[0]['email'] !== '') {
@@ -1512,60 +1512,31 @@ class C_sales extends MY_Controller
                // $mail->PHPMailer_Lib->load();
                 //$mail = new PHPMailer;
 
-                $mail->From = "ahsankhan50@gmail.com";
-                $mail->FromName = "INVOICE";
+                $mail->From = $Company[0]['email'];
+                $mail->FromName = $Company[0]['name'];
                 
-                $mail->addAddress("ahsankhan_50@yahoo.com", "Recipient Name");
+                $mail->addAddress($customer[0]['email'], $customer[0]['first_name']);
                 
-                //Provide file path and name of the attachments
-                $mail->addAttachment("images/icon_star.png");        
-                //$mail->addAttachment("images/profile.png"); //Filename is optional
-                
-                
-                $mail->Subject = "Subject Text";
-                $mail->Body = "<i>Mail body in HTML</i>";
-                $mail->AltBody = "This is the plain text version of the email content";
-               
+                $mail->AddStringAttachment($pdf_invoice, $invoice_no.'.pdf', 'base64', 'application/pdf'); //Filename is optional
                 //$mail->AddStringAttachment($pdf_invoice, 'doc.pdf', 'base64', 'application/pdf');
                 
+                $mail->Subject = "INVOICE";
+                $mail->Body = "<i>The Invoice has been sent to you, please check.</i>";
+               
                 // Set email format to HTML
                 $mail->isHTML(true);
                 
-                
                 // Send email
                 if(!$mail->send()){
-                    echo 'Message could not be sent.';
-                    echo 'Mailer Error: ' . $mail->ErrorInfo;
+                    
+                    $this->session->set_flashdata('error', 'Message could not be sent. '.$mail->ErrorInfo);
+                    redirect('trans/C_sales/allSales/', 'refresh');
+                   
                 }else{
-                    echo 'Message has been sent';
+                    $this->session->set_flashdata('message', 'Email sent to ' . $customer[0]['first_name'] . ' successfully.');
+                    redirect('trans/C_sales/allSales/', 'refresh');
                 }
-                // $this->load->library('email');
                 
-                // $config['protocol'] = 'sendmail';
-                // $config['mailpath'] = '/usr/sbin/sendmail';
-                // $config['charset'] = 'iso-8859-1';
-                // $config['wordwrap'] = TRUE;
-
-                // $this->email->initialize($config);
-
-                // $this->email->from($Company[0]['email'], $Company[0]['name']);
-                // $this->email->to($customer[0]['email']);
-                // //$this->email->cc('another@another-example.com');
-                // //$this->email->bcc('them@their-example.com');
-                // $message = "email invoice";
-
-                // $this->email->subject('INVOICE');
-                // $this->email->message($message);
-                // // $pdf_invoice = $this->printReceipt($invoice_no);
-                // $this->email->attach($pdf_invoice);
-
-                // if (!$this->email->send()) {
-                //     $this->session->set_flashdata('error', $this->email->print_debugger(array('headers')));
-                //     redirect('trans/C_sales/allSales/', 'refresh');
-                // } else {
-                //     $this->session->set_flashdata('message', 'email sent to ' . $customer[0]['first_name'] . ' successfully.');
-                //     redirect('trans/C_sales/allSales/', 'refresh');
-                // }
             } else { //company email
                 $this->session->set_flashdata('error', 'Company email not available');
                 redirect('pos/C_customers/customerDetail/' . $customer_id, 'refresh');

@@ -35,8 +35,8 @@ var Transaction = function () {
                                 '" title="Print Invoice" target="_blank" ><i class=\'fa fa-print fa-fw\'></i></a>'+
                                 '| <a href="'+site_url+'/trans/C_sales/xml_receipt/' + aData['invoice_no'] + 
                                 '" title="XML Invoice" target="_blank" >xml</a>'+
-                                '| <a href="'+site_url+'/trans/C_sales/send_email_inv/'+ aData['customer_id'] + '/' + aData['invoice_no'] + 
-                                '" title="Email Invoice">email</a>'
+                                ' | <a href="'+site_url+'/trans/C_sales/send_email_inv/'+ aData['customer_id'] + '/' + aData['invoice_no'] + 
+                                '" title="Email Invoice">Email</a>'
                                 // DELETE SALES BUTTON
                                 // +' | <a href="'+
                                 // site_url+'/trans/C_sales/delete/' + aData['invoice_no'] +  

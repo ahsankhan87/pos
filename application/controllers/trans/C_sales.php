@@ -1121,7 +1121,7 @@ class C_sales extends MY_Controller
 
         $data['title'] =  'Sales';
         $data['main'] = ''; //($sales_items[0]['register_mode'] == 'sale' ? 'Sales' : 'Return').' Invoice #'.$new_invoice_no;
-        
+
         $this->load->view('pos/sales/receipt_ubl_xml', $data);
     }
 
@@ -1274,7 +1274,7 @@ class C_sales extends MY_Controller
         $Company = $this->M_companies->get_companies($company_id);
         $customer =  @$this->M_customers->get_customers(@$sales_items[0]['customer_id']);
 
-        
+
         $this->load->library('Pdf_f');
         $pdf = new Pdf_f("P", 'mm', 'A4');
 
@@ -1285,7 +1285,7 @@ class C_sales extends MY_Controller
         $pdf->SetFont('Arial', '', 12);
         $pdf->Cell(50, 7, $Company[0]['address'], 0, 1);
         //$pdf->Cell(50, 7, "Salem 636002.", 0, 1);
-        $pdf->Cell(50, 7, "PH : ".$Company[0]['contact_no'], 0, 1);
+        $pdf->Cell(50, 7, "PH : " . $Company[0]['contact_no'], 0, 1);
 
         //Display INVOICE text
         $pdf->SetY(15);
@@ -1325,7 +1325,7 @@ class C_sales extends MY_Controller
         $pdf->Cell(30, 9, "QTY", 1, 0, "C");
         $pdf->Cell(40, 9, "TOTAL", 1, 1, "C");
         $pdf->SetFont('Arial', '', 12);
-        
+
         $discount = 0;
         $total_cost = 0;
         $total = 0;
@@ -1338,9 +1338,9 @@ class C_sales extends MY_Controller
             $item = $this->M_items->get_items($row['item_id']);
 
             $pdf->Cell(80, 9, $item[0]["name"], "LR", 0);
-            $pdf->Cell(40, 9, number_format($row["item_unit_price"],2), "R", 0, "R");
-            $pdf->Cell(30, 9, number_format($row["quantity_sold"],2), "R", 0, "C");
-            $pdf->Cell(40, 9, number_format(($row['item_unit_price'] * $row['quantity_sold']),2), "R", 1, "R");
+            $pdf->Cell(40, 9, number_format($row["item_unit_price"], 2), "R", 0, "R");
+            $pdf->Cell(30, 9, number_format($row["quantity_sold"], 2), "R", 0, "C");
+            $pdf->Cell(40, 9, number_format(($row['item_unit_price'] * $row['quantity_sold']), 2), "R", 1, "R");
         }
         //Display table empty rows
         for ($i = 0; $i < 12 - count($sales_items); $i++) {
@@ -1378,5 +1378,210 @@ class C_sales extends MY_Controller
         ///////////////
 
         $pdf->Output();
+    }
+
+    function send_email_inv($customer_id, $invoice_no)
+    {
+        //////////
+        /////////
+        $sales_items = $this->M_sales->get_sales_items($invoice_no);
+        //$sales_items = $data['sales_items'];
+
+        $company_id = $_SESSION['company_id'];
+        $Company = $this->M_companies->get_companies($company_id);
+        $customer =  @$this->M_customers->get_customers(@$sales_items[0]['customer_id']);
+
+
+        $this->load->library('Pdf_f');
+        $pdf = new Pdf_f("P", 'mm', 'A4');
+
+        $pdf->AddPage();
+        //Display Company Info
+        $pdf->SetFont('Arial', 'B', 14);
+        $pdf->Cell(50, 10, $Company[0]['name'], 0, 1);
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->Cell(50, 7, $Company[0]['address'], 0, 1);
+        //$pdf->Cell(50, 7, "Salem 636002.", 0, 1);
+        $pdf->Cell(50, 7, "PH : " . $Company[0]['contact_no'], 0, 1);
+
+        //Display INVOICE text
+        $pdf->SetY(15);
+        $pdf->SetX(-40);
+        $pdf->SetFont('Arial', 'B', 18);
+        $pdf->Cell(50, 10, "INVOICE", 0, 1);
+
+        //Display Horizontal line
+        $pdf->Line(0, 42, 210, 42);
+
+        //Billing Details // Body
+        $pdf->SetY(49);
+        $pdf->SetX(10);
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(50, 10, "Bill To: ", 0, 1);
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->Cell(50, 7, $customer[0]["first_name"], 0, 1);
+        $pdf->Cell(50, 7, $customer[0]["address"], 0, 1);
+        //$pdf->Cell(50, 7, $customer[0]["city"], 0, 1);
+
+        //Display Invoice no
+        $pdf->SetY(49);
+        $pdf->SetX(-60);
+        $pdf->Cell(50, 7, "Invoice No : " . $invoice_no);
+
+        //Display Invoice date
+        $pdf->SetY(57);
+        $pdf->SetX(-60);
+        $pdf->Cell(50, 7, "Invoice Date : " . $sales_items[0]["sale_date"]);
+
+        //Display Table headings
+        $pdf->SetY(85);
+        $pdf->SetX(10);
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(80, 9, "DESCRIPTION", 1, 0);
+        $pdf->Cell(40, 9, "PRICE", 1, 0, "C");
+        $pdf->Cell(30, 9, "QTY", 1, 0, "C");
+        $pdf->Cell(40, 9, "TOTAL", 1, 1, "C");
+        $pdf->SetFont('Arial', '', 12);
+
+        $discount = 0;
+        $total_cost = 0;
+        $total = 0;
+        //Display table product rows
+        foreach ($sales_items as $row) {
+            $total_cost = ($row['item_unit_price'] * $row['quantity_sold']) - $row['discount_value'];
+            $total += ($row['item_unit_price'] * $row['quantity_sold']);
+            $discount += $row['discount_value'];
+            $tax_amount = $total_cost * $row['tax_rate'] / 100;
+            $item = $this->M_items->get_items($row['item_id']);
+
+            $pdf->Cell(80, 9, $item[0]["name"], "LR", 0);
+            $pdf->Cell(40, 9, number_format($row["item_unit_price"], 2), "R", 0, "R");
+            $pdf->Cell(30, 9, number_format($row["quantity_sold"], 2), "R", 0, "C");
+            $pdf->Cell(40, 9, number_format(($row['item_unit_price'] * $row['quantity_sold']), 2), "R", 1, "R");
+        }
+        //Display table empty rows
+        for ($i = 0; $i < 12 - count($sales_items); $i++) {
+            $pdf->Cell(80, 9, "", "LR", 0);
+            $pdf->Cell(40, 9, "", "R", 0, "R");
+            $pdf->Cell(30, 9, "", "R", 0, "C");
+            $pdf->Cell(40, 9, "", "R", 1, "R");
+        }
+        //Display table total row
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(150, 9, "TOTAL", 1, 0, "R");
+        $pdf->Cell(40, 9, $total, 1, 1, "R");
+
+        //Display amount in words
+        $pdf->SetY(215);
+        $pdf->SetX(10);
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(0, 9, "Amount in Words ", 0, 1);
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->Cell(0, 9, $total, 0, 1);
+        ///////////////
+        ///body
+
+        //set footer position
+        $pdf->SetY(-60);
+        //$pdf->SetFont('helvetica', 'B', 12);
+        //$pdf->Cell(0, 10, "for ABC COMPUTERS", 0, 1, "R");
+        $pdf->Ln(15);
+        $pdf->SetFont('helvetica', '', 12);
+        $pdf->Cell(0, 10, "Authorized Signature", 0, 1, "R");
+        $pdf->SetFont('helvetica', '', 10);
+
+        //Display Footer Text
+        $pdf->Cell(0, 10, "This is a computer generated invoice", 0, 1, "C");
+        ///////////////
+
+        //$pdf_invoice = $pdf->Output();
+        ///////// pdf creation end
+        ////////
+
+        $customer = $this->M_customers->get_customers($customer_id);
+        $company_id = $_SESSION['company_id'];
+        $Company = $this->M_companies->get_companies($company_id);
+
+        if ($customer[0]['email'] !== '') {
+            if ($Company[0]['email'] !== '') {
+                
+                // Load PHPMailer library
+                $this->load->library('PHPMailer_Lib');
+                $mail = new PHPMailer_Lib();
+                // PHPMailer object
+               // $mail->PHPMailer_Lib->load();
+                //$mail = new PHPMailer;
+
+                $mail->From = "ahsankhan50@gmail.com";
+                $mail->FromName = "INVOICE";
+                
+                $mail->addAddress("ahsankhan_50@yahoo.com", "Recipient Name");
+                
+                //Provide file path and name of the attachments
+                $mail->addAttachment("images/icon_star.png");        
+                //$mail->addAttachment("images/profile.png"); //Filename is optional
+                
+                
+                $mail->Subject = "Subject Text";
+                $mail->Body = "<i>Mail body in HTML</i>";
+                $mail->AltBody = "This is the plain text version of the email content";
+               
+                //$mail->AddStringAttachment($pdf_invoice, 'doc.pdf', 'base64', 'application/pdf');
+                
+                // Set email format to HTML
+                $mail->isHTML(true);
+                
+                
+                // Send email
+                if(!$mail->send()){
+                    echo 'Message could not be sent.';
+                    echo 'Mailer Error: ' . $mail->ErrorInfo;
+                }else{
+                    echo 'Message has been sent';
+                }
+                // $this->load->library('email');
+                
+                // $config['protocol'] = 'sendmail';
+                // $config['mailpath'] = '/usr/sbin/sendmail';
+                // $config['charset'] = 'iso-8859-1';
+                // $config['wordwrap'] = TRUE;
+
+                // $this->email->initialize($config);
+
+                // $this->email->from($Company[0]['email'], $Company[0]['name']);
+                // $this->email->to($customer[0]['email']);
+                // //$this->email->cc('another@another-example.com');
+                // //$this->email->bcc('them@their-example.com');
+                // $message = "email invoice";
+
+                // $this->email->subject('INVOICE');
+                // $this->email->message($message);
+                // // $pdf_invoice = $this->printReceipt($invoice_no);
+                // $this->email->attach($pdf_invoice);
+
+                // if (!$this->email->send()) {
+                //     $this->session->set_flashdata('error', $this->email->print_debugger(array('headers')));
+                //     redirect('trans/C_sales/allSales/', 'refresh');
+                // } else {
+                //     $this->session->set_flashdata('message', 'email sent to ' . $customer[0]['first_name'] . ' successfully.');
+                //     redirect('trans/C_sales/allSales/', 'refresh');
+                // }
+            } else { //company email
+                $this->session->set_flashdata('error', 'Company email not available');
+                redirect('pos/C_customers/customerDetail/' . $customer_id, 'refresh');
+            }
+        } else { //company email
+            $this->session->set_flashdata('error', 'Customer email not available');
+            redirect('trans/C_sales/allSales/', 'refresh');
+        }
+    }
+
+    function upload_files($file)
+    {
+        $config['upload_path'] = 'upload/';
+        $config['allowed_types'] = 'pdf';
+        $$this->load->library('upload', $config);
+
+        $this->upload->do_upload();
     }
 }

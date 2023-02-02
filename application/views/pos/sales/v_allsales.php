@@ -33,7 +33,6 @@
             </ul>
         </div>
         <!-- /btn-group -->
-        <?php echo anchor('trans/C_sales/xml_receipt', 'Print', 'class="hidden-print"'); ?>
 
         </p>
 

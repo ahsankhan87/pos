@@ -14,7 +14,7 @@
 window.onload = function() { window.print(); }
 
 window.onafterprint = function(e){
-    window.location = '<?php echo site_url('trans/C_sales/index/cash') ?>';
+    //window.location = '<?php echo site_url('trans/C_sales/index/cash') ?>';
 };
 </script>
 <style>
@@ -171,32 +171,31 @@ window.onafterprint = function(e){
         <div>
         <?php
 
-        function zatca_base64_tlv_encode($seller_name, $vat_registration_number, $invoice_datetimez, $invoice_amount, $invoice_tax_amount)
-        {
-            $result = chr(1) . chr( strlen($seller_name) ) . $seller_name;
-            $result.= chr(2) . chr( strlen($vat_registration_number) ) . $vat_registration_number;
-            $result.= chr(3) . chr( strlen($invoice_datetimez) ) . $invoice_datetimez;
-            $result.= chr(4) . chr( strlen($invoice_amount) ) . $invoice_amount;
-            $result.= chr(5) . chr( strlen($invoice_tax_amount) ) . $invoice_tax_amount;
-            return base64_encode($result);
-        }
+        
+        //Qrcode for SEPA Payment Euruopean Uninion 
+        $service_tag = "BCD";
+        $character_set = "1"; //1=UTF-8, 2=ISO 8859-1, 3=ISO 8859-2, 4=ISO 8859-4, 5=ISO 8859-5, 6=ISO 8859-7, 7=ISO 8859-10, 8=ISO 8859-15
+        $identification = "SCT"; //SEPA credit transfer
+        $version = "002"; //V1: 001  V2: 002
+        $BIC = "BPOTBEB1"; //BIC of the Beneficiary Bank
+        $beneficiary_name = $Company[0]['name']; //Name of the Beneficiary.
+        $beneficiary_IBAN = $Company[0]['tax_no']; //Account number of the Beneficiary Only IBAN is allowed
+        $amount = $_SESSION['home_currency_code'].(float)round(($total-$discount_total+$total_tax_amount)-$sales_items[0]['amount_due'],2); //Amount of the Credit Transfer in Euro Amount must be 0.01 or more and 999999999.99 or less
+        $payment_reference = $invoice_no; //Ppayment_reference / INvoice No.
+        $creditor_reference = ""; //Remittance Information (Structured) Creditor Reference (ISO 11649 RF Creditor Reference may be used).
+        
+        $data = $this->M_sales->generate_sepa_qrcode($service_tag,$version,$character_set,$identification,$BIC, $beneficiary_name, $beneficiary_IBAN, $amount, $payment_reference,$creditor_reference);
+        /////
 
+        //QRcode for ZATCA Saudi Arabia
         $seller_name = $Company[0]['name'];
         $vat_registration_number = $Company[0]['tax_no'];
         $invoice_datetimez = $sales_items[0]['sale_time'];
         $invoice_amount = round(($total-$discount_total+$total_tax_amount)-$sales_items[0]['amount_due'],2);
         $invoice_tax_amount = round($total_tax_amount,2);
         
-        $data = zatca_base64_tlv_encode($seller_name, $vat_registration_number, $invoice_datetimez, $invoice_amount, $invoice_tax_amount);
-
-            // $data1 = $Company[0]['name']."                                                                    ".
-            //         //$Company[0]['address']."                                                                    ".
-            //         // $Company[0]['contact_no']."                                                                    ".
-            //         lang('date')." : ".date('d-m-Y g:ia',strtotime($sales_items[0]['sale_time'])). "                                                        ".
-            //         // lang('sub_total'). " : ".$total."                                                                         ".
-            //         // lang('disc')." : ".round($discount_total,2)."                                                                   ".
-            //         lang('tax')." : ".round($total_tax_amount,2)."                                                               ".
-            //         lang('grand').' '.lang('total')." : ".round(($total-$discount_total+$total_tax_amount)-$sales_items[0]['amount_due'],2);
+        //$data = $this->M_sales->zatca_base64_tlv_encode_qrcode($seller_name, $vat_registration_number, $invoice_datetimez, $invoice_amount, $invoice_tax_amount);
+        /////
 
             $params['data'] = $data;
             $params['level'] = 'H';

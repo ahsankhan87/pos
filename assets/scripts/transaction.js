@@ -30,10 +30,10 @@ var Transaction = function () {
                 $('td:eq(4)', nRow).addClass('text-right');
 
                 $('td:eq(5)', nRow).html('<a href="'+site_url+'/trans/C_sales/editSales/' + aData['invoice_no'] + 
-                                '" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a> | <a href="'+
-                                site_url+'/trans/C_sales/printReceipt/' + aData['invoice_no'] + 
+                                '" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a>'+
+                                ' | <a href="'+site_url+'/trans/C_sales/receipt/' + aData['invoice_no'] + 
                                 '" title="Print Invoice" target="_blank" ><i class=\'fa fa-print fa-fw\'></i></a>'+
-                                '| <a href="'+site_url+'/trans/C_sales/xml_receipt/' + aData['invoice_no'] + 
+                                ' | <a href="'+site_url+'/trans/C_sales/ubl_xml_receipt/' + aData['invoice_no'] + 
                                 '" title="XML Invoice" target="_blank" >xml</a>'+
                                 ' | <a href="'+site_url+'/trans/C_sales/send_email_inv/'+ aData['customer_id'] + '/' + aData['invoice_no'] + 
                                 '" title="Email Invoice">Email</a>'

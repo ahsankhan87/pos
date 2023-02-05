@@ -1108,23 +1108,10 @@ class C_sales extends MY_Controller
         $data['Company'] = $this->M_companies->get_companies($company_id);
 
         $this->load->view('templates/header', $data);
-        // $this->load->view('pos/sales/v_receipt_small',$data);
-        $this->load->view('pos/sales/v_receipt', $data);
+        $this->load->view('pos/sales/v_receipt_small',$data);
+        // $this->load->view('pos/sales/v_receipt', $data);
         $this->load->view('templates/footer');
     }
-
-    public function xml_receipt($new_invoice_no)
-    {
-        $data = array('langs' => $this->session->userdata('lang'));
-        $data['sales_items'] = $this->M_sales->get_sales_by_invoice($new_invoice_no);
-        $data['invoice_no'] = $new_invoice_no;
-
-        $data['title'] =  'Sales';
-        $data['main'] = ''; //($sales_items[0]['register_mode'] == 'sale' ? 'Sales' : 'Return').' Invoice #'.$new_invoice_no;
-
-        $this->load->view('pos/sales/receipt_ubl_xml', $data);
-    }
-
 
     function get_sales_JSON()
     {
@@ -1520,8 +1507,14 @@ class C_sales extends MY_Controller
                 $mail->AddStringAttachment($pdf_invoice, $invoice_no.'.pdf', 'base64', 'application/pdf'); //Filename is optional
                 //$mail->AddStringAttachment($pdf_invoice, 'doc.pdf', 'base64', 'application/pdf');
                 
-                $mail->Subject = "INVOICE";
-                $mail->Body = "<i>The Invoice has been sent to you, please check.</i>";
+                $mail->Subject = $Company[0]['name']." Invoice";
+                $body = "<p>Dear ".$customer[0]['first_name'].",</p>";
+                $body .= "<p><i>Thanks for being a customer. A detailed summary of your invoice is attached.</i></p>";
+                $body .= "<p>If you have questions, we're happy to help.</p>";
+                $body .= "<p>Email Sales Email or contact us through other support channels.</p>";
+                $body .= "<p>NOTE: Please do not reply to this email. Your response will not be received.</p>";
+
+                $mail->Body = $body;
                
                 // Set email format to HTML
                 $mail->isHTML(true);
@@ -1547,12 +1540,16 @@ class C_sales extends MY_Controller
         }
     }
 
-    function upload_files($file)
+    public function ubl_xml_receipt($new_invoice_no)
     {
-        $config['upload_path'] = 'upload/';
-        $config['allowed_types'] = 'pdf';
-        $$this->load->library('upload', $config);
+        $data = array('langs' => $this->session->userdata('lang'));
+        $data['sales_items'] = $this->M_sales->get_sales_by_invoice($new_invoice_no);
+        $data['invoice_no'] = $new_invoice_no;
 
-        $this->upload->do_upload();
+        $data['title'] =  'Sales';
+        $data['main'] = ''; //($sales_items[0]['register_mode'] == 'sale' ? 'Sales' : 'Return').' Invoice #'.$new_invoice_no;
+
+        $this->load->view('pos/sales/receipt_ubl_xml', $data);
     }
+
 }

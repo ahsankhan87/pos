@@ -166,5 +166,34 @@ class m_sales extends CI_Model{
         return array();
     }
 
+    //Create Base64 Encode For Qrcode Saudi Arabia
+    public function zatca_base64_tlv_encode_qrcode($seller_name, $vat_registration_number, $invoice_datetimez, $invoice_amount, $invoice_tax_amount)
+    {
+        $result = chr(1) . chr( strlen($seller_name) ) . $seller_name;
+        $result.= chr(2) . chr( strlen($vat_registration_number) ) . $vat_registration_number;
+        $result.= chr(3) . chr( strlen($invoice_datetimez) ) . $invoice_datetimez;
+        $result.= chr(4) . chr( strlen($invoice_amount) ) . $invoice_amount;
+        $result.= chr(5) . chr( strlen($invoice_tax_amount) ) . $invoice_tax_amount;
+        return base64_encode($result);
+    }
+
+    //Create Base64 Encode For Qrcode SEPA (Single Euro Payment Area) for Euroupian Uninion 
+    //EPC QR Code ( European Payments Council )
+    //SEPA Credit Transfer (SCT) QR Code
+    public function generate_sepa_qrcode($service_tag,$version,$character_set,$identification, $BIC, $beneficiary_name, $beneficiary_IBAN, $amount, $payment_reference,$creditor_reference )
+    {
+        $result = trim($service_tag."|");
+        $result .= trim($version."|"); //V1: 001  V2: 002
+        $result .= trim($character_set."|"); //1=UTF-8, 2=ISO 8859-1, 3=ISO 8859-2, 4=ISO 8859-4, 5=ISO 8859-5, 6=ISO 8859-7, 7=ISO 8859-10, 8=ISO 8859-15
+        $result .= trim($identification."|"); //SEPA credit transfer
+        $result .= trim($BIC."|"); //BIC of the Beneficiary Bank
+        $result .= trim($beneficiary_name."|");
+        $result .= trim($beneficiary_IBAN."|"); //Account number of the Beneficiary Only IBAN is allowed
+        $result .= trim($amount."|"); //Amount of the Credit Transfer in Euro Amount must be 0.01 or more and 999999999.99 or less
+        $result .= trim($payment_reference."|"); //payment_reference or invoice no.
+        $result .= trim($creditor_reference); //Remittance Information (Structured) Creditor Reference (ISO 11649 RF Creditor Reference may be used).
+        
+        return $result;
+    }
 }
     

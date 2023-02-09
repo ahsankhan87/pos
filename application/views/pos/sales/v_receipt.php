@@ -98,7 +98,6 @@
                             $symbol = $_SESSION['home_currency_symbol'];
                         }
 
-
                         echo '<tr>';
                         echo '<td style="text-align:center;" >' . $counter++ . '</td>';
                         echo '<td>' . $item[0]['name'] . (isset($size) ? " " . $size : '') . '</td>';
@@ -132,11 +131,11 @@
         </div>
         <div class="col-xs-4 invoice-block">
             <ul class="list-unstyled amounts">
-                <!--
-                            <li>
-								<strong>Sub - Total amount:</strong> <?php echo $symbol . round($total, 2); ?>
-							</li>
-							-->
+                    <!--
+                    <li>
+                        <strong>Sub - Total amount:</strong> <?php echo $symbol . round($total, 2); ?>
+                    </li>
+                    -->
                 <li>
                     <strong><?php echo lang('total') . ' ' . lang('disc'); ?>:</strong> <?php echo $symbol . round($discount, 2); ?>
                 </li>
@@ -148,11 +147,11 @@
                     <strong><?php echo lang('grand') . ' ' . lang('total'); ?>:</strong> <?php echo $symbol . round($net_amount, 2); ?>
                 </li>
                 <li>
-                    <?php $balance = $this->M_customers->get_customer_total_balance_e_op_balance(@$sales_items[0]['customer_id'],FY_START_DATE,FY_END_DATE); ?>
-                    <?php echo "Prev: ".lang('balance'). ': ' . ((double)$balance-$net_amount); ?>
+                    <?php $balance = $this->M_customers->get_customer_total_balance_e_op_balance(@$sales_items[0]['customer_id'], FY_START_DATE, FY_END_DATE); ?>
+                    <?php echo "Prev: " . lang('balance') . ': ' . ((float)$balance - $net_amount); ?>
                 </li>
                 <li>
-                    <?php echo lang('balance'). ': ' . ((double)$balance); ?>
+                    <?php echo lang('balance') . ': ' . ((float)$balance); ?>
                 </li>
             </ul>
         </div>
@@ -205,7 +204,37 @@ It is completely on our discretion to accept any return or not.
                 </table>-->
 
     <br />
-    <div class="text-left">Powered by: <i>khybersoft.com</i> </div>
+    <div class="text-center">
+        <?php
+
+        //Qrcode for SEPA Payment Euruopean Uninion 
+        $service_tag = "BCD";
+        $character_set = "1"; //1=UTF-8, 2=ISO 8859-1, 3=ISO 8859-2, 4=ISO 8859-4, 5=ISO 8859-5, 6=ISO 8859-7, 7=ISO 8859-10, 8=ISO 8859-15
+        $identification = "SCT"; //SEPA credit transfer
+        $version = "002"; //V1: 001  V2: 002
+        $BIC = "BPOTBEB1"; //BIC of the Beneficiary Bank
+        $beneficiary_name = $Company[0]['name']; //Name of the Beneficiary.
+        $beneficiary_IBAN = $Company[0]['tax_no']; //Account number of the Beneficiary Only IBAN is allowed
+        $amount = $_SESSION['home_currency_code'] . (float)round(($total - $discount_total + $total_tax_amount) - $sales_items[0]['amount_due'], 2); //Amount of the Credit Transfer in Euro Amount must be 0.01 or more and 999999999.99 or less
+        $payment_reference = $invoice_no; //Ppayment_reference / INvoice No.
+        $creditor_reference = ""; //Remittance Information (Structured) Creditor Reference (ISO 11649 RF Creditor Reference may be used).
+
+        $data = $this->M_sales->generate_sepa_qrcode($service_tag, $version, $character_set, $identification, $BIC, $beneficiary_name, $beneficiary_IBAN, $amount, $payment_reference, $creditor_reference);
+        /////
+        $params['data'] = $data;
+        $params['level'] = 'H';
+        $params['size'] = 3;
+        $params['savename'] = FCPATH . 'tes.png';
+        $this->ciqrcode->generate($params);
+
+        echo '<img src="' . base_url() . 'tes.png" />';
+        ?>
+        <!-- <?php echo $qr_code; ?> -->
+    </div>
+    <div style="font-weight: bold;"><?php echo lang('thanks_for_purchasing'); ?></div>
+    
+</div>
+<div class="text-left">Powered by: <i>khybersoft.com</i> </div>
 
 </div>
 <!-- END PAGE CONTENT-->

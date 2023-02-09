@@ -293,6 +293,7 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
                     //discount:$scope.discount, //DISCOUNT BY VALUES
                     discount: ($scope.discount_value === undefined ? '' : $scope.discount_value), //BY PERCENT
                     sale_date:$scope.sale_date,
+                    due_date:($scope.due_date === undefined ? '' : $scope.due_date),
                     exchange_rate: ($scope.exchange_rate === undefined ? '' : $scope.exchange_rate),
                     currency_id:($scope.customer_currency_id === undefined ? '' : $scope.customer_currency_id),
                     supplier_id:($scope.supplier_id === undefined ? '' : $scope.supplier_id),

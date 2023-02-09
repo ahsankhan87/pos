@@ -89,7 +89,7 @@ class C_sales extends MY_Controller
 
         $data['main_small'] = $fiscal_dates;
 
-        $data['sales'] = $this->M_sales->get_sales(false, $start_date, $to_date);
+        //$data['sales'] = $this->M_sales->get_sales(false, $start_date, $to_date);
 
         $this->load->view('templates/header', $data);
         $this->load->view('pos/sales/v_allsales', $data);
@@ -146,6 +146,7 @@ class C_sales extends MY_Controller
 
             //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
             $sale_date = date('Y-m-d', strtotime($data_posted->sale_date));
+            $due_date = ($data_posted->due_date == '' ? '' :date('Y-m-d', strtotime($data_posted->due_date)));
             $customer_id = $data_posted->customer_id;
             $emp_id = $data_posted->emp_id;
             $supplier_id = $data_posted->supplier_id;
@@ -197,6 +198,7 @@ class C_sales extends MY_Controller
                     'total_amount' => ($register_mode == 'sale' ? $total_amount : -$total_amount), //return will be in minus amount
                     'total_tax' => ($register_mode == 'sale' ? $total_tax_amount : -$total_tax_amount), //return will be in minus amount
                     'is_taxable' => $is_taxable,
+                    'due_date' => $due_date,
                 );
 
                 $this->db->insert('pos_sales', $data);
@@ -1108,8 +1110,8 @@ class C_sales extends MY_Controller
         $data['Company'] = $this->M_companies->get_companies($company_id);
 
         $this->load->view('templates/header', $data);
-        $this->load->view('pos/sales/v_receipt_small',$data);
-        // $this->load->view('pos/sales/v_receipt', $data);
+        // $this->load->view('pos/sales/v_receipt_small',$data);
+        $this->load->view('pos/sales/v_receipt', $data);
         $this->load->view('templates/footer');
     }
 

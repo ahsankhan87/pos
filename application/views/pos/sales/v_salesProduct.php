@@ -153,7 +153,12 @@
                         </select>
 
                     </div>
-
+                    <?php if ($saleType === 'credit') { ?>
+                        <label class="control-label col-sm-2" for=""><?php echo 'Due' . ' ' . lang('date'); ?></label>
+                        <div class="col-sm-4">
+                            <input type="date" ng-model="due_date" class="form-control" />
+                        </div>
+                    <?php } ?>
                 </div>
 
                 <?php if ($supplier_cust) { ?>

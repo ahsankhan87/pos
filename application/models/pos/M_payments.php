@@ -20,8 +20,12 @@ class M_payments extends CI_Model{
        return $query->result_array();
     }
     
-    function get_payments($payment_id = FALSE)
+    function get_payments($payment_id = FALSE,$from_date=null,$to_date=null)
     {
+        if($from_date != null && $to_date != null){
+            $this->db->where("ap.payment_date BETWEEN '$from_date' AND '$to_date'");
+        }
+        
         if($payment_id == FALSE)
         {
             $this->db->select('gp.title,gp.title_ur,ap.invoice_no,ap.employee_id,ap.payment_date,
@@ -38,6 +42,7 @@ class M_payments extends CI_Model{
        $query = $this->db->get_where('acc_payments ap',array('ap.id'=>$payment_id,'ap.company_id'=> $_SESSION['company_id']));
        return $query->result_array();
     }
+
     function getMAXPaymentInvoiceNo()
     {   
         $this->db->order_by('CAST(SUBSTR(invoice_no,2) AS UNSIGNED) DESC');

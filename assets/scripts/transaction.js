@@ -34,9 +34,11 @@ var Transaction = function () {
                                 ' | <a href="'+site_url+'/trans/C_sales/receipt/' + aData['invoice_no'] + 
                                 '" title="Print Invoice" target="_blank" ><i class=\'fa fa-print fa-fw\'></i></a>'+
                                 ' | <a href="'+site_url+'/trans/C_sales/ubl_xml_receipt/' + aData['invoice_no'] + 
-                                '" title="XML Invoice" target="_blank" >xml</a>'+
+                                '" title="XML Invoice" target="_blank" >XML</a>'+
                                 ' | <a href="'+site_url+'/trans/C_sales/send_email_inv/'+ aData['customer_id'] + '/' + aData['invoice_no'] + 
-                                '" title="Email Invoice">Email</a>'
+                                '" title="Email Invoice">Email</a>'+
+                                ' | <a href="'+site_url+'/trans/C_sales/printReceipt/'+  aData['invoice_no'] + 
+                                '" title="PDF Invoice" target="_blank" >PDF</a>'
                                 // DELETE SALES BUTTON
                                 // +' | <a href="'+
                                 // site_url+'/trans/C_sales/delete/' + aData['invoice_no'] +  

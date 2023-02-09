@@ -283,7 +283,6 @@ class M_pos_reports extends CI_Model{
                               
        $query = $this->db->query($query_string);
         
-       
        $data = $query->result_array();
        return $data;
        

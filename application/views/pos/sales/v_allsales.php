@@ -31,11 +31,15 @@
                     <?php echo anchor('trans/C_sales/index/creditReturn', lang('credit') . ' ' . lang('return'), 'class="hidden-print"'); ?>
                 </li>
             </ul>
+            
         </div>
         <!-- /btn-group -->
+        <?php echo anchor('trans/C_sales', 'Recurring Invoice', 'class="btn btn-primary"'); ?>
+
+        <!-- /btn-group -->
+        <?php echo anchor('trans/C_sales/index/delivery', 'Delivery Note', 'class="btn btn-primary"'); ?>
 
         </p>
-
 
         <div class="portlet">
             <div class="portlet-title">
@@ -84,13 +88,13 @@
                         //            
                         //            echo '</tbody>';
                         //echo '<tfoot>
-                        //                    <tr>
-                        //                        <th></th><th></th><th></th>
-                        //                        <th></th><th></th>
-                        //                        <th></th>
-                        //                
-                        //                    </tr>
-                        //                </tfoot>';
+            //                    <tr>
+            //                        <th></th><th></th><th></th>
+            //                        <th></th><th></th>
+            //                        <th></th>
+            //                
+            //                    </tr>
+            //                </tfoot>';
 
                         ?>
                     </tbody>

@@ -93,7 +93,7 @@ class C_entries extends MY_Controller
             $this->delete_by_invoice_no($invoice_no);
         }
         // print_r($data_posted);
-        if (count($data_posted) > 0) {
+        if (count((array) $data_posted) > 0) {
             $this->db->trans_start();
 
             if ($is_edit) {

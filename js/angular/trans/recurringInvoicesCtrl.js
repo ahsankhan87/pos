@@ -1,10 +1,13 @@
 ////////////////////////////////////////////////////////
 //THIS IS SALES CONTROLLER 
 ///////////////////////////////////////////////////////
-app.controller('salesProductCtrl', function($scope,$http,$timeout) {
+app.controller('recurringInvoicesCtrl', function($scope,$http,$timeout) {
     
     $scope.sale_date = new Date();
     $scope.due_date = new Date();
+    $scope.period_start_date = new Date();
+    $scope.next_shipment = new Date();
+    
     $scope.is_taxable = true;
     $scope.customer_vat_no = '';
         
@@ -48,7 +51,7 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
         $scope.customer_currency_name = '';
         $scope.customer_currency_symbol = '';
         
-        $http.get(site_url+'/trans/C_sales/getCustomerCurrencyJSON/'+customer_id).then(function(response){
+        $http.get(site_url+'/trans/C_recurring_invoices/getCustomerCurrencyJSON/'+customer_id).then(function(response){
         
         if(response.data.length > 0)
         {
@@ -300,12 +303,18 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
                     supplier_id:($scope.supplier_id === undefined ? '' : $scope.supplier_id),
                     // is_taxable: ($scope.is_taxable === undefined ? 1 : $scope.is_taxable),
                     is_taxable: $scope.is_taxable,
+                    period_start_date: ($scope.period_start_date === undefined ? '' : $scope.period_start_date),
+                    last_send_date:($scope.last_send_date === undefined ? '' : $scope.last_send_date), 
+                    send_every_day: $scope.send_every_day,
+                    send_every_month: $scope.send_every_month,
+                    next_shipment: $scope.next_shipment,
+                    
 
                     items: $scope.invoice.items
                     };
                  ///////
                  
-                var file = site_url+'/trans/C_sales/saleProducts';
+                var file = site_url+'/trans/C_recurring_invoices/saleProducts';
                  
                 // fields in key-value pairs
                 $http.post(file, $scope.invoice).then(function (response) {
@@ -319,10 +328,10 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
                    if(response.data.invoice_no == 'no-posting-type')
                    {
                      alert('Please assign posting type to customer otherwise amount will not be post to accounts');
-                     window.location = site_url+"/trans/C_sales";
+                     window.location = site_url+"/trans/C_recurring_invoices";
                    }else
                    {
-                      window.location = site_url+"/trans/C_sales/receipt/"+response.data.invoice_no; 
+                      window.location = site_url+"/trans/C_recurring_invoices/receipt/"+response.data.invoice_no; 
                       console.log(response.data);
                    }
                    

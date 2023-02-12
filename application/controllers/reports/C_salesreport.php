@@ -40,7 +40,6 @@ class C_salesreport extends MY_Controller{
         $data['productsDDL'] = $this->M_items->getItemDropDown();
         $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
         
-        
         $data['daily_sales_report'] = $this->M_pos_reports->sales_reports($data['from_date'],$data['to_date'],$_SESSION['company_id'],$customer_id,$product_id,$emp_id,$register_mode,$sale_type);
             
             //for logging

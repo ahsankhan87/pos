@@ -4,11 +4,13 @@
         if ($this->session->flashdata('message')) {
             echo "<div class='alert alert-success fade in'>";
             echo $this->session->flashdata('message');
+            $this->session->unset_userdata('message');
             echo '</div>';
         }
         if ($this->session->flashdata('error')) {
             echo "<div class='alert alert-danger fade in'>";
             echo $this->session->flashdata('error');
+            $this->session->unset_userdata('message');
             echo '</div>';
         }
         ?>
@@ -33,12 +35,7 @@
             </ul>
             
         </div>
-        <!-- /btn-group -->
-        <?php echo anchor('trans/C_sales', 'Recurring Invoice', 'class="btn btn-primary"'); ?>
-
-        <!-- /btn-group -->
-        <?php echo anchor('trans/C_sales/index/delivery', 'Delivery Note', 'class="btn btn-primary"'); ?>
-
+        
         </p>
 
         <div class="portlet">

@@ -199,12 +199,13 @@ var sample_estimate = function () {
                             $('td:eq(3)', nRow).html(parseFloat(aData['net_amount']).toFixed(2));
                             $('td:eq(3)', nRow).addClass('text-right');
             
-                                $('td:eq(4)', nRow).html('<a href="'+
-                                site_url+'/trans/C_sales/index/cash/'
-                                + aData['customer_id'] +'/' + aData['invoice_no'] + '" title="Transfer to sales" >Transfer</a> | <a href="'+
-                                site_url+'/trans/C_estimate/receipt/' + aData['invoice_no'] + 
-                                '" title="Print Invoice" ><i class=\'fa fa-print fa-fw\'></i></a> | <a href="'+
-                                site_url+'/trans/C_estimate/delete/' + aData['invoice_no'] +  
+                                $('td:eq(4)', nRow).html('<a href="'+site_url+'/trans/C_sales/index/cash/'
+                                + aData['customer_id'] +'/' + aData['invoice_no'] + '" title="Transfer to sales" >To sales</a>'
+                                +' | <a href="'+site_url+'/trans/C_delivery_note/index/cash/'
+                                + aData['customer_id'] +'/' + aData['invoice_no'] + '" title="Transfer to delivery note" >To delivery note</a>'
+                                +' | <a href="'+site_url+'/trans/C_estimate/receipt/' + aData['invoice_no'] + 
+                                '" title="Print Invoice" ><i class=\'fa fa-print fa-fw\'></i></a> '
+                                +' | <a href="'+site_url+'/trans/C_estimate/delete/' + aData['invoice_no'] +  
                                 '" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>');
                             
                             return nRow;

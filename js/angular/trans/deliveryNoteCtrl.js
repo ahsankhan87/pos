@@ -1,10 +1,10 @@
 ////////////////////////////////////////////////////////
 //THIS IS SALES CONTROLLER 
 ///////////////////////////////////////////////////////
-app.controller('salesProductCtrl', function($scope,$http,$timeout) {
+app.controller('deliveryNoteCtrl', function($scope,$http,$timeout) {
     
     $scope.sale_date = new Date();
-    $scope.due_date = new Date();
+    $scope.delivery_date = new Date();
     $scope.is_taxable = true;
     $scope.customer_vat_no = '';
         
@@ -48,7 +48,7 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
         $scope.customer_currency_name = '';
         $scope.customer_currency_symbol = '';
         
-        $http.get(site_url+'/trans/C_sales/getCustomerCurrencyJSON/'+customer_id).then(function(response){
+        $http.get(site_url+'/trans/C_delivery_note/getCustomerCurrencyJSON/'+customer_id).then(function(response){
         
         if(response.data.length > 0)
         {
@@ -294,7 +294,7 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
                     //discount:$scope.discount, //DISCOUNT BY VALUES
                     discount: ($scope.discount_value === undefined ? '' : $scope.discount_value), //BY PERCENT
                     sale_date:$scope.sale_date,
-                    due_date:($scope.due_date === undefined ? '' : $scope.due_date),
+                    delivery_date:($scope.delivery_date === undefined ? '' : $scope.delivery_date),
                     exchange_rate: ($scope.exchange_rate === undefined ? '' : $scope.exchange_rate),
                     currency_id:($scope.customer_currency_id === undefined ? '' : $scope.customer_currency_id),
                     supplier_id:($scope.supplier_id === undefined ? '' : $scope.supplier_id),
@@ -305,7 +305,7 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
                     };
                  ///////
                  
-                var file = site_url+'/trans/C_sales/saleProducts';
+                var file = site_url+'/trans/C_delivery_note/saleProducts';
                  
                 // fields in key-value pairs
                 $http.post(file, $scope.invoice).then(function (response) {
@@ -319,10 +319,10 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
                    if(response.data.invoice_no == 'no-posting-type')
                    {
                      alert('Please assign posting type to customer otherwise amount will not be post to accounts');
-                     window.location = site_url+"/trans/C_sales";
+                     window.location = site_url+"/trans/C_delivery_note";
                    }else
                    {
-                      window.location = site_url+"/trans/C_sales/receipt/"+response.data.invoice_no; 
+                      window.location = site_url+"/trans/C_delivery_note/receipt/"+response.data.invoice_no; 
                       console.log(response.data);
                    }
                    

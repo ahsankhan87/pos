@@ -695,7 +695,6 @@ CREATE TABLE `modules` (
 --
 -- Dumping data for table `modules`
 --
-
 INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar`, `icon`, `path`, `sort`, `status`) VALUES
 (1, 0, 'Dashboard', 'Dashboard', 'ڈیش بورڈ', 'لوحة القيادة', 'icon-home', '#', '', 'active'),
 (2, 0, 'pos', 'POS', 'POS', 'POS', 'fa fa-list', '#', '', 'active'),
@@ -723,18 +722,23 @@ INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar
 (24, 5, 'C_balancesheet', 'Balance Sheet', 'بیلنس شیٹ', 'ورقة التوازن', '', 'C_balancesheet', '41', 'active'),
 (25, 2, 'C_locations', 'Locations', 'مقامات', 'المواقع', '', 'C_locations', '65', 'active'),
 (26, 4, 'C_expenses', 'Expenses', 'اخراجات', 'نفقات', 'fa fa-files-o fa-fw', 'C_expenses/allPayments', '30', 'active'),
-(27, 5, 'C_yearreport', 'Annual Report', 'سالانہ رپورٹ', 'تقرير سنوي', '', 'C_yearreport', '50', 'active'),
+(27, 5, 'C_yearreport', 'Annual Report', 'سالانہ رپورٹ', 'تقرير سنوي', '', 'C_yearreport', '50', 'inactive'),
 (28, 2, 'C_banking', 'Banking', 'بینک', 'الخدمات المصرفية', '', 'C_banking', '32', 'active'),
 (29, 2, 'C_units', 'Units', 'یونٹ', 'الوحدات', '', 'C_units', '55', 'active'),
-(30, 2, 'C_eventCalendar', 'Calendar', 'بکنگ / منصوبہ بندی', 'التقويم', '', 'C_eventCalendar', '53', 'active'),
+(30, 2, 'C_eventCalendar', 'Calendar', 'بکنگ / منصوبہ بندی', 'التقويم', '', 'C_eventCalendar', '53', 'inactive'),
 (31, 1, 'C_dashboard', 'View', 'ڈیش بورڈ', 'رأي', '', 'C_dashboard', '10', 'active'),
 (32, 2, 'C_areas', 'Employee Area', 'ملازم ایریا', 'منطقة الموظف', '', 'C_areas', '58', 'inactive'),
 (33, 0, 'mfg', 'Manufacturing', 'مینوفیکچرنگ', 'تصنيع', 'fa fa-list', '#', '', 'active'),
 (34, 33, 'C_workcenters', 'Work Centers', 'کام کے مراکز', 'مراكز العمل', '', 'C_workcenters', '10', 'active'),
 (35, 33, 'C_workorders', 'Work Orders', 'کام کے احکامات', 'طلبات العمل', '', 'C_workorders', '15', 'active'),
 (36, 33, 'C_billofmaterial', 'Bill of Material', 'اشیا کا حساب', 'فاتورة المواد', '', 'C_billofmaterial', '20', 'active'),
-(37, 4, 'C_estimate', 'Estimates', 'فروخت', 'اقتباس', 'fa fa-files-o fa-fw', 'C_estimate/allestimate', '20', 'active'),
-(38, 4, 'C_purchaseOrders', 'Purchase Orders', 'خریداری', 'أمر شراء', 'fa fa-edit fa-fw', 'C_purchaseOrders/allPurchaseorders', '10', 'active');
+(37, 4, 'C_estimate', 'Estimates', 'فروخت', 'اقتباس', 'fa fa-files-o fa-fw', 'C_estimate/allestimate', '25', 'active'),
+(38, 4, 'C_purchaseOrders', 'Purchase Orders', 'خریداری', 'أمر شراء', 'fa fa-edit fa-fw', 'C_purchaseOrders/allPurchaseorders', '10', 'active'),
+(39, 4, 'C_sales', 'Sales v2', 'فروخت', 'مبيعات', 'fa fa-files-o fa-fw', 'C_sales/allSalesv2', '21', 'inactive'),
+(40, 5, 'C_accountReceivable', 'Account Receivable ', 'اکاؤنٹ وصولی', 'حساب العميل', '', 'C_accountReceivable', '42', 'active'),
+(41, 5, 'C_accountPayable', 'Account Payable ', 'قابل ادائیگی اکاؤنٹ', 'حساب المستحق', '', 'C_accountPayable', '43', 'active'),
+(43, 4, 'C_recurring_invoices', 'Recurring Invoices', 'فروخت', 'اقتباس', 'fa fa-files-o fa-fw', 'C_recurring_invoices/all', '26', 'active'),
+(44, 4, 'C_delivery_note', 'Delivery Note', 'فروخت', 'اقتباس', 'fa fa-files-o fa-fw', 'C_delivery_note/all', '27', 'active');
 
 -- --------------------------------------------------------
 
@@ -2610,7 +2614,133 @@ ALTER TABLE `users`
 ALTER TABLE `companies` ADD `forgot_pass_identity` TEXT NULL AFTER `tax_no`;
 ALTER TABLE `users` ADD `email` varchar(200) NULL AFTER `forgot_pass_identity`;
 
-INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar`, `icon`, `path`, `sort`, `status`) VALUES ('0', '5', 'C_accountReceivable', 'Account Receivable ', 'اکاؤنٹ وصولی', 'حساب العميل', '', 'C_accountReceivable', '42', 'active');
-INSERT INTO `modules` (`id`, `parent_id`, `name`, `title`, `title_ur`, `title_ar`, `icon`, `path`, `sort`, `status`) VALUES ('0', '5', 'C_accountPayable', 'Account Payable ', 'قابل ادائیگی اکاؤنٹ', 'حساب المستحق', '', 'C_accountPayable', '43', 'active');
 ALTER TABLE `pos_customer_payments` ADD `due_date` DATE NULL AFTER `entry_id`;
 ALTER TABLE `pos_supplier_payments` ADD `due_date` DATE NULL AFTER `entry_id`;
+
+ALTER TABLE `pos_sales` ADD `due_date` DATE NULL AFTER `is_taxable`;
+
+CREATE TABLE `pos_delivery_note` (
+ `sale_id` int(10) NOT NULL AUTO_INCREMENT,
+ `invoice_no` varchar(20) NOT NULL,
+ `company_id` int(255) NOT NULL,
+ `sale_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ `sale_date` date NOT NULL,
+ `customer_id` int(10) DEFAULT NULL,
+ `employee_id` int(10) NOT NULL DEFAULT '0',
+ `user_id` int(100) NOT NULL,
+ `comment` text NOT NULL,
+ `register_mode` varchar(512) DEFAULT NULL,
+ `account` varchar(255) NOT NULL COMMENT 'cash or credit',
+ `amount_due` decimal(10,4) NOT NULL DEFAULT '0.0000',
+ `description` text,
+ `discount_value` decimal(10,4) DEFAULT NULL,
+ `total_amount` decimal(10,4) NOT NULL DEFAULT '0.0000',
+ `total_tax` decimal(20,4) NOT NULL DEFAULT '0.0000',
+ `exchange_rate` decimal(10,5) NOT NULL DEFAULT '0.00000',
+ `paid` decimal(10,4) NOT NULL DEFAULT '0.0000',
+ `currency_id` int(10) NOT NULL DEFAULT '0',
+ `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ `supplier_id` int(20) DEFAULT '0',
+ `is_taxable` tinyint(1) NOT NULL,
+ `delivery_date` date DEFAULT NULL,
+ `delivery_address` text NULL,
+ PRIMARY KEY (`sale_id`),
+ KEY `customer_id` (`customer_id`),
+ KEY `employee_id` (`employee_id`),
+ KEY `company_id` (`company_id`),
+ KEY `invoice_no` (`invoice_no`),
+ KEY `supplier_id` (`supplier_id`),
+ KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `pos_delivery_note_items` (
+ `sale_item_id` int(10) NOT NULL AUTO_INCREMENT,
+ `invoice_no` varchar(20) NOT NULL,
+ `sale_id` int(10) NOT NULL DEFAULT '0',
+ `item_id` int(10) NOT NULL DEFAULT '0',
+ `description` varchar(30) DEFAULT NULL,
+ `serialnumber` varchar(30) DEFAULT NULL,
+ `line` int(3) NOT NULL DEFAULT '0',
+ `quantity_sold` decimal(15,2) NOT NULL DEFAULT '0.00',
+ `item_cost_price` decimal(15,4) NOT NULL,
+ `item_unit_price` decimal(15,4) NOT NULL,
+ `discount_percent` int(11) NOT NULL DEFAULT '0',
+ `size_id` int(255) NOT NULL,
+ `color_id` int(255) NOT NULL,
+ `service` tinyint(1) NOT NULL,
+ `unit_id` int(20) DEFAULT NULL,
+ `currency_id` int(10) DEFAULT NULL,
+ `exchange_rate` decimal(10,5) DEFAULT NULL,
+ `company_id` int(20) NOT NULL,
+ `discount_value` decimal(10,4) DEFAULT NULL,
+ `tax_id` int(20) NOT NULL DEFAULT '0',
+ `tax_rate` int(20) NOT NULL DEFAULT '0',
+ `inventory_acc_code` varchar(20) DEFAULT '0',
+ PRIMARY KEY (`sale_item_id`),
+ KEY `invoice_no` (`invoice_no`,`sale_id`,`item_id`),
+ KEY `company_id` (`company_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `pos_recurring_invoices` (
+ `sale_id` int(10) NOT NULL AUTO_INCREMENT,
+ `invoice_no` varchar(20) NOT NULL,
+ `company_id` int(255) NOT NULL,
+ `sale_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ `sale_date` date NOT NULL,
+ `customer_id` int(10) DEFAULT NULL,
+ `employee_id` int(10) NOT NULL DEFAULT '0',
+ `user_id` int(100) NOT NULL,
+ `comment` text NOT NULL,
+ `register_mode` varchar(512) DEFAULT NULL,
+ `account` varchar(255) NOT NULL COMMENT 'cash or credit',
+ `amount_due` decimal(10,4) NOT NULL DEFAULT '0.0000',
+ `description` text,
+ `discount_value` decimal(10,4) DEFAULT NULL,
+ `total_amount` decimal(10,4) NOT NULL DEFAULT '0.0000',
+ `total_tax` decimal(20,4) NOT NULL DEFAULT '0.0000',
+ `exchange_rate` decimal(10,5) NOT NULL DEFAULT '0.00000',
+ `paid` decimal(10,4) NOT NULL DEFAULT '0.0000',
+ `currency_id` int(10) NOT NULL DEFAULT '0',
+ `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ `supplier_id` int(20) DEFAULT '0',
+ `is_taxable` tinyint(1) NOT NULL,
+ `due_date` date DEFAULT NULL,
+ PRIMARY KEY (`sale_id`),
+ KEY `customer_id` (`customer_id`),
+ KEY `employee_id` (`employee_id`),
+ KEY `company_id` (`company_id`),
+ KEY `invoice_no` (`invoice_no`),
+ KEY `supplier_id` (`supplier_id`),
+ KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `pos_recurring_invoices_items` (
+ `sale_item_id` int(10) NOT NULL AUTO_INCREMENT,
+ `invoice_no` varchar(20) NOT NULL,
+ `sale_id` int(10) NOT NULL DEFAULT '0',
+ `item_id` int(10) NOT NULL DEFAULT '0',
+ `description` varchar(30) DEFAULT NULL,
+ `serialnumber` varchar(30) DEFAULT NULL,
+ `line` int(3) NOT NULL DEFAULT '0',
+ `quantity_sold` decimal(15,2) NOT NULL DEFAULT '0.00',
+ `item_cost_price` decimal(15,4) NOT NULL,
+ `item_unit_price` decimal(15,4) NOT NULL,
+ `discount_percent` int(11) NOT NULL DEFAULT '0',
+ `size_id` int(255) NOT NULL,
+ `color_id` int(255) NOT NULL,
+ `service` tinyint(1) NOT NULL,
+ `unit_id` int(20) DEFAULT NULL,
+ `currency_id` int(10) DEFAULT NULL,
+ `exchange_rate` decimal(10,5) DEFAULT NULL,
+ `company_id` int(20) NOT NULL,
+ `discount_value` decimal(10,4) DEFAULT NULL,
+ `tax_id` int(20) NOT NULL DEFAULT '0',
+ `tax_rate` int(20) NOT NULL DEFAULT '0',
+ `inventory_acc_code` varchar(20) DEFAULT '0',
+ PRIMARY KEY (`sale_item_id`),
+ KEY `invoice_no` (`invoice_no`,`sale_id`,`item_id`),
+ KEY `company_id` (`company_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `pos_recurring_invoices` ADD `period_start_date` DATE NULL AFTER `due_date`, ADD `last_send_date` DATE NULL AFTER `period_start_date`, ADD `send_every_day` INT(11) NULL AFTER `last_send_date`, ADD `send_every_month` VARCHAR(30) NULL AFTER `send_every_day`, ADD `sending_date` VARCHAR(30) NULL AFTER `send_every_month`, ADD `shipment_type` INT(11) NULL AFTER `sending_date`, ADD `next_shipment` DATE NULL AFTER `shipment_type`;

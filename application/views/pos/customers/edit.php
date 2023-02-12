@@ -33,34 +33,17 @@ echo form_hidden('id',$values['id']);
 <div class="form-group">
   <label class="control-label col-sm-2" for="opening">Opening Balance Debit:</label>
   <div class="col-sm-4">
-    <input type="number" class="form-control" name="op_balance_dr" value="<?php echo $values['op_balance_dr']; ?>" min="0" step="0.01" placeholder="Opening Balance Amount" />
+    <input type="number" class="form-control" name="op_balance_dr" value="<?php echo $values['op_balance_dr']; ?>" min="0" step="0.00001" placeholder="Opening Balance Amount" />
     <input type="hidden" name="op_balance_dr_old" value="<?php echo $values['op_balance_dr']; ?>"/>
   </div>
   
   <label class="control-label col-sm-2" for="opening">Opening Balance Credit:</label>
   <div class="col-sm-4">
-    <input type="number" class="form-control" name="op_balance_cr" value="<?php echo $values['op_balance_cr']; ?>" min="0" step="0.01" placeholder="Opening Balance Amount" />
+    <input type="number" class="form-control" name="op_balance_cr" value="<?php echo $values['op_balance_cr']; ?>" min="0" step="0.00001" placeholder="Opening Balance Amount" />
     <input type="hidden" name="op_balance_cr_old" value="<?php echo $values['op_balance_cr']; ?>"/>
   </div>
   
 </div>
-
-<?php if(@$_SESSION['multi_currency'] == 1)
-{
-?>
-<div class="form-group">
-  <label class="control-label col-sm-2" for="currency_id">Currency:</label>
-  <div class="col-sm-4">
-    <?php echo form_dropdown('currency_id',$currencyDropDown,$values['currency_id'],'class="form-control select2me" required=""'); ?>
-  </div>
-  
-    <label class="col-md-2 control-label">Exchange Rate</label>
-    <div class="col-md-4">
-    	<input type="text" class="form-control" name="exchange_rate" value="<?php echo $values['exchange_rate']; ?>" placeholder="Enter Exchange Rate">
-    
-    </div>
-</div>
-<?php } ?> 
 
 <div class="form-group">
   <label class="control-label col-md-2" for="store Name">Account:</label>

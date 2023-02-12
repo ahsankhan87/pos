@@ -26,6 +26,8 @@ var path = '<?php echo base_url(); ?>';</script>
 <!-- custom Angular JS-->
 <script src="<?php echo base_url() ?>js/angular/myapp.js"></script>
 <script src="<?php echo base_url() ?>js/angular/trans/salesCtrl.js"></script>
+<script src="<?php echo base_url() ?>js/angular/trans/recurringInvoicesCtrl.js"></script>
+<script src="<?php echo base_url() ?>js/angular/trans/deliveryNoteCtrl.js"></script>
 <script src="<?php echo base_url() ?>js/angular/trans/editSalesCtrl.js"></script>
 <script src="<?php echo base_url() ?>js/angular/trans/purchaseCtrl.js"></script>
 <script src="<?php echo base_url() ?>js/angular/trans/purchaseordersCtrl.js"></script>

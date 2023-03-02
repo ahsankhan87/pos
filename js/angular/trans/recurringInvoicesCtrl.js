@@ -261,7 +261,6 @@ app.controller('recurringInvoicesCtrl', function($scope,$http,$timeout) {
             //GET INVENTORY AND WIP ACCOUNT CODE AND  AMOUNT FROM ITEMS TABLE
             //if ($scope.inventory_acc_code != returnData[0].inventory_acc_code) {
                 
-               
             //} 
             ////////////////
             
@@ -280,7 +279,6 @@ app.controller('recurringInvoicesCtrl', function($scope,$http,$timeout) {
         if($scope.invoice.items.length > 0)
         {
             if(parseInt($scope.customer_id) !== 0 || parseInt($scope.supplier_id) !== 0 || $scope.supplier_id == null || $scope.customer_id == null)
-            
             {
                 $scope.cart_loader = true;//show loader gif
                 

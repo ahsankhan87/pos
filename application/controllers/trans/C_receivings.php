@@ -107,18 +107,9 @@ class C_receivings extends MY_Controller{
             $supplier_id =$data_posted->supplier_id;
             $posting_type_code = $this->M_suppliers->getSupplierPostingTypes($supplier_id);
             
-            //if multi currency is used then multiply $exchange_rate with amount
-             if(@$_SESSION['multi_currency'] == 1)
-             {
-                //total net amount 
-                $total_amount =  round(($data_posted->total_amount-$discount)/$exchange_rate,2)-$total_tax_amount;
-                $total_return_amount =  round(($data_posted->total_amount-$discount)/$exchange_rate,2)-$total_tax_amount;//FOR RETURN PURSPOSE
-             }else{
-                $total_amount =  round(($data_posted->total_amount-$discount),2)-$total_tax_amount;
-                $total_return_amount =  round(($data_posted->total_amount-$discount),2)-$total_tax_amount;//FOR RETURN PURSPOSE
-             }
-            /////
-        
+            $total_amount =  round(($data_posted->total_amount-$discount),2)-$total_tax_amount;
+            $total_return_amount =  round(($data_posted->total_amount-$discount),2)-$total_tax_amount;//FOR RETURN PURSPOSE
+             
         if(count($posting_type_code) !== 0)
         {
          $data = array(
@@ -252,7 +243,7 @@ class C_receivings extends MY_Controller{
                     $dr_ledger_id = $inventory_code;
                     $cr_ledger_id = $posting_type_code[0]['cash_acc_code'];
                 
-                    $this->M_entries->addEntries($dr_ledger_id,$cr_ledger_id,$amount,$amount,ucwords($narration),$new_invoice_no,$sale_date);
+                    $this->M_entries->addEntries($dr_ledger_id,$cr_ledger_id,$total_amount,$total_amount,ucwords($narration),$new_invoice_no,$sale_date);
                 }
 
                 // $dr_ledger_id = $posting_type_code[0]['inventory_acc_code'];
@@ -300,7 +291,7 @@ class C_receivings extends MY_Controller{
                 $dr_ledger_id = $inventory_code;
                 $cr_ledger_id = $posting_type_code[0]['payable_acc_code'];
             
-                $this->M_entries->addEntries($dr_ledger_id,$cr_ledger_id,$amount,$amount,ucwords($narration),$new_invoice_no,$sale_date);
+                $this->M_entries->addEntries($dr_ledger_id,$cr_ledger_id,$total_amount,$total_amount,ucwords($narration),$new_invoice_no,$sale_date);
             }
 
             // $dr_ledger_id = $posting_type_code[0]['inventory_acc_code'];

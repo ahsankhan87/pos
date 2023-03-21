@@ -283,7 +283,7 @@ app.controller('salesProductCtrl', function($scope,$http,$timeout) {
                 
                  //collect all cart info and submit to db
                 $scope.invoice = {
-                    customer_id:parseInt($scope.customer_id),
+                    customer_id:$('#cust').val(),//parseInt($scope.customer_id),
                     emp_id:$scope.emp_id,
                     saleType:$scope.saleType,
                     register_mode:$scope.register_mode,

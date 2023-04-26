@@ -648,9 +648,9 @@ class C_customers extends MY_Controller{
                     $op_balance_cr = (float)$this->input->post('op_balance_cr', true)/$exchange_rate;
                     
                     
-                    $op_balance_dr_old = $this->input->post('op_balance_dr_old', true)/$exchange_rate;
+                    $op_balance_dr_old = (float)$this->input->post('op_balance_dr_old', true)/$exchange_rate;
                     
-                    $op_balance_cr_old = $this->input->post('op_balance_cr_old', true)/$exchange_rate;
+                    $op_balance_cr_old = (float)$this->input->post('op_balance_cr_old', true)/$exchange_rate;
                     
                     
                     $posting_type_code = $this->M_postingTypes->get_salesPostingTypes($this->input->post('posting_type_id',true));

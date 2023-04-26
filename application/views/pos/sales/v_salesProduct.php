@@ -113,18 +113,9 @@
 
                     <label class="control-label col-sm-2" for=""><?php echo lang('customer'); ?></label>
                     <div class="col-sm-4" ng-init="customer_id='<?php echo 1; ?>'">
-                        <!-- <select  id="cust" class="form-control <?php echo ($customer_id == '' ? 'select2me' : '') ?>" ng-change="getCustomerCurrency(customer_id)" ng:model="customer_id"> -->
-                        <select id="cust" class="form-control select2me" ng:model="customer_id">
-                            <?php
-                            foreach ($customersDDL as $key => $values) :
-                                echo '<option value="' . $key . '" '.($key == 1 ? "selected=''" : "").'>';
-                                echo $values;
-                                echo '</option>';
-                            endforeach;
-                            ?>
-                        </select>
-                        <p ng-if="customer_vat_no.length > 0">VAT No:{{customer_vat_no}}</p>
-                        <?php echo anchor('#', 'Add New <i class="fa fa-plus"></i>', ' data-toggle="modal" data-target="#customerModal"'); ?>
+                        <select id="cust" ng:model="customer_id" class="form-control select2me"></select>
+                        <br><?php echo anchor('#', lang('add_new').' <i class="fa fa-plus"></i>', ' data-toggle="modal" data-target="#customerModal"'); ?>
+
                     </div>
 
                     <label class="control-label col-sm-2" for=""><?php echo lang('sale') . ' ' . lang('date'); ?></label>
@@ -422,6 +413,39 @@
         var site_url = '<?php echo site_url($langs); ?>';
         var path = '<?php echo base_url(); ?>';
 
+        ////
+        customerDDL();
+        ////////////////////////
+        //GET customer DROPDOWN LIST
+        function customerDDL() {
+
+        let customer_ddl = '';
+        $.ajax({
+            url: site_url + "/pos/C_customers/get_act_customers_JSON",
+            type: 'GET',
+            dataType: 'json', // added data type
+            success: function(data) {
+                console.log(data);
+                let i = 0;
+                customer_ddl += '<option value="0">Select Customer</option>';
+
+                $.each(data, function(index, value) {
+
+                    customer_ddl += '<option value="' + value.id + '">' + value.first_name+ '</option>';
+
+                });
+
+                $('#cust').html(customer_ddl);
+
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        });
+        }
+        ///////////////////
+        
         $("#customerForm").submit(function(event) {
             // Stop form from submitting normally
             event.preventDefault();
@@ -442,10 +466,8 @@
                     //$("#result").html(data);
                     toastr.success("Data saved successfully", 'Success');
                     console.log(data);
-
-                    setTimeout(function() {
-                        location.reload();
-                    }, 2000);
+                    $('#customerModal').modal('toggle');
+                    customerDDL();
 
                 });
             }

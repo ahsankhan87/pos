@@ -119,7 +119,7 @@ class C_receivings extends MY_Controller{
              }
             /////
         
-        if(count((array)$posting_type_code) !== 0)
+        if(count($posting_type_code) !== 0)
         {
          $data = array(
             'company_id'=> $_SESSION['company_id'],
@@ -252,7 +252,7 @@ class C_receivings extends MY_Controller{
                     $dr_ledger_id = $inventory_code;
                     $cr_ledger_id = $posting_type_code[0]['cash_acc_code'];
                 
-                    $this->M_entries->addEntries($dr_ledger_id,$cr_ledger_id,$amount,$amount,ucwords($narration),$new_invoice_no,$sale_date);
+                    $this->M_entries->addEntries($dr_ledger_id,$cr_ledger_id,$total_amount,$total_amount,ucwords($narration),$new_invoice_no,$sale_date);
                 }
 
                 // $dr_ledger_id = $posting_type_code[0]['inventory_acc_code'];
@@ -300,7 +300,7 @@ class C_receivings extends MY_Controller{
                 $dr_ledger_id = $inventory_code;
                 $cr_ledger_id = $posting_type_code[0]['payable_acc_code'];
             
-                $this->M_entries->addEntries($dr_ledger_id,$cr_ledger_id,$amount,$amount,ucwords($narration),$new_invoice_no,$sale_date);
+                $this->M_entries->addEntries($dr_ledger_id,$cr_ledger_id,$total_amount,$total_amount,ucwords($narration),$new_invoice_no,$sale_date);
             }
 
             // $dr_ledger_id = $posting_type_code[0]['inventory_acc_code'];

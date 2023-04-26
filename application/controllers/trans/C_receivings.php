@@ -119,7 +119,7 @@ class C_receivings extends MY_Controller{
              }
             /////
         
-        if(count($posting_type_code) !== 0)
+        if(count((array)$posting_type_code) !== 0)
         {
          $data = array(
             'company_id'=> $_SESSION['company_id'],

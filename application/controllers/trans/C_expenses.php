@@ -49,7 +49,7 @@ class C_expenses extends MY_Controller{
            $new_invoice_no = 'P'.$number;
            
         //extract JSON array items from posted data.
-        if(count($data_posted) > 0)
+        if(count((array)$data_posted) > 0)
         {
             $this->db->trans_start();
             

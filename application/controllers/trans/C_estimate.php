@@ -221,7 +221,7 @@ class C_estimate extends MY_Controller{
 //        print_r($data_posted);
 //        echo die;
         
-        if(count($data_posted) > 0)
+        if(count((array)$data_posted) > 0)
         {
             $this->db->trans_start();
         

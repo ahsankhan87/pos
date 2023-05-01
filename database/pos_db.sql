@@ -2612,6 +2612,7 @@ ALTER TABLE `users`
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 ALTER TABLE `companies` ADD `forgot_pass_identity` TEXT NULL AFTER `tax_no`;
+ALTER TABLE `users` ADD `forgot_pass_identity` TEXT NULL AFTER `status`;
 ALTER TABLE `users` ADD `email` varchar(200) NULL AFTER `forgot_pass_identity`;
 
 ALTER TABLE `pos_customer_payments` ADD `due_date` DATE NULL AFTER `entry_id`;

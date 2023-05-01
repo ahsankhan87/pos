@@ -107,9 +107,18 @@ class C_receivings extends MY_Controller{
             $supplier_id =$data_posted->supplier_id;
             $posting_type_code = $this->M_suppliers->getSupplierPostingTypes($supplier_id);
             
-            $total_amount =  round(($data_posted->total_amount-$discount),2)-$total_tax_amount;
-            $total_return_amount =  round(($data_posted->total_amount-$discount),2)-$total_tax_amount;//FOR RETURN PURSPOSE
-             
+            //if multi currency is used then multiply $exchange_rate with amount
+             if(@$_SESSION['multi_currency'] == 1)
+             {
+                //total net amount 
+                $total_amount =  round(($data_posted->total_amount-$discount)/$exchange_rate,2)-$total_tax_amount;
+                $total_return_amount =  round(($data_posted->total_amount-$discount)/$exchange_rate,2)-$total_tax_amount;//FOR RETURN PURSPOSE
+             }else{
+                $total_amount =  round(($data_posted->total_amount-$discount),2)-$total_tax_amount;
+                $total_return_amount =  round(($data_posted->total_amount-$discount),2)-$total_tax_amount;//FOR RETURN PURSPOSE
+             }
+            /////
+        
         if(count($posting_type_code) !== 0)
         {
          $data = array(

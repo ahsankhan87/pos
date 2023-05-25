@@ -2745,3 +2745,22 @@ CREATE TABLE `pos_recurring_invoices_items` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 ALTER TABLE `pos_recurring_invoices` ADD `period_start_date` DATE NULL AFTER `due_date`, ADD `last_send_date` DATE NULL AFTER `period_start_date`, ADD `send_every_day` INT(11) NULL AFTER `last_send_date`, ADD `send_every_month` VARCHAR(30) NULL AFTER `send_every_day`, ADD `sending_date` VARCHAR(30) NULL AFTER `send_every_month`, ADD `shipment_type` INT(11) NULL AFTER `sending_date`, ADD `next_shipment` DATE NULL AFTER `shipment_type`;
+
+CREATE TABLE `acc_receipts` (
+ `id` int(10) NOT NULL AUTO_INCREMENT,
+ `invoice_no` varchar(100) NOT NULL,
+ `payment_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ `company_id` int(255) NOT NULL,
+ `employee_id` int(10) NOT NULL DEFAULT '0',
+ `comment` text NOT NULL,
+ `payment_date` date NOT NULL,
+ `description` text,
+ `name` varchar(100) NOT NULL,
+ `amount` double(10,4) NOT NULL,
+ `account_code` varchar(100) NOT NULL,
+ `tax_id` int(11) NOT NULL DEFAULT '0',
+ `tax_rate` decimal(10,3) NOT NULL DEFAULT '0.000',
+ `tax_amount` decimal(10,3) NOT NULL DEFAULT '0.000',
+ `entry_id` int(11) NOT NULL DEFAULT '0',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8

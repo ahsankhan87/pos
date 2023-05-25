@@ -54,10 +54,13 @@ class M_payments extends CI_Model{
     
     function delete($invoice_no)
     {
-        $this->db->delete('acc_entries',array('invoice_no'=>$invoice_no));
-        $this->db->delete('acc_entry_items',array('invoice_no'=>$invoice_no));
+        $this->db->delete('acc_entries',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
+        $this->db->delete('acc_entry_items',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
         
-        $this->db->delete('acc_payments',array('invoice_no'=>$invoice_no));
+        $this->db->delete('acc_payments',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
+        $this->db->delete('pos_supplier_payments',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
+        $this->db->delete('pos_customer_payments',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
+        $this->db->delete('pos_bank_payments',array('invoice_no'=>$invoice_no,'company_id'=> $_SESSION['company_id']));
     }
 }
     

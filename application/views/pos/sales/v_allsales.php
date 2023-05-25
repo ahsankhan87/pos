@@ -16,26 +16,11 @@
         ?>
 
         <p>
-        <div class="btn-group">
-            <button type="button" class="btn btn-success"><?php echo lang('new') . ' ' . lang('transaction') ?></button>
-            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
-            <ul class="dropdown-menu" role="menu">
-                <li>
-                    <?php echo anchor('trans/C_sales/index/cash', lang('cash') . ' ' . lang('sales'), 'class="hidden-print"'); ?>
-                </li>
-                <li>
-                    <?php echo anchor('trans/C_sales/index/credit', lang('credit') . ' ' . lang('sales'), 'class="hidden-print"'); ?>
-                </li>
-                <li>
-                    <?php echo anchor('trans/C_sales/index/cashReturn', lang('cash') . ' ' . lang('return'), 'class="hidden-print"'); ?>
-                </li>
-                <li>
-                    <?php echo anchor('trans/C_sales/index/creditReturn', lang('credit') . ' ' . lang('return'), 'class="hidden-print"'); ?>
-                </li>
-            </ul>
-            
-        </div>
-        
+        <?php echo anchor('trans/C_sales/index/cash', lang('cash') . ' ' . lang('sales'), 'class="btn btn-success hidden-print"'); ?>
+        <?php echo anchor('trans/C_sales/index/credit', lang('credit') . ' ' . lang('sales'), 'class="btn btn-success hidden-print"'); ?>
+        <?php echo anchor('trans/C_sales/index/cashReturn', lang('cash') . ' ' . lang('return'), 'class="btn btn-warning hidden-print"'); ?>
+        <?php echo anchor('trans/C_sales/index/creditReturn', lang('credit') . ' ' . lang('return'), 'class="btn btn-warning hidden-print"'); ?>
+       
         </p>
 
         <div class="portlet">

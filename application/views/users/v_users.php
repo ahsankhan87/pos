@@ -36,7 +36,7 @@
 			</div>
         <div class="portlet-body flip-scroll">
             
-    <table class="table table-bordered table-striped table-condensed flip-content" id="sample_2">
+    <table class="table table-bordered table-striped table-condensed flip-content" id="sample_1">
         <thead class="flip-content">
         <tr>
             <th>ID</th>

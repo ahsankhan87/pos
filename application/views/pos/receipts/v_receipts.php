@@ -51,7 +51,7 @@
                     <label class="control-label col-sm-2" for="">Credit Account</label>
                     <div class="col-sm-4">
 
-                        <select class="form-control select2me" ng:model="credit_account" ng:init="credit_account='2000'">
+                        <select class="form-control select2me" ng:model="credit_account" ng:init="credit_account='1003'">
                             <?php
                             foreach ($cash_account as $key => $values) :
                                 echo '<option value="' . $key . '">';

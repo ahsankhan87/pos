@@ -25,7 +25,7 @@
 <link href="<?php echo base_url(); ?>assets/css/custom.css" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url(); ?>assets/css/animate.min.css" rel="stylesheet" type="text/css">
 <!-- END THEME STYLES -->
-<link rel="shortcut icon" href="favicon.ico">
+<link rel="shortcut icon" href="<?php echo base_url(); ?>assets/img/favicon.ico">
 </head>
 <!-- BEGIN BODY -->
 <body class="login">

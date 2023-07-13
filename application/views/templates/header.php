@@ -426,7 +426,7 @@ var path = '<?php echo base_url(); ?>';</script>
 					<!--<div id="dashboard-report-range" class="pull-right tooltips btn btn-fit-height btn-primary" data-container="body" data-placement="bottom" data-original-title="Change dashboard date range">
 						<i class="icon-calendar"></i>&nbsp; <span class="thin uppercase visible-lg-inline-block">November 20, 2016 - December 19, 2016</span>&nbsp; <i class="fa fa-angle-down"></i>
 					</div>-->
-                    <div class="breadcrumb-username"><?php echo lang('user') ?>: <i><?php echo $_SESSION['username']; ?></i></div>
+                    <div class="breadcrumb-username"><?php echo lang('fiscal_year') .':'. FY_YEAR; ?></i> <br/><?php echo lang('user') ?>: <i><?php echo $_SESSION['username']; ?></i></div>
 				</div>
                 
 			</div>

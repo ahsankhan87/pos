@@ -79,7 +79,7 @@ class M_fyear extends CI_Model{
     
     function activateFyear($id)
     {
-        $this->db->update('acc_fiscal_years', array('status'=>'inactive'));
+        $this->db->update('acc_fiscal_years', array('status'=>'inactive'),array('company_id'=> $_SESSION['company_id']));
         
         $data = array(
         'status' => 'active',
@@ -90,7 +90,7 @@ class M_fyear extends CI_Model{
                     $this->M_logs->add_log($msg,"fyear","activated","Accounts");
                     // end logging
                     
-       $this->db->update('acc_fiscal_years', $data, array('id'=>$id));
+       $this->db->update('acc_fiscal_years', $data, array('id'=>$id,'company_id'=> $_SESSION['company_id']));
        
        //ASSIGN IT TO CONSTANT VARIABLES IN MY_CONTROLLER 
        $fyear = $this->get_ActiveFyear($_SESSION['company_id']);

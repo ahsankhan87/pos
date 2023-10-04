@@ -375,7 +375,7 @@ class M_customers extends CI_Model{
                                 //ADD ITEM DETAIL IN INVENTORY TABLE    
                                   $data1= array(
                                     'trans_item'=>$values['item_id'],
-                                    'trans_comment'=>'KSPOS Deleted',
+                                    'trans_comment'=>'KSPOS Deleted (Customer Delete)',
                                     'trans_inventory' => -$values['quantity_sold'],
                                     'company_id'=> $_SESSION['company_id'],
                                     'trans_user'=>$_SESSION['user_id'],

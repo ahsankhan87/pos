@@ -112,8 +112,8 @@
                     ?>
 
                     <label class="control-label col-sm-2" for=""><?php echo lang('customer'); ?></label>
-                    <div class="col-sm-4" ng-init="customer_id='<?php echo 1; ?>'">
-                        <select id="cust" ng:model="customer_id" class="form-control select2me"></select>
+                    <div class="col-sm-4" >
+                        <select id="cust" ng:model="customer_id" ng-init="customer_id='2'" class="form-control select2me"></select>
                         <br><?php echo anchor('#', lang('add_new').' <i class="fa fa-plus"></i>', ' data-toggle="modal" data-target="#customerModal"'); ?>
 
                     </div>
@@ -431,7 +431,7 @@
 
                 $.each(data, function(index, value) {
 
-                    customer_ddl += '<option value="' + value.id + '">' + value.first_name+ '</option>';
+                    customer_ddl += '<option value="' + value.id + '" '+ (value.id == 1 ? "selected" : "")+'>' + value.first_name+ '</option>';
 
                 });
 

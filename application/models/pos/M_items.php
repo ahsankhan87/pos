@@ -591,7 +591,60 @@ class M_items extends CI_Model{
             return ($avg_cost); //get absolute number i.e if negative value it will convert it to positive
         
     }
-    
+
+    //get avg cost of the product using below formula
+    function getReturnAvgCost($item_id,$new_costPrice,$new_qty,$color_id=0, $size_id=0)
+    {
+        //get old item cost price and qty.
+        $options = array('item_id'=> $item_id,'color_id'=>$color_id,'size_id'=>$size_id);
+        
+        $query = $this->db->get_where('pos_items_detail',$options);
+        if($row = $query->row())
+        {
+            $oldCost_price = $row->avg_cost;
+            //$old_qty = $this->total_stock($item_id,$color_id, $size_id);
+            $old_qty = $row->quantity;
+        }
+        else
+        {  
+            //if old cost and qty is no available then set value to zero
+            $oldCost_price = 0;
+            $old_qty = 0;
+            //////
+        }   
+        
+        //IF SERVICE THEN RETUEN ZERO
+        $options = array('item_id'=> $item_id);
+        $this->db->select('service');
+        $query = $this->db->get_where('pos_items',$options);
+        $row = $query->row();
+        if($row->service)
+        {
+            return 0;
+        }
+        ////////////
+        
+            $old_cost = ($oldCost_price*$old_qty);
+            
+            $new_cost = ($new_costPrice*$new_qty);
+            
+            
+            if($old_cost != $new_cost)
+            {
+                $total_cost = ($old_cost-$new_cost);
+            }else{
+                $total_cost = $old_cost;
+            }
+            
+            $total_qty = (($old_qty-$new_qty) == 0 ? 1 : ($old_qty-$new_qty));
+               
+           
+            $avg_cost = ($total_cost/$total_qty);
+            
+            return ($avg_cost); //get absolute number i.e if negative value it will convert it to positive
+        
+    }
+
     function get_item_history($item_id)
     {
         $options = array('trans_item'=> $item_id,'company_id'=> $_SESSION['company_id']);

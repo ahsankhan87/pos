@@ -189,19 +189,20 @@ class C_receivings extends MY_Controller{
                             if($data_posted->register_mode == 'return')
                             {
                                 $quantity = ($total_stock - $posted_values->quantity);
+                                $avg_cost = $this->M_items->getAvgCost($posted_values->item_id,$posted_values->cost_price,$posted_values->quantity,$posted_values->color_id,$posted_values->size_id,'return');//calculate avg cost
                             }else {
                                 $quantity=($total_stock + $posted_values->quantity); 
+                                $avg_cost = $this->M_items->getAvgCost($posted_values->item_id,$posted_values->cost_price,$posted_values->quantity,$posted_values->color_id,$posted_values->size_id,$data_posted->register_mode);//calculate avg cost
                             }
 
                         }else{
                             $quantity = 0;
                         }
                         
-                 
                 $option_data = array(
                 'quantity'=>$quantity,
                 'unit_price' =>$posted_values->unit_price,
-                'avg_cost'=>$this->M_items->getAvgCost($posted_values->item_id,$posted_values->cost_price,$posted_values->quantity,$posted_values->color_id,$posted_values->size_id,$data_posted->register_mode)//calculate avg cost
+                'avg_cost'=>$avg_cost,
                  
                 );
               $this->db->update('pos_items_detail',$option_data,array('color_id'=>$posted_values->color_id,'size_id'=>$posted_values->size_id,'item_id'=>$posted_values->item_id));

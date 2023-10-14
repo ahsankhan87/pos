@@ -23,13 +23,36 @@ class C_receivings extends MY_Controller{
         
         //$data['itemDDL'] = $this->M_items->getItemDropDown();
         $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
-        $data['sizesDDL'] = $this->M_sizes->get_activeSizesDDL();
+        //$data['sizesDDL'] = $this->M_sizes->get_activeSizesDDL();
         $data['supplierDDL'] = $this->M_suppliers->getSupplierDropDown();//search for legder account
         
         $this->load->view('templates/header',$data);
         $this->load->view('pos/receivings/v_purchases',$data);
         $this->load->view('templates/footer');
     }
+    
+    public function purchase_return($invoice_no)
+    {
+        $data = array('langs' => $this->session->userdata('lang'));
+
+        $data['title'] = lang('return') . ' ' . lang('purchases'). ' INV # '. $invoice_no;
+        $data['main'] = lang('return') . ' ' . lang('purchases'). ' INV # '. $invoice_no;
+
+        $data['purchaseType'] = ''; //$saleType;//CASH, CREDIT, CASH RETURN AND CREDIT RETURN
+        $data['invoice_no'] = $invoice_no;
+        $data['edit'] = true;
+        //$data['isEstimate'] = $isEstimate;
+
+        //$data['itemDDL'] = $this->M_items->get_allItemsforJSON();
+        $data['supplierDDL'] = $this->M_suppliers->getSupplierDropDown();//search for legder account
+        //$data['supplier_cust'] = $this->M_suppliers->get_cust_supp();
+        $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('pos/receivings/v_return_purchases', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function upload_purchase_file($invoice_no)
     { 
         if($this->input->server('REQUEST_METHOD') === 'POST')
@@ -160,8 +183,8 @@ class C_receivings extends MY_Controller{
                 'item_cost_price'=>($register_mode == 'receive' ? $posted_values->cost_price : -$posted_values->cost_price),//actually its avg cost comming from sale from
                 'item_unit_price'=>($register_mode == 'receive' ? $posted_values->unit_price : -$posted_values->unit_price),//if purchase return then insert amount in negative
                 //'discount_percent'=>$posted_values->discount,
-                'color_id'=>$posted_values->color_id,
-                'size_id'=>$posted_values->size_id,
+                'color_id'=>0,
+                'size_id'=>0,
                 'company_id'=> $_SESSION['company_id'],
                 'unit_id'=>$posted_values->unit_id,
                 'tax_id'=>$posted_values->tax_id,
@@ -179,9 +202,9 @@ class C_receivings extends MY_Controller{
                     
             //insert items details
             //if items already exist according to expiry then update qty.
-            if($this->M_items->checkItemOptions($posted_values->item_id,$posted_values->color_id,$posted_values->size_id))
+            if($this->M_items->checkItemOptions($posted_values->item_id,0,0))
             {
-                $total_stock =  $this->M_items->total_stock($posted_values->item_id,$posted_values->color_id,$posted_values->size_id);
+                $total_stock =  $this->M_items->total_stock($posted_values->item_id,0,0);
                         
                         //if products is to be return then it will subtract from qty and the avg cost will be reverse to original cost
                         if($service != 1)
@@ -189,10 +212,10 @@ class C_receivings extends MY_Controller{
                             if($data_posted->register_mode == 'return')
                             {
                                 $quantity = ($total_stock - $posted_values->quantity);
-                                $avg_cost = $this->M_items->getAvgCost($posted_values->item_id,$posted_values->cost_price,$posted_values->quantity,$posted_values->color_id,$posted_values->size_id,'return');//calculate avg cost
+                                $avg_cost = $this->M_items->getAvgCost($posted_values->item_id,$posted_values->cost_price,$posted_values->quantity,0,0,'return');//calculate avg cost
                             }else {
                                 $quantity=($total_stock + $posted_values->quantity); 
-                                $avg_cost = $this->M_items->getAvgCost($posted_values->item_id,$posted_values->cost_price,$posted_values->quantity,$posted_values->color_id,$posted_values->size_id,$data_posted->register_mode);//calculate avg cost
+                                $avg_cost = $this->M_items->getAvgCost($posted_values->item_id,$posted_values->cost_price,$posted_values->quantity,0,0,$data_posted->register_mode);//calculate avg cost
                             }
 
                         }else{
@@ -205,7 +228,7 @@ class C_receivings extends MY_Controller{
                 'avg_cost'=>$avg_cost,
                  
                 );
-              $this->db->update('pos_items_detail',$option_data,array('color_id'=>$posted_values->color_id,'size_id'=>$posted_values->size_id,'item_id'=>$posted_values->item_id));
+              $this->db->update('pos_items_detail',$option_data,array('item_id'=>$posted_values->item_id));
          
             }
             //item details
@@ -614,4 +637,84 @@ class C_receivings extends MY_Controller{
         $this->session->set_flashdata('message','Entry Deleted');
         redirect('trans/C_receivings/allPurchases','refresh');
     }
+
+    
+    function getReceivingsItemsJSON($invoice_no)
+    {
+        $data = $this->M_receivings->get_receiving_items_by_invoice($invoice_no);
+
+        $outp = "";
+        foreach ($data as $rs) {
+            //$tm =  json_decode($rs["teams_id"]);
+            //print_r($tm);
+
+            if ($outp != "") {
+                $outp .= ",";
+            }
+
+            $outp .= '{"item_id":"'  . $rs["item_id"] . '",';
+            $outp .= '"size_id":"'   . $rs["size_id"] . '",';
+            $outp .= '"unit_id":"'   . $rs["unit_id"] . '",';
+            $outp .= '"item_cost_price":"'   . $rs["item_cost_price"] . '",';
+            $outp .= '"item_unit_price":"'   . $rs["item_unit_price"] . '",';
+            $outp .= '"quantity_purchased":"'   . $rs["quantity_purchased"] . '",';
+            $outp .= '"discount_percent":"'   . $rs["discount_percent"] . '",';
+            //$outp .= '"discount_value":"'   . $rs["discount_value"] . '",';
+            $outp .= '"tax_id":"'   . $rs["tax_id"] . '",';
+            $outp .= '"tax_rate":"'   . $rs["tax_rate"] . '",';
+            $outp .= '"tax_name":"",';
+            //$outp .= '"inventory_acc_code":"'   . $rs["inventory_acc_code"] . '",';
+            $outp .= '"service":"'   . $rs["service"] . '",';
+
+            $item_name = $this->M_items->get_ItemName($rs["item_id"]);
+            $outp .= '"name":"'   . @$item_name . '",';
+
+            // $size_name = $this->M_sizes->get_sizeName($rs["size_id"]);
+            // $outp .= '"size":"'   . @$size_name . '",';
+
+            $outp .= '"invoice_no":"' . $rs["invoice_no"]     . '"}';
+        }
+
+        $outp = '[' . $outp . ']';
+        echo $outp;
+    }
+
+
+    function getReceivingsJSON($invoice_no)
+    {
+        $data = $this->M_receivings->get_receiving_by_invoice($invoice_no);
+
+        $outp = "";
+        foreach ($data as $rs) {
+            //$tm =  json_decode($rs["teams_id"]);
+            //print_r($tm);
+
+            if ($outp != "") {
+                $outp .= ",";
+            }
+
+            $outp .= '{"receiving_time":"'  . $rs["receiving_time"] . '",';
+            $outp .= '"receiving_date":"'   . $rs["receiving_date"] . '",';
+            $outp .= '"supplier_id":"'   . $rs["supplier_id"] . '",';
+            $outp .= '"supplier_invoice_no":"'   . $rs["supplier_invoice_no"] . '",';
+            $outp .= '"employee_id":"'   . $rs["employee_id"] . '",';
+            $outp .= '"user_id":"'   . $rs["user_id"] . '",';
+            $outp .= '"register_mode":"'   . $rs["register_mode"] . '",';
+            $outp .= '"account":"'   . $rs["account"] . '",';
+            $outp .= '"description":"'   . $rs["description"] . '",';
+            $outp .= '"discount_value":"'   . $rs["discount_value"] . '",';
+            $outp .= '"total_amount":"'   . $rs["total_amount"] . '",';
+            $outp .= '"total_tax":"'   . $rs["total_tax"] . '",';
+            $outp .= '"paid":"'   . $rs["paid"] . '",';
+            
+            $outp .= '"exchange_rate":"'   . $rs["exchange_rate"] . '",';
+            $outp .= '"currency_id":"'   . $rs["currency_id"] . '",';
+
+            $outp .= '"invoice_no":"' . $rs["invoice_no"]     . '"}';
+        }
+
+        $outp = '[' . $outp . ']';
+        echo $outp;
+    }
+
 }

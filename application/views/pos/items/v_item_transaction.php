@@ -17,21 +17,9 @@
         ?> 
         <div class="row">
             <div class="col-sm-12">
-                <div class="btn-group">
-					<button type="button" class="btn btn-success">Add New <i class="fa fa-plus"></i></button>
-					<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
-					<ul class="dropdown-menu" role="menu">
-						<li>
-							<?php echo anchor('pos/Items/create','Product'); ?>
-						</li>
-						<li>
-							<?php echo anchor('pos/Items/createService','Services'); ?>
-						</li>
-						
-					</ul>
-				</div>
+                
 				<!-- /btn-group -->
-                <?php echo anchor('pos/Categories','Categories','class="btn btn-primary"'); ?>
+                <?php echo anchor('pos/items','Go Back','onclick="history.back()" class="btn btn-primary"'); ?>
                 
                 <!-- Trigger the modal with a button 
                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#create-Product-Modal">Add New Product</button>

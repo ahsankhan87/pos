@@ -43,7 +43,7 @@ class M_receivings extends CI_Model{
         }
         
         $this->db->select('r.receiving_id,r.invoice_no,r.receiving_date,r.total_amount,r.total_tax,(total_amount+r.total_tax) AS net_amount,
-        r.supplier_id,r.account,r.employee_id,e.first_name as emp,s.name as supplier,r.supplier_invoice_no,r.file');
+        r.supplier_id,r.account,r.register_mode,r.employee_id,e.first_name as emp,s.name as supplier,r.supplier_invoice_no,r.file');
         $this->db->join('pos_supplier as s','s.id = r.supplier_id','left');
         $this->db->join('pos_employees as e','e.id = r.employee_id','left');
         
@@ -106,6 +106,14 @@ class M_receivings extends CI_Model{
     {   
         $this->db->where(array('invoice_no'=>$invoice_no,'company_id'=>$_SESSION['company_id']));
         $query = $this->db->get('pos_receivings');
+        return $query->result_array();
+       
+    }
+    
+    function get_receiving_items_by_invoice($invoice_no)
+    {   
+        $this->db->where(array('invoice_no'=>$invoice_no,'company_id'=>$_SESSION['company_id']));
+        $query = $this->db->get('pos_receivings_items');
         return $query->result_array();
        
     }

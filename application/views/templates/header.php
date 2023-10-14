@@ -30,6 +30,7 @@ var path = '<?php echo base_url(); ?>';</script>
 <script src="<?php echo base_url() ?>js/angular/trans/deliveryNoteCtrl.js"></script>
 <script src="<?php echo base_url() ?>js/angular/trans/editSalesCtrl.js"></script>
 <script src="<?php echo base_url() ?>js/angular/trans/purchaseCtrl.js"></script>
+<script src="<?php echo base_url() ?>js/angular/trans/purchase_returnCtrl.js"></script>
 <script src="<?php echo base_url() ?>js/angular/trans/purchaseordersCtrl.js"></script>
 <script src="<?php echo base_url() ?>js/angular/trans/expenseCtrl.js"></script>
 <script src="<?php echo base_url() ?>js/angular/trans/receiptsCtrl.js"></script>

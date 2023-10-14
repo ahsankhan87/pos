@@ -534,13 +534,23 @@ var sample_purchaseorders = function () {
                 }else{
                     var file = '<a href="'+path+'images/purchases/'+aData['file']+'" target="_blank" data-file="' + aData['file'] +'" data-invoice_no="' + aData['invoice_no'] +'" id="show_purchase_file" title="Show File" ><i class=\'fa fa-image\'></i></a>'
                 }
+                if(aData['register_mode'] != 'return')
+                {
+                    var return_link = ' | <a href="'+
+                    site_url+'/trans/C_receivings/purchase_return/' + aData['invoice_no'] +  
+                    '" onclick="return confirm(\'Are you sure you want to purchase return?\')"; title="Return">Return</a>';
+                }else{
+                    var return_link = '';
+                }
                 $('td:eq(8)', nRow).html('<a href="'+
                                 site_url+'/trans/C_receivings/receipt/' + aData['invoice_no'] + 
                                 '" title="Print Invoice" ><i class=\'fa fa-print fa-fw\'></i></a> | '+
                                 '<a href="'+
                                 site_url+'/trans/C_receivings/delete/' + aData['invoice_no'] +  
                                 '" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a> | '+
-                                file);
+                                file +
+                                return_link
+                                );
                             
                             return nRow;
                         },

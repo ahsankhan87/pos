@@ -17,8 +17,8 @@
         <!-- /btn-group -->
         <?php echo anchor('trans/C_receivings/index/cash', lang('cash') . ' ' . lang('purchases'), 'class="btn btn-success hidden-print"'); ?>
         <?php echo anchor('trans/C_receivings/index/credit', lang('credit') . ' ' . lang('purchases'), 'class="btn btn-success hidden-print"'); ?>
-        <?php echo anchor('trans/C_receivings/index/cashReturn', lang('cash') . ' ' . lang('purchases') . ' ' . lang('return'), 'class="btn btn-warning hidden-print"'); ?>
-        <?php echo anchor('trans/C_receivings/index/creditReturn', lang('credit') . ' ' . lang('purchases') . ' ' . lang('return'), 'class="btn btn-warning hidden-print"'); ?>
+        <?php //echo anchor('trans/C_receivings/purchase_return', lang('cash') . ' ' . lang('purchases') . ' ' . lang('return'), 'class="btn btn-warning hidden-print"'); ?>
+        <?php //echo anchor('trans/C_receivings/index/creditReturn', lang('credit') . ' ' . lang('purchases') . ' ' . lang('return'), 'class="btn btn-warning hidden-print"'); ?> 
         </p>
 
 

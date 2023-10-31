@@ -21,97 +21,97 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane <?php echo $active_tab_0; ?>" id="tab_0">
-                <div class='hide' id="print_title"><?php echo 'Daily Sale Report'; ?> <strong><?php echo date('d-m-Y', strtotime($from_date)); ?></strong></div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="portlet-body flip-scroll">
-                             <table class="table table-bordered table-striped table-condensed table-hover flip-content" id="sample_1"> <!----sample_sales_reports -->
-                                <thead class="flip-content">
-                                    <tr>
-                                        <th>ID</th> 
-                                        <th>Serial No.</th> 
-                                        <th><?php echo lang('product').' '.lang('size') ?></th>
-                                        <th><?php echo 'Damaged Tyre' ?></th>
-                                        <th><?php echo lang('amount') ?></th>
-                                        <th><?php echo lang('price') ?></th>
-                                    </tr>
-                                </thead>
+            <div class='hide' id="print_title"><?php echo 'Daily Sale Report'; ?> <strong><?php echo date('d-m-Y', strtotime($from_date)); ?></strong></div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="portlet-body flip-scroll">
+                        <table class="table table-bordered table-striped table-condensed table-hover flip-content" id="sample_1"> <!----sample_sales_reports -->
+                            <thead class="flip-content">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Serial No.</th>
+                                    <th><?php echo lang('product') . ' ' . lang('size') ?></th>
+                                    <th><?php echo '' ?></th>
+                                    <th><?php echo lang('amount') ?></th>
+                                    <th><?php echo lang('price') ?></th>
+                                </tr>
+                            </thead>
 
-                                <tbody>
-                                    <?php
-                                    $unit_price = 0;
-                                    $cost_price = 0;
-                                    $discount_value = 0;
-                                    $sno=1;
-                                    $id=1;
-                                    $total_price=0;
-                                    $expense_total=0;
+                            <tbody>
+                                <?php
+                                $unit_price = 0;
+                                $cost_price = 0;
+                                $discount_value = 0;
+                                $sno = 1;
+                                $id = 1;
+                                $total_price = 0;
+                                $expense_total = 0;
 
-                                    foreach ($daily_sales_report as $key => $list) {
-                                        
-                                        echo '<td>'.$id++.'</td>';
-                                        echo '<td>'.$sno++.'</td>';
-                                        echo '<td>' . $this->M_items->get_ItemName($list['item_id']) . '</td>';
-                                        echo '<td></td>';
+                                foreach ($daily_sales_report as $key => $list) {
 
-                                        echo '<td class="text-right">' . round($list['item_unit_price'], 2) . '</td>';
-                                        echo '<td class="text-right">';
-                                        if ($list['register_mode'] == "sale") {
-                                            echo (($list['item_unit_price']) * ($list['quantity_sold']) - $list['discount_value']);
-                                        } else {
-                                            echo (($list['item_unit_price']) * - ($list['quantity_sold']) - $list['discount_value']);
-                                        }
-                                        echo '</td>';
+                                    echo '<td>' . $id++ . '</td>';
+                                    echo '<td>' . $sno++ . '</td>';
+                                    echo '<td>' . $this->M_items->get_ItemName($list['item_id']) . '</td>';
+                                    echo '<td></td>';
 
-                                        $unit_price  += (($list['item_unit_price']) * ($list['quantity_sold']) - $list['discount_value']);
-                                        
-                                        echo '</tr>';
+                                    echo '<td class="text-right">' . round($list['item_unit_price'], 2) . '</td>';
+                                    echo '<td class="text-right">';
+                                    if ($list['register_mode'] == "sale") {
+                                        echo (($list['item_unit_price']) * ($list['quantity_sold']) - $list['discount_value']);
+                                    } else {
+                                        echo (($list['item_unit_price']) * - ($list['quantity_sold']) - $list['discount_value']);
                                     }
-                                    $total_price = $unit_price;
-                                    echo '<tr>';
-                                    echo   '<th></th>
+                                    echo '</td>';
+
+                                    $unit_price  += (($list['item_unit_price']) * ($list['quantity_sold']) - $list['discount_value']);
+
+                                    echo '</tr>';
+                                }
+                                $total_price = $unit_price;
+                                echo '<tr>';
+                                echo   '<th></th>
                                             <th class="text-right"></th>
                                             <th class="text-right"></th>
                                             <th class="text-right"></th>
                                             <th class="text-right">Total</th>
-                                            <th class="text-right">'. number_format($total_price,2).'</th>';
+                                            <th class="text-right">' . number_format($total_price, 2) . '</th>';
+                                echo '</tr>';
+                                $expenses = $this->M_payments->get_payments(FALSE, $from_date, $to_date);
+
+                                foreach ($expenses as $list) {
+                                    echo '<tr>';
+                                    echo '<td></td>';
+                                    echo '<td></td>';
+                                    echo '<td></td>';
+                                    echo '<td></td>';
+                                    echo '<th class="text-right">' . $list['title'] . '</th>';
+                                    echo '<th class="text-right">' . number_format($list['net_amount'], 2) . '</th>';
                                     echo '</tr>';
-                                    $expenses = $this->M_payments->get_payments(FALSE,$from_date,$to_date);
-                                    
-                                    foreach ($expenses as $list) {
-                                        echo '<tr>';
-                                            echo '<td></td>';
-                                            echo '<td></td>';
-                                            echo '<td></td>';
-                                            echo '<td></td>';
-                                            echo '<th class="text-right">'.$list['title'].'</th>';
-                                            echo '<th class="text-right">'.number_format($list['net_amount'],2).'</th>';
-                                        echo '</tr>';
 
-                                        $expense_total += $list['net_amount'];
-                                    }
-                                    
-                                    ?>
-                                    
-                                </tbody>
+                                    $expense_total += $list['net_amount'];
+                                }
 
-                                <tfoot>
-                                    <tr>
-                                        <th></th>
-                                        <th class="text-right"></th>
-                                        <th class="text-right"></th>
-                                        <th class="text-right"></th>
-                                        <th class="text-right">Balance</th>
-                                        <th class="text-right"><?php echo number_format($total_price-$expense_total,2); ?></th>
-                                    </tr>
-                                </tfoot>
+                                ?>
 
-                            </table>
-                        </div>
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th class="text-right"></th>
+                                    <th class="text-right"></th>
+                                    <th class="text-right"></th>
+                                    <th class="text-right">Balance</th>
+                                    <th class="text-right"><?php echo number_format($total_price - $expense_total, 2); ?></th>
+                                </tr>
+                            </tfoot>
+
+                        </table>
                     </div>
-                    <hr />
                 </div>
-           
+                <hr />
+            </div>
+
         </div> <!-- /.tab 0 -->
 
         <div class="tab-pane <?php echo $active_tab_1; ?>" id="tab_1">

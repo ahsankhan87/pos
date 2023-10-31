@@ -15,7 +15,7 @@
         <p>
             <?php echo anchor('pos/C_customers/create', lang('add_new') . ' <i class="fa fa-plus"></i>', 'class="btn btn-success"'); ?>
             <?php echo anchor('pos/C_customers/CustomerImport', 'Import Customers', 'class="btn btn-success"'); ?>
-            <?php echo anchor('pos/C_customers/cheque_list', 'List of Cheques', 'class="btn btn-success"'); ?>
+            <?php //echo anchor('pos/C_customers/cheque_list', 'List of Cheques', 'class="btn btn-success"'); ?>
 
         </p>
 

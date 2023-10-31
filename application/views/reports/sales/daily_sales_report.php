@@ -3,7 +3,7 @@
         <li class="<?php echo $active_tab_0; ?>">
             <a href="#tab_0" data-toggle="tab"><?php echo lang('sales') . ' ' . lang('report'); ?></a>
         </li>
-        
+
     </ul>
     <div class="tab-content">
         <div class="tab-pane <?php echo $active_tab_0; ?>" id="tab_0">
@@ -29,7 +29,7 @@
 
                             <div class="form-group">
 
-                                
+
                                 <div class="col-sm-offset-2 col-sm-4">
                                     <button type="submit" class="btn btn-primary"><?php echo lang('search') ?></button>
                                 </div>
@@ -53,16 +53,16 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="portlet-body flip-scroll">
-                             <table class="table table-bordered table-striped table-condensed table-hover flip-content" id="sample_1"> <!----sample_sales_reports -->
+                            <table class="table table-bordered table-striped table-condensed table-hover flip-content" id="sample_1"> <!----sample_sales_reports -->
                                 <thead class="flip-content">
                                     <tr>
                                         <!-- <th><?php echo lang('date') ?></th> -->
                                         <!-- <th>Inv#</th> -->
                                         <!-- <th><?php echo lang('customer') ?></th> -->
-                                        <th>id.</th> 
-                                        <th>Serial No.</th> 
-                                        <th><?php echo lang('product').' '.lang('size') ?></th>
-                                        <th><?php echo 'Damaged Tyre' ?></th>
+                                        <th>id.</th>
+                                        <th>Serial No.</th>
+                                        <th><?php echo lang('product') . ' ' . lang('size') ?></th>
+                                        <th><?php echo '' ?></th>
                                         <!-- <th>Qty <?php echo lang('sold') ?></th> -->
                                         <th><?php echo lang('amount') ?></th>
                                         <!-- <th><?php echo lang('disc') ?></th> -->
@@ -76,9 +76,9 @@
                                     $unit_price = 0;
                                     $cost_price = 0;
                                     $discount_value = 0;
-                                    $sno=1;
-                                    $id=1;
-                                    $total_price=0;
+                                    $sno = 1;
+                                    $id = 1;
+                                    $total_price = 0;
 
                                     foreach ($sales_report as $key => $list) {
                                         //  echo '<td>'.form_checkbox('p_id[]',$list['item_id'],false).'</td>';
@@ -87,8 +87,8 @@
                                         // echo '<td>' . $this->M_customers->get_CustomerName($list['customer_id']) . '</td>';
                                         // echo '<td>' . $this->M_employees->get_empName($list['employee_id']) . '</td>';
 
-                                        echo '<td>'.$id++.'</td>';
-                                        echo '<td>'.$sno++.'</td>';
+                                        echo '<td>' . $id++ . '</td>';
+                                        echo '<td>' . $sno++ . '</td>';
                                         echo '<td>' . $this->M_items->get_ItemName($list['item_id']) . '</td>';
                                         echo '<td></td>';
 

@@ -130,7 +130,7 @@ class M_reports extends CI_Model{
     function get_net_income()
     {
         $query_string = 
-        'SELECT sum(debit-credit) AS net_income
+        'SELECT sum(credit-debit) AS net_income
         FROM account_types at join acc_groups g ON at.id=g.account_type_id JOIN acc_entry_items ei ON ei.account_code=g.account_code
         WHERE ei.company_id = '.$_SESSION['company_id'].' AND g.company_id = '.$_SESSION['company_id'].' AND ei.date BETWEEN "'.FY_START_DATE.'" AND "'.FY_END_DATE.'" AND at.name in ("expense","cos","revenue")';
         
@@ -174,4 +174,3 @@ class M_reports extends CI_Model{
         
     }
 }
-?>

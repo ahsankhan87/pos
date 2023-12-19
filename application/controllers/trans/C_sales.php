@@ -145,16 +145,13 @@ class C_sales extends MY_Controller
             $this->db->trans_start();
 
             //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
-<<<<<<< HEAD
+
             list($sale_date, $time) = explode("T", $data_posted->sale_date);
-		    list($due_date, $time) = explode("T", $data_posted->due_date);
+            list($due_date, $time) = explode("T", $data_posted->due_date);
 
             // $sale_date = date('Y-m-d', strtotime($data_posted->sale_date));
             // $due_date = ($data_posted->due_date == '' ? '' :date('Y-m-d', strtotime($data_posted->due_date)));
-=======
-            $sale_date = date('Y-m-d', strtotime($data_posted->sale_date));
-            $due_date = ($data_posted->due_date == '' ? '' : date('Y-m-d', strtotime($data_posted->due_date)));
->>>>>>> 8844a7f15c26f211350fcd7881289c1e79ad7920
+
             $customer_id = $data_posted->customer_id;
             $emp_id = $data_posted->emp_id;
             $supplier_id = $data_posted->supplier_id;
@@ -670,7 +667,10 @@ class C_sales extends MY_Controller
 
             //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
             $invoice_no = $data_posted->invoice_no;
-            $sale_date = date('Y-m-d', strtotime($data_posted->sale_date));
+            list($sale_date, $time) = explode("T", $data_posted->sale_date);
+            // list($due_date, $time) = explode("T", $data_posted->due_date);
+
+            // $sale_date = date('Y-m-d', strtotime($data_posted->sale_date));
             $customer_id = $data_posted->customer_id;
             $emp_id = $data_posted->emp_id;
             $supplier_id = $data_posted->supplier_id;

@@ -36,76 +36,76 @@
                                     <th><?php echo lang('price') ?></th>
                                 </tr>
                             </thead>
+                            <?php if (count((array)@$daily_sales_report)) { ?>
+                                <tbody>
+                                    <?php
+                                    $unit_price = 0;
+                                    $cost_price = 0;
+                                    $discount_value = 0;
+                                    $sno = 1;
+                                    $id = 1;
+                                    $total_price = 0;
+                                    $expense_total = 0;
 
-                            <tbody>
-                                <?php
-                                $unit_price = 0;
-                                $cost_price = 0;
-                                $discount_value = 0;
-                                $sno = 1;
-                                $id = 1;
-                                $total_price = 0;
-                                $expense_total = 0;
+                                    foreach ($daily_sales_report as $key => $list) {
 
-                                foreach ($daily_sales_report as $key => $list) {
+                                        echo '<td>' . $id++ . '</td>';
+                                        echo '<td>' . $sno++ . '</td>';
+                                        echo '<td>' . $this->M_items->get_ItemName($list['item_id']) . '</td>';
+                                        echo '<td></td>';
 
-                                    echo '<td>' . $id++ . '</td>';
-                                    echo '<td>' . $sno++ . '</td>';
-                                    echo '<td>' . $this->M_items->get_ItemName($list['item_id']) . '</td>';
-                                    echo '<td></td>';
+                                        echo '<td class="text-right">' . round($list['item_unit_price'], 2) . '</td>';
+                                        echo '<td class="text-right">';
+                                        if ($list['register_mode'] == "sale") {
+                                            echo (($list['item_unit_price']) * ($list['quantity_sold']) - $list['discount_value']);
+                                        } else {
+                                            echo (($list['item_unit_price']) * - ($list['quantity_sold']) - $list['discount_value']);
+                                        }
+                                        echo '</td>';
 
-                                    echo '<td class="text-right">' . round($list['item_unit_price'], 2) . '</td>';
-                                    echo '<td class="text-right">';
-                                    if ($list['register_mode'] == "sale") {
-                                        echo (($list['item_unit_price']) * ($list['quantity_sold']) - $list['discount_value']);
-                                    } else {
-                                        echo (($list['item_unit_price']) * - ($list['quantity_sold']) - $list['discount_value']);
+                                        $unit_price  += (($list['item_unit_price']) * ($list['quantity_sold']) - $list['discount_value']);
+
+                                        echo '</tr>';
                                     }
-                                    echo '</td>';
-
-                                    $unit_price  += (($list['item_unit_price']) * ($list['quantity_sold']) - $list['discount_value']);
-
-                                    echo '</tr>';
-                                }
-                                $total_price = $unit_price;
-                                echo '<tr>';
-                                echo   '<th></th>
+                                    $total_price = $unit_price;
+                                    echo '<tr>';
+                                    echo   '<th></th>
                                             <th class="text-right"></th>
                                             <th class="text-right"></th>
                                             <th class="text-right"></th>
                                             <th class="text-right">Total</th>
                                             <th class="text-right">' . number_format($total_price, 2) . '</th>';
-                                echo '</tr>';
-                                $expenses = $this->M_payments->get_payments(FALSE, $from_date, $to_date);
-
-                                foreach ($expenses as $list) {
-                                    echo '<tr>';
-                                    echo '<td></td>';
-                                    echo '<td></td>';
-                                    echo '<td></td>';
-                                    echo '<td></td>';
-                                    echo '<th class="text-right">' . $list['title'] . '</th>';
-                                    echo '<th class="text-right">' . number_format($list['net_amount'], 2) . '</th>';
                                     echo '</tr>';
+                                    $expenses = $this->M_payments->get_payments(FALSE, $from_date, $to_date);
 
-                                    $expense_total += $list['net_amount'];
-                                }
+                                    foreach ($expenses as $list) {
+                                        echo '<tr>';
+                                        echo '<td></td>';
+                                        echo '<td></td>';
+                                        echo '<td></td>';
+                                        echo '<td></td>';
+                                        echo '<th class="text-right">' . $list['title'] . '</th>';
+                                        echo '<th class="text-right">' . number_format($list['net_amount'], 2) . '</th>';
+                                        echo '</tr>';
 
-                                ?>
+                                        $expense_total += $list['net_amount'];
+                                    }
 
-                            </tbody>
+                                    ?>
 
-                            <tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th class="text-right"></th>
-                                    <th class="text-right"></th>
-                                    <th class="text-right"></th>
-                                    <th class="text-right">Balance</th>
-                                    <th class="text-right"><?php echo number_format($total_price - $expense_total, 2); ?></th>
-                                </tr>
-                            </tfoot>
+                                </tbody>
 
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th class="text-right"></th>
+                                        <th class="text-right"></th>
+                                        <th class="text-right"></th>
+                                        <th class="text-right">Balance</th>
+                                        <th class="text-right"><?php echo number_format($total_price - $expense_total, 2); ?></th>
+                                    </tr>
+                                </tfoot>
+                            <?php } ?>
                         </table>
                     </div>
                 </div>

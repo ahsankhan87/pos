@@ -145,11 +145,16 @@ class C_sales extends MY_Controller
             $this->db->trans_start();
 
             //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
+<<<<<<< HEAD
             list($sale_date, $time) = explode("T", $data_posted->sale_date);
 		    list($due_date, $time) = explode("T", $data_posted->due_date);
 
             // $sale_date = date('Y-m-d', strtotime($data_posted->sale_date));
             // $due_date = ($data_posted->due_date == '' ? '' :date('Y-m-d', strtotime($data_posted->due_date)));
+=======
+            $sale_date = date('Y-m-d', strtotime($data_posted->sale_date));
+            $due_date = ($data_posted->due_date == '' ? '' : date('Y-m-d', strtotime($data_posted->due_date)));
+>>>>>>> 8844a7f15c26f211350fcd7881289c1e79ad7920
             $customer_id = $data_posted->customer_id;
             $emp_id = $data_posted->emp_id;
             $supplier_id = $data_posted->supplier_id;
@@ -1369,7 +1374,7 @@ class C_sales extends MY_Controller
         $pdf->Cell(0, 10, "This is a computer generated invoice", 0, 1, "C");
         ///////////////
 
-        $pdf->Output('I','INV#-'.$new_invoice_no,true);
+        $pdf->Output('I', 'INV#-' . $new_invoice_no, true);
     }
 
     function send_email_inv($customer_id, $invoice_no)
@@ -1496,45 +1501,43 @@ class C_sales extends MY_Controller
 
         if ($customer[0]['email'] !== '') {
             if ($Company[0]['email'] !== '') {
-                
+
                 // Load PHPMailer library
                 $this->load->library('PHPMailer_Lib');
                 $mail = new PHPMailer_Lib();
                 // PHPMailer object
-               // $mail->PHPMailer_Lib->load();
+                // $mail->PHPMailer_Lib->load();
                 //$mail = new PHPMailer;
 
                 $mail->From = $Company[0]['email'];
                 $mail->FromName = $Company[0]['name'];
-                
+
                 $mail->addAddress($customer[0]['email'], $customer[0]['first_name']);
-                
-                $mail->AddStringAttachment($pdf_invoice, $invoice_no.'.pdf', 'base64', 'application/pdf'); //Filename is optional
+
+                $mail->AddStringAttachment($pdf_invoice, $invoice_no . '.pdf', 'base64', 'application/pdf'); //Filename is optional
                 //$mail->AddStringAttachment($pdf_invoice, 'doc.pdf', 'base64', 'application/pdf');
-                
-                $mail->Subject = $Company[0]['name']." Invoice";
-                $body = "<p>Dear ".$customer[0]['first_name'].",</p>";
+
+                $mail->Subject = $Company[0]['name'] . " Invoice";
+                $body = "<p>Dear " . $customer[0]['first_name'] . ",</p>";
                 $body .= "<p><i>Thanks for being a customer. A detailed summary of your invoice is attached.</i></p>";
                 $body .= "<p>If you have questions, we're happy to help.</p>";
                 $body .= "<p>Email Sales Email or contact us through other support channels.</p>";
                 $body .= "<p>NOTE: Please do not reply to this email. Your response will not be received.</p>";
 
                 $mail->Body = $body;
-               
+
                 // Set email format to HTML
                 $mail->isHTML(true);
-                
+
                 // Send email
-                if(!$mail->send()){
-                    
-                    $this->session->set_flashdata('error', 'Message could not be sent. '.$mail->ErrorInfo);
+                if (!$mail->send()) {
+
+                    $this->session->set_flashdata('error', 'Message could not be sent. ' . $mail->ErrorInfo);
                     redirect('trans/C_sales/allSales/', 'refresh');
-                   
-                }else{
+                } else {
                     $this->session->set_flashdata('message', 'Email sent to ' . $customer[0]['first_name'] . ' successfully.');
                     redirect('trans/C_sales/allSales/', 'refresh');
                 }
-                
             } else { //company email
                 $this->session->set_flashdata('error', 'Company email not available');
                 redirect('pos/C_customers/customerDetail/' . $customer_id, 'refresh');
@@ -1556,5 +1559,4 @@ class C_sales extends MY_Controller
 
         $this->load->view('pos/sales/receipt_ubl_xml', $data);
     }
-
 }

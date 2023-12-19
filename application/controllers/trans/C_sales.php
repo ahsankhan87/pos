@@ -145,8 +145,11 @@ class C_sales extends MY_Controller
             $this->db->trans_start();
 
             //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
-            $sale_date = date('Y-m-d', strtotime($data_posted->sale_date));
-            $due_date = ($data_posted->due_date == '' ? '' :date('Y-m-d', strtotime($data_posted->due_date)));
+            list($sale_date, $time) = explode("T", $data_posted->sale_date);
+		    list($due_date, $time) = explode("T", $data_posted->due_date);
+
+            // $sale_date = date('Y-m-d', strtotime($data_posted->sale_date));
+            // $due_date = ($data_posted->due_date == '' ? '' :date('Y-m-d', strtotime($data_posted->due_date)));
             $customer_id = $data_posted->customer_id;
             $emp_id = $data_posted->emp_id;
             $supplier_id = $data_posted->supplier_id;

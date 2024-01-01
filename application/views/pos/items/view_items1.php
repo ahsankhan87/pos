@@ -55,7 +55,7 @@
                             <th>ID</th>
                             <th><?php echo lang('name'); ?></th>
                             <th><?php echo lang('unit'); ?></th>
-                            <th><?php echo lang('type'); ?></th>
+                            <th><?php echo lang('category'); ?></th>
                             <th class="text-right">Qty</th>
                             <th class="text-right"><?php echo lang('cost') . ' ' . lang('price'); ?>(avg)</th>
                             <th class="text-right"><?php echo lang('unit') . ' ' . lang('price'); ?></th>

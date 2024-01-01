@@ -19,7 +19,7 @@ var initGetAllProducts = function () {
                         { "data": "item_id" },
                         { "data": "name" },
                         { "data": "unit_name" },
-                        { "data": "item_type" }, //{ "data": "category_id" },
+                        { "data": "category" }, //{ "data": "item_type" }, 
                         // { "data": "location_name" },
                         { "data": "quantity" },
                         { "data": "avg_cost" },

@@ -20,7 +20,7 @@ class Items extends MY_Controller
         $data['main'] = lang('listof') . ' ' . lang('products');
 
 
-        $data['items'] = $this->M_items->get_allItems();
+        //$data['items'] = $this->M_items->get_allItems();
         //$data['categoryDDL'] = $this->M_category->getCategoriesDropDown();
         //$data['supplierDDL']= $this->M_suppliers->getSupplierDropDown();
 

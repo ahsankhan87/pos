@@ -142,6 +142,21 @@ class M_reports extends CI_Model{
         }
     }
     
+    function get_sales_net_income()
+    {
+        $query_string = 
+        'SELECT sum(((si.item_unit_price-si.item_cost_price)* si.quantity_sold)-si.discount_value) AS net_income
+        FROM pos_sales s left join pos_sales_items si ON s.sale_id = si.sale_id 
+        WHERE s.company_id = '.$_SESSION['company_id'].' AND s.sale_date BETWEEN "'.FY_START_DATE.'" AND "'.FY_END_DATE.'"';
+        
+        $query = $this->db->query($query_string);
+        
+        if($row = $query->row())
+        {
+            return $row->net_income;
+        }
+    }
+    
     function year_report($company_id,$month,$year,$account_code)
     {
         if($this->db->dbdriver === 'sqlite3')

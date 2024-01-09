@@ -25,11 +25,11 @@
                 <form class="form-inline" method="post" action="<?php echo site_url('reports/C_balancesheet') ?>" role="form">
                     <div class="form-group">
                         <label for="exampleInputEmail2"><?php echo lang('from') . ' ' . lang('date') ?></label>
-                        <input type="date" class="form-control" name="from_date" placeholder="From Date">
+                        <input type="date" class="form-control" name="from_date" value="<?php echo date('Y-m-d'); ?>" placeholder="From Date">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword2"><?php echo lang('to') . ' ' . lang('date') ?></label>
-                        <input type="date" class="form-control" name="to_date" placeholder="To Date">
+                        <input type="date" class="form-control" name="to_date" value="<?php echo date('Y-m-d'); ?>" placeholder="To Date">
                     </div>
 
                     <button type="submit" class="btn btn-default"><?php echo lang('search') ?></button>
@@ -44,10 +44,10 @@
 <div class="row">
     <div class="col-sm-8 col-sm-offset-2 border">
         <div class="text-center">
-            <?php echo anchor('reports/C_balancesheet/printPDF/'.$from_date.'/'.$to_date,"<i class='fa fa-print'></i> Print","target='_blank'"); ?>
+            <?php echo anchor('reports/C_balancesheet/printPDF/' . $from_date . '/' . $to_date, "<i class='fa fa-print'></i> Print", "target='_blank'"); ?>
             <h3><?php echo ucfirst($this->session->userdata("company_name")); ?></h3>
             <h4 style="margin-bottom:2px;"><?php echo $main; ?></h4>
-            <p><?php echo date('d-m-Y',strtotime($from_date)) .' to '.date('d-m-Y',strtotime($to_date)); ?></p>
+            <p><?php echo date('d-m-Y', strtotime($from_date)) . ' to ' . date('d-m-Y', strtotime($to_date)); ?></p>
         </div>
         <h3>Assets</h3>
         <table class="table table-condensed">
@@ -162,11 +162,11 @@
                 echo '</td>';
 
                 echo '<td class="text-right">';
-                echo -number_format($net_income,2);
+                echo number_format((float)$net_income, 2);
                 echo '</td>';
 
                 //echo '<td>';
-                $total += -$net_income;
+                $total += $net_income;
                 //echo '</td>';
                 echo '</tr>';
                 ?>

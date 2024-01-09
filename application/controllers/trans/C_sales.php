@@ -286,7 +286,7 @@ class C_sales extends MY_Controller
                     //$discount += ($posted_values->quantity * $posted_values->unit_price)*$posted_values->discount/100;
 
                     //ADD INVENTORY AMOUNT WHICH IS SELECTED IN product and services
-                    @$inventory_acc_code[$posted_values->inventory_acc_code] += $posted_values->cost_price;
+                    @$inventory_acc_code[$posted_values->inventory_acc_code] += $posted_values->quantity * $posted_values->cost_price;
 
                 endforeach;
 
@@ -810,7 +810,7 @@ class C_sales extends MY_Controller
                     //$discount += ($posted_values->quantity * $posted_values->unit_price)*$posted_values->discount/100;
 
                     //ADD INVENTORY AMOUNT WHICH IS SELECTED IN product and services
-                    @$inventory_acc_code[$posted_values->inventory_acc_code] += $posted_values->cost_price;
+                    @$inventory_acc_code[$posted_values->inventory_acc_code] += $posted_values->quantity * $posted_values->cost_price;
 
                 endforeach;
 

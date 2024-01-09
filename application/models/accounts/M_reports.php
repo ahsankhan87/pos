@@ -152,8 +152,8 @@ class M_reports extends CI_Model
             return $row->net_income;
         }
     }
-
-    function year_report($company_id, $month, $year, $account_code)
+    
+    function year_report($company_id,$month,$year,$account_code)
     {
         if ($this->db->dbdriver === 'sqlite3') {
             //FOR DESKTOP APP ONLY

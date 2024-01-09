@@ -101,10 +101,11 @@ class M_items extends CI_Model{
         //$this->db->order_by('B.item_id','desc');
         $this->db->select('B.item_id,B.category_id, B.name,B.service,A.barcode,A.inventory_acc_code,A.picture,
         A.size_id,A.color_id,A.item_type,A.unit_id,A.quantity,A.avg_cost,A.cost_price,A.unit_price,A.re_stock_level,
-        A.inventory_acc_code,A.wip_acc_code,
+        A.inventory_acc_code,A.wip_acc_code, C.name as category,
         A.tax_id,T.name as tax_name,T.rate as tax_rate, U.name as unit_name');
         $this->db->join('pos_items AS B','A.item_id = B.item_id','left');
         $this->db->join('pos_taxes AS T','T.id = A.tax_id','left');
+        $this->db->join('pos_categories as C','B.category_id = C.id','left');
         // $this->db->join('pos_sizes as C','A.size_id = C.id','left');
         $this->db->join('pos_units as U','A.unit_id = U.id','left');
         // $this->db->join('pos_locations as L','A.location_id = L.id','left');

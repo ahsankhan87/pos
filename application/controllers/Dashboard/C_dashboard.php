@@ -22,6 +22,7 @@ class C_dashboard extends MY_Controller{
         $data['main'] = lang('home_searchBox');
         
         //$data['net_income']=  ($_SESSION['role'] == 'admin' ? $this->M_reports->get_net_income() : 0);
+        // $data['net_income']=  ($_SESSION['role'] == 'admin' ? $this->M_reports->get_sales_net_income() : 0);
         $data['totalStock']= $this->M_dashboard->totalStock($_SESSION["company_id"]);
         //$data['totalStock'] =  $this->M_dashboard->get_level3_account_balance('inventory');
         //$data['monthlySaleReport']=  $this->M_dashboard->monthlySaleReport($_SESSION["company_id"],FY_YEAR,'sales');

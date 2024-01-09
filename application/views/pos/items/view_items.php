@@ -67,7 +67,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th><?php echo lang('name'); ?></th>
-                                <th><?php echo lang('type'); ?></th>
+                                <th><?php echo lang('category'); ?></th>
                                 <th>Qty</th>
                                 <th><?php echo lang('unit'); ?></th>
                                 <th><?php echo lang('cost') . ' ' . lang('price'); ?>(avg)</th>

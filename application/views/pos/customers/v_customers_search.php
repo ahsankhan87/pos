@@ -100,7 +100,11 @@
 			'<li><a href="'.site_url($langs).'/trans/C_sales/index/credit/' . $values['id'] . '">Credit Sales</a></li>' .
 			'<li><a href="'.site_url($langs).'/trans/C_sales/index/cashReturn/' . $values['id'] . '">Cash Return</a></li>' .
 			'<li><a href="'.site_url($langs).'/trans/C_sales/index/creditReturn/' . $values['id'] . '">Credit Return</a></li></ul></div>';
-                            
+            ?>
+            <?php echo anchor('pos/C_customers/edit/' . $values['id'], '<i class="fa fa-pencil-square-o fa-fw"></i>', 'title="Edit"'); ?> |
+            <a href="<?php echo site_url('pos/C_customers/delete/' . $values['id']) ?>" onclick="return confirm('Are you sure you want to permanent delete supplier and his account transactions?')" title="Permanent Delete"><i class="fa fa-trash-o fa-fw"></i></a>
+
+        <?php
                             
             echo '</td>';
             echo '</tr>';

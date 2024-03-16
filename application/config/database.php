@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
@@ -76,9 +76,9 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-    //'port' => 5432,
-	'username' => 'root',//'als',
-	'password' => '',//'acmelogic',
+	//'port' => 5432,
+	'username' => 'root', //'als',
+	'password' => '', //'acmelogic',
 	'database' => 'pos_db',
 	'dbdriver' => 'mysqli', //'sqlsrv',
 	'dbprefix' => '',

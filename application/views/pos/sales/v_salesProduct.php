@@ -6,12 +6,15 @@
             <table class="table table-bordered table-hover">
 
                 <thead>
+
                     <tr>
                         <td colspan="4"><input ng-change="addItemByBarcode(barcode)" autofocus ng-trim="true" ng-model="barcode" type="text" placeholder="Paste Barcode" class="form-control">
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="4"><input type="search" ng:model="search" placeholder="Search Products" class="form-control" /></td>
+                        <td colspan="4"><input type="search" ng:model="search" placeholder="Search Products" class="form-control" />
+                            <input type="button" class="btn btn-success btn-xs" ng-click="getProductByID()" value="Search" />
+                        </td>
                     </tr>
                     <tr>
                         <!-- <th>Size</th> -->
@@ -19,13 +22,14 @@
                         <th>Qty</th>
                         <th></th>
                     </tr>
+
                 </thead>
                 <tbody>
 
                     <tr ng-show="loader">
                         <td colspan="4" class="text-center"><img src="<?php echo base_url('images/wait.gif'); ?>" width="30" height="30" title="Loading" alt="Loading" /></td>
                     </tr>
-                    <tr ng:repeat="item in products | filter:search | limitTo:30">
+                    <tr ng:repeat="item in products | limitTo:30">
 
                         <!-- <td ng-click='addItem(item.item_id,item.size_id)' style="cursor: pointer;"><small>{{item.size}}</small></td> -->
                         <td ng-click='addItem(item.item_id,item.size_id)' style="cursor: pointer;"><a href="#"><small>{{item.name}} {{item.expiry_date}}</small></a></td>
@@ -112,9 +116,9 @@
                     ?>
 
                     <label class="control-label col-sm-2" for=""><?php echo lang('customer'); ?></label>
-                    <div class="col-sm-4" >
+                    <div class="col-sm-4">
                         <select id="cust" ng:model="customer_id" ng-init="customer_id='2'" class="form-control select2me"></select>
-                        <br><?php echo anchor('#', lang('add_new').' <i class="fa fa-plus"></i>', ' data-toggle="modal" data-target="#customerModal"'); ?>
+                        <br><?php echo anchor('#', lang('add_new') . ' <i class="fa fa-plus"></i>', ' data-toggle="modal" data-target="#customerModal"'); ?>
 
                     </div>
 
@@ -224,8 +228,8 @@
                         <td>
                             <input type="hidden" ng:model="item.name" class="form-control" readonly="" />
                             <strong>
-                                <?php echo anchor('pos/Items/item_transactions/'."{{item.item_id}}","{{item.name}}",'target="_blank"'); ?>
-                                <!-- <a href="<?php echo base_url('/pos/Items/item_transactions')?>/{{item.item_id}}" target="_blank"></a></strong> -->
+                                <?php echo anchor('pos/Items/item_transactions/' . "{{item.item_id}}", "{{item.name}}", 'target="_blank"'); ?>
+                                <!-- <a href="<?php echo base_url('/pos/Items/item_transactions') ?>/{{item.item_id}}" target="_blank"></a></strong> -->
                         </td>
                         <!-- IF SERVICE PRODUCT THEN NO MAX QTY FILED-->
                         <td ng-form="cellForm" ng-if="item.service || register_mode == 'return'">
@@ -419,33 +423,33 @@
         //GET customer DROPDOWN LIST
         function customerDDL() {
 
-        let customer_ddl = '';
-        $.ajax({
-            url: site_url + "/pos/C_customers/get_act_customers_JSON",
-            type: 'GET',
-            dataType: 'json', // added data type
-            success: function(data) {
-                console.log(data);
-                let i = 0;
-                customer_ddl += '<option value="0">Select Customer</option>';
+            let customer_ddl = '';
+            $.ajax({
+                url: site_url + "/pos/C_customers/get_act_customers_JSON",
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function(data) {
+                    console.log(data);
+                    let i = 0;
+                    customer_ddl += '<option value="0">Select Customer</option>';
 
-                $.each(data, function(index, value) {
+                    $.each(data, function(index, value) {
 
-                    customer_ddl += '<option value="' + value.id + '" '+ (value.id == 1 ? "selected" : "")+'>' + value.first_name+ '</option>';
+                        customer_ddl += '<option value="' + value.id + '" ' + (value.id == 1 ? "selected" : "") + '>' + value.first_name + '</option>';
 
-                });
+                    });
 
-                $('#cust').html(customer_ddl);
+                    $('#cust').html(customer_ddl);
 
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(xhr.status);
-                console.log(thrownError);
-            }
-        });
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
         }
         ///////////////////
-        
+
         $("#customerForm").submit(function(event) {
             // Stop form from submitting normally
             event.preventDefault();

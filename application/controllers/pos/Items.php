@@ -123,7 +123,7 @@ class Items extends MY_Controller
         }
         $pdf->Output('barcode.pdf', 'I');
     }
-    
+
     public function print_barcode()
     {
         $data = array('langs' => $this->session->userdata('lang'));
@@ -140,11 +140,17 @@ class Items extends MY_Controller
         $this->load->view('templates/footer');
     }
     //get item for Drop down list for sale
-    function get_items()
+    function get_items($limit = 1000000, $search = "")
     {
         ini_set('max_execution_time', 0);
         ini_set('memory_limit', '100240M');
-        $items = $this->M_items->get_allItemsforJSON();
+
+        $search = urldecode($search);
+
+        // Sanitize input
+        $search = $this->db->escape_like_str($search);
+
+        $items = $this->M_items->get_allItemsforJSON($search, $limit);
         //var_dump($items);
 
         echo json_encode($items);
@@ -377,7 +383,6 @@ class Items extends MY_Controller
             $this->M_items->updateItems($new_picture);
             $this->session->set_flashdata('message', 'Product Updated');
             redirect('pos/Items/index', 'refresh');
-            
         } else {
             $data['title'] = lang('update') . ' ' . lang('product');
             $data['main'] = lang('update') . ' ' . lang('product');
@@ -437,9 +442,8 @@ class Items extends MY_Controller
 
     function delete($id, $inventory_acc_code, $total_cost = 0, $size_id = 0)
     {
-        if($this->session->userdata('role') != 'admin')
-        {
-            redirect('No_access','refresh');    
+        if ($this->session->userdata('role') != 'admin') {
+            redirect('No_access', 'refresh');
         }
         $this->db->trans_start();
         $this->M_items->deleteItem($id, $inventory_acc_code, $total_cost, $size_id);

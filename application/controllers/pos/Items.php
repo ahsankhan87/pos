@@ -157,6 +157,23 @@ class Items extends MY_Controller
         // $this->load->view('pos/items/getItems',$data);
     }
 
+    function get_items_by_barcode($barcode = "")
+    {
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '100240M');
+
+        $search = urldecode($barcode);
+
+        // Sanitize input
+        $search = $this->db->escape_like_str($barcode);
+
+        $items = $this->M_items->get_items_by_barcode($search);
+        //var_dump($items);
+
+        echo json_encode($items);
+        // $this->load->view('pos/items/getItems',$data);
+    }
+    
     //get all items for purchases
     function get_allItems()
     {

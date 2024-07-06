@@ -152,6 +152,7 @@ class C_receivings extends MY_Controller{
             'employee_id'=>$emp_id,
             'user_id'=>$_SESSION['user_id'],
             'receiving_date' => $sale_date,
+            'receiving_time' => $sale_date . ' ' . date("H:i:s"),
             'register_mode'=>$data_posted->register_mode,
             'account'=>$data_posted->purchaseType,
             'amount_due'=>$data_posted->amount_due,

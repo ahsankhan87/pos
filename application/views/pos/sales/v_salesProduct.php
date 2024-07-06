@@ -124,7 +124,7 @@
 
                     <label class="control-label col-sm-2" for=""><?php echo lang('sale') . ' ' . lang('date'); ?></label>
                     <div class="col-sm-4">
-                        <input type="date" ng-model="sale_date" readonly="" class="form-control" />
+                        <input type="date" ng-model="sale_date" class="form-control" />
                     </div>
                 </div>
             </div>

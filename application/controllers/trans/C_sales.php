@@ -131,7 +131,7 @@ class C_sales extends MY_Controller
         $data_posted = json_decode(file_get_contents("php://input", true));
 
         //print_r($data_posted);
-        //        echo die;
+        //echo die;
 
         // print_r($data_posted);
         if (count((array)$data_posted) > 0) {
@@ -146,7 +146,7 @@ class C_sales extends MY_Controller
 
             //GET ALL ACCOUNT CODE WHICH IS TO BE POSTED AMOUNT
 
-            list($sale_date, $time) = explode("T", $data_posted->sale_date);
+            list($sale_date, $sale_time) = explode("T", $data_posted->sale_date);
             list($due_date, $time) = explode("T", $data_posted->due_date);
 
             // $sale_date = date('Y-m-d', strtotime($data_posted->sale_date));
@@ -193,6 +193,7 @@ class C_sales extends MY_Controller
                     'employee_id' => $emp_id,
                     'user_id' => $_SESSION['user_id'],
                     'sale_date' => $sale_date,
+                    'sale_time' => $sale_date . ' ' . date("H:i:s"),
                     'register_mode' => $data_posted->register_mode,
                     'account' => $data_posted->saleType,
                     //'amount_due'=>$data_posted->amount_due,
@@ -1118,8 +1119,8 @@ class C_sales extends MY_Controller
         $data['Company'] = $this->M_companies->get_companies($company_id);
 
         $this->load->view('templates/header', $data);
-        // $this->load->view('pos/sales/v_receipt_small',$data);
-        $this->load->view('pos/sales/v_receipt', $data);
+        $this->load->view('pos/sales/v_receipt_small', $data);
+        //$this->load->view('pos/sales/v_receipt', $data);
         $this->load->view('templates/footer');
     }
 

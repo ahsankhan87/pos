@@ -126,7 +126,10 @@ class M_items extends CI_Model
     public function get_items_by_barcode($search = "")
     {
 
-        $this->db->where('A.barcode', $search);
+        $search = urldecode($search);
+
+        // Ensure the search term is sanitized
+        $this->db->where('A.barcode', $this->db->escape_str($search));
 
         //$this->db->order_by('B.item_id','desc');
         $this->db->select('B.item_id,B.category_id, B.name,B.service,A.barcode,A.inventory_acc_code,A.picture,

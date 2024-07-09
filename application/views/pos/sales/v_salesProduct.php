@@ -13,7 +13,7 @@
                     </tr>
                     <tr>
                         <td colspan="4"><input type="search" ng:model="search" placeholder="Search Products" class="form-control" />
-                            <input type="button" class="btn btn-success btn-xs" ng-click="getProductByID()" value="Search" />
+                           
                         </td>
                     </tr>
                     <tr>
@@ -29,7 +29,7 @@
                     <tr ng-show="loader">
                         <td colspan="4" class="text-center"><img src="<?php echo base_url('images/wait.gif'); ?>" width="30" height="30" title="Loading" alt="Loading" /></td>
                     </tr>
-                    <tr ng:repeat="item in products | limitTo:30">
+                    <tr ng:repeat="item in products | filter:search | limitTo:30">
 
                         <!-- <td ng-click='addItem(item.item_id,item.size_id)' style="cursor: pointer;"><small>{{item.size}}</small></td> -->
                         <td ng-click='addItem(item.item_id,item.size_id)' style="cursor: pointer;"><a href="#"><small>{{item.name}} {{item.expiry_date}}</small></a></td>

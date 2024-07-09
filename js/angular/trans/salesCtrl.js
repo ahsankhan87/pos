@@ -7,12 +7,10 @@ app.controller('salesProductCtrl', function ($scope, $http, $timeout) {
     $scope.due_date = new Date();
     $scope.is_taxable = true;
     $scope.customer_vat_no = '';
-
-    console.log($scope.sale_date);
-
+    let timeout;
     //get all products for sales
     $scope.getAllProduct = function () {
-        const limit = 10;
+        const limit = 1000000;
         $scope.loader = true;//show loader gif
 
         $http.get(site_url + '/pos/Items/get_items/' + limit, { cache: true }).then(function (response) {
@@ -24,25 +22,25 @@ app.controller('salesProductCtrl', function ($scope, $http, $timeout) {
         });
     }
     //get all products for sales
-    let timeout;
-    $scope.getProductByID = function () {
-        const limit = 100;
 
-        clearTimeout(timeout);
-        timeout = setTimeout(function () {
-            $scope.loader = true;//show loader gif
-            const encodedSearchTerm = encodeURIComponent($scope.search);
-            $http.get(site_url + '/pos/Items/get_items/' + limit + '/' + encodedSearchTerm).then(function (response) {
-                $scope.loader = false;//hide loader gif
-                $scope.products = response.data;
+    // $scope.getProductByID = function () {
+    //     const limit = 100;
 
-                //console.log($scope.products);
-            }).catch(function (error) {
-                console.error('Error occurred:', error);
-            });
-        }, 300);
+    //     clearTimeout(timeout);
+    //     timeout = setTimeout(function () {
+    //         $scope.loader = true;//show loader gif
+    //         const encodedSearchTerm = encodeURIComponent($scope.search);
+    //         $http.get(site_url + '/pos/Items/get_items/' + limit + '/' + encodedSearchTerm).then(function (response) {
+    //             $scope.loader = false;//hide loader gif
+    //             $scope.products = response.data;
 
-    }
+    //             //console.log($scope.products);
+    //         }).catch(function (error) {
+    //             console.error('Error occurred:', error);
+    //         });
+    //     }, 300);
+
+    // }
     //get Customer VAT No.
     $scope.getCustomer = function (customer_id) {
 
@@ -191,61 +189,46 @@ app.controller('salesProductCtrl', function ($scope, $http, $timeout) {
     //add product by barcode in sales form
     $scope.addItemByBarcode = function (barcode) {
 
-        // $scope.barcode; //from input
+        $timeout(function () {
+            // $scope.barcode; //from input
 
-        //search product using barcode
-        // var returnData = $.grep($scope.products, function (element, index) {
-        //     return (element.barcode == barcode);
-        // })
+            //search product using barcode
+            var returnData = $.grep($scope.products, function (element, index) {
+                return (element.barcode == barcode);
+            })
 
-        clearTimeout(timeout);
-        timeout = setTimeout(function () {
-            $scope.loader = true;//show loader gif
-            const encodedSearchTerm = encodeURIComponent($scope.barcode);
-            $http.get(site_url + '/pos/Items/get_items_by_barcode/' + encodedSearchTerm).then(function (response) {
-                $scope.loader = false;//hide loader gif
-                var returnData = response.data;
-                console.log(returnData);
-
-                if (parseInt(returnData[0].quantity) <= 0 && parseInt(returnData[0].service) == 0) {
-                    alert('Product is not in stock, Please Purchase Product');
-                } else //ADD PR0DUCT TOTHE CART
-                {
-                    sno++;
-                    $scope.invoice.items.push({
-                        sno: sno,
-                        item_id: parseInt(returnData[0].item_id),
-                        quantity: parseFloat(1),
-                        item_qty: parseFloat(returnData[0].quantity),
-                        name: returnData[0].name + (returnData[0].size == null ? '' : ' ' + returnData[0].size),
-                        unit_price: parseFloat(returnData[0].unit_price),
-                        cost_price: parseFloat(returnData[0].avg_cost),
-                        discount_percent: parseFloat(0),
-                        discount_value: parseFloat(0),
-                        size_id: (returnData[0].size_id == null ? 0 : returnData[0].size_id),
-                        unit_id: (returnData[0].unit_id == null ? 0 : returnData[0].unit_id),
-                        color_id: 0,
-                        tax_id: parseFloat(returnData[0].tax_id),
-                        tax_rate: parseFloat((returnData[0].tax_rate == null ? 0 : returnData[0].tax_rate)),
-                        tax_name: returnData[0].tax_name,
-                        exchange_rate: 0,
-                        currency_id: 0,
-                        service: parseInt(returnData[0].service),
-                        avg_cost: parseFloat(returnData[0].avg_cost),
-                        inventory_acc_code: returnData[0].inventory_acc_code,
-                        wip_acc_code: returnData[0].wip_acc_code,
-                    });
-                }
-                $scope.barcode = '';
-
-            }).catch(function (error) {
-                console.error('Error occurred:', error);
-            });
+            //IF QTY IS ZERO THEN ALERT ERROR MSG
+            if (parseInt(returnData[0].quantity) <= 0 && parseInt(returnData[0].service) == 0) {
+                alert('Product is not in stock, Please Purchase Product');
+            } else //ADD PR0DUCT TOTHE CART
+            {
+                sno++;
+                $scope.invoice.items.push({
+                    sno: sno,
+                    item_id: parseInt(returnData[0].item_id),
+                    quantity: parseFloat(1),
+                    item_qty: parseFloat(returnData[0].quantity),
+                    name: returnData[0].name + (returnData[0].size == null ? '' : ' ' + returnData[0].size),
+                    unit_price: parseFloat(returnData[0].unit_price),
+                    cost_price: parseFloat(returnData[0].avg_cost),
+                    discount_percent: parseFloat(0),
+                    discount_value: parseFloat(0),
+                    size_id: (returnData[0].size_id == null ? 0 : returnData[0].size_id),
+                    unit_id: (returnData[0].unit_id == null ? 0 : returnData[0].unit_id),
+                    color_id: 0,
+                    tax_id: parseFloat(returnData[0].tax_id),
+                    tax_rate: parseFloat((returnData[0].tax_rate == null ? 0 : returnData[0].tax_rate)),
+                    tax_name: returnData[0].tax_name,
+                    exchange_rate: 0,
+                    currency_id: 0,
+                    service: parseInt(returnData[0].service),
+                    avg_cost: parseFloat(returnData[0].avg_cost),
+                    inventory_acc_code: returnData[0].inventory_acc_code,
+                    wip_acc_code: returnData[0].wip_acc_code,
+                });
+            }
+            $scope.barcode = '';
         }, 10);
-
-
-
-        //IF QTY IS ZERO THEN ALERT ERROR MSG
 
 
     }

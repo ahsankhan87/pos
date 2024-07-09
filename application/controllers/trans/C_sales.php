@@ -28,6 +28,8 @@ class C_sales extends MY_Controller
         $data['salesPostingTypeDDL'] = $this->M_postingTypes->get_SalesPostingTypesDDL();
         //$data['taxes'] = $this->M_taxes->get_activetaxes();
 
+        log_message('debug', 'SQL Query: ' . $this->db->last_query());
+
         $this->load->view('templates/header', $data);
         $this->load->view('pos/sales/v_salesProduct', $data);
         $this->load->view('templates/footer');

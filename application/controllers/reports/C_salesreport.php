@@ -41,6 +41,7 @@ class C_salesreport extends MY_Controller
         $data['CustomerDDL'] = $this->M_customers->getCustomerDropDown();
         $data['productsDDL'] = $this->M_items->getItemDropDown();
         $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
+        $data['categoryDDL'] = $this->M_category->getCategoriesDropDown();
 
         $data['daily_sales_report'] = $this->M_pos_reports->sales_reports($data['from_date'], $data['to_date'], $_SESSION['company_id'], $customer_id, $product_id, $emp_id, $register_mode, $sale_type);
 
@@ -88,6 +89,7 @@ class C_salesreport extends MY_Controller
         $data['CustomerDDL'] = $this->M_customers->getCustomerDropDown();
         $data['productsDDL'] = $this->M_items->getItemDropDown();
         $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
+        $data['categoryDDL'] = $this->M_category->getCategoriesDropDown();
 
         if ($data['from_date'] && $data['to_date']) {
             $data['sales_report'] = $this->M_pos_reports->sales_reports($data['from_date'], $data['to_date'], $_SESSION['company_id'], $customer_id, $product_id, $emp_id, $register_mode, $sale_type);
@@ -133,6 +135,7 @@ class C_salesreport extends MY_Controller
         $data['CustomerDDL'] = $this->M_customers->getCustomerDropDown();
         $data['productsDDL'] = $this->M_items->getItemDropDown();
         $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
+        $data['categoryDDL'] = $this->M_category->getCategoriesDropDown();
 
         if ($data['from_date'] && $data['to_date']) {
             $data['customerWise_sales_report'] = $this->M_pos_reports->customer_wise_sales($data['from_date'], $data['to_date'], $_SESSION['company_id'], $emp_id, $register_mode, $sale_type);
@@ -172,15 +175,17 @@ class C_salesreport extends MY_Controller
         $emp_id = $this->input->post('emp_id');
         $register_mode = $this->input->post('register_mode');
         $sale_type = $this->input->post('sale_type');
+        $categoryID = $this->input->post('categoryID');
         $data['register_mode'] = $register_mode;
         $data['sale_type'] = $sale_type;
 
         $data['CustomerDDL'] = $this->M_customers->getCustomerDropDown();
         $data['productsDDL'] = $this->M_items->getItemDropDown();
         $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
+        $data['categoryDDL'] = $this->M_category->getCategoriesDropDown();
 
         if ($data['from_date'] && $data['to_date']) {
-            $data['productWise_sales_report'] = $this->M_pos_reports->product_wise_sales($data['from_date'], $data['to_date'], $_SESSION['company_id'], $emp_id, $register_mode, $sale_type);
+            $data['productWise_sales_report'] = $this->M_pos_reports->product_wise_sales($data['from_date'], $data['to_date'], $_SESSION['company_id'], $emp_id, $register_mode, $sale_type, $categoryID);
         }
         //for logging
         $msg = '';
@@ -221,7 +226,7 @@ class C_salesreport extends MY_Controller
         $data['sale_type'] = $sale_type;
 
         $data['CustomerDDL'] = $this->M_customers->getCustomerDropDown();
-        $data['categoryDDL'] = $this->M_items->getItemDropDown();
+        $data['categoryDDL'] = $this->M_category->getCategoriesDropDown();
         $data['productsDDL'] = $this->M_items->getItemDropDown();
         $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
 

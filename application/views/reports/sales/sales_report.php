@@ -470,11 +470,17 @@
                                     </select>
                                 </div>
 
+                                <label class="control-label col-sm-2" for=""><?php echo lang('category') ?></label>
+                                <div class="col-sm-4">
+                                    <?php echo form_dropdown('categoryID', $categoryDDL, '', 'class="form-control select2me"') ?>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-4">
-                                    <button type="submit" class="btn btn-default">Search</button>
+                                    <button type="submit" class="btn btn-primary">Search</button>
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -555,7 +561,7 @@
 
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-default">Search</button>
+                                    <button type="submit" class="btn btn-primary">Search</button>
                                 </div>
                             </div>
 
@@ -673,7 +679,7 @@
                                 </div>
 
                                 <div class="col-sm-offset-2 col-sm-4">
-                                    <button type="submit" class="btn btn-default">Search</button>
+                                    <button type="submit" class="btn btn-primary">Search</button>
                                 </div>
                             </div>
 

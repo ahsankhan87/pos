@@ -97,16 +97,6 @@ class Items extends MY_Controller
 
             // Print text using writeHTMLCell()
             //$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
-            if (!empty($Company[0]['image']) || $Company[0]['image'] != '') {
-                // $html= '<div style="text-align:top;padding-bottom:100px;background-color:black;">
-                // <img src="' . base_url('images/company/thumb/' . $Company[0]['image']) . '" width="30" height="30" alt="picture"/>
-                // </div>';
-                //$pdf->writeHTML($html, true, false, true, false, '');
-                $image = base_url('images/company/thumb/' . $Company[0]['image']);
-            }
-            $pdf->SetXY(2, 5);
-            $pdf->Image($image, '', '', 40, 40, '', '', 'T', false, 300, '', false, false, 1, false, false, false);
-            $pdf->Text(25, 3, $product);
 
             $style = array(
                 'border' => 2,
@@ -117,8 +107,24 @@ class Items extends MY_Controller
                 'module_width' => 1, // width of a single module in points
                 'module_height' => 1 // height of a single module in points
             );
-            $pdf->write1DBarcode($product_id, "C128", 25, 8, 20, 4, $style);
-            $pdf->Text(30, 14, $rate);
+
+            if (!empty($Company[0]['image']) || $Company[0]['image'] != '') {
+                // $html= '<div style="text-align:top;padding-bottom:100px;background-color:black;">
+                // <img src="' . base_url('images/company/thumb/' . $Company[0]['image']) . '" width="30" height="30" alt="picture"/>
+                // </div>';
+                //$pdf->writeHTML($html, true, false, true, false, '');
+                $image = base_url('images/company/thumb/' . $Company[0]['image']);
+                $pdf->SetXY(2, 5);
+                $pdf->Image($image, '', '', 40, 40, '', '', 'T', false, 300, '', false, false, 1, false, false, false);
+                $pdf->Text(25, 3, $product);
+
+                $pdf->write1DBarcode($product_id, "C128", 25, 8, 20, 4, $style);
+                $pdf->Text(30, 14, $rate);
+            } else {
+                $pdf->write1DBarcode($product_id, "C128", 2, 5, 20, 4, $style);
+                $pdf->Text(2, 14, $rate);
+            }
+
             //ob_end_clean();
         }
         $pdf->Output('barcode.pdf', 'I');
@@ -173,7 +179,7 @@ class Items extends MY_Controller
         echo json_encode($items);
         // $this->load->view('pos/items/getItems',$data);
     }
-    
+
     //get all items for purchases
     function get_allItems()
     {

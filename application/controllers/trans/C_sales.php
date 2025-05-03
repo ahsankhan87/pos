@@ -439,7 +439,7 @@ class C_sales extends MY_Controller
 
 
                         //CUSTOMER PAYMENT ENTRY
-                        $this->M_customers->addCustomerPaymentEntry($dr_ledger_id, $cr_ledger_id, $total_amount, 0, $customer_id, $narration, $new_invoice_no, $sale_date, $exchange_rate, $entry_id);
+                        $this->M_customers->addCustomerPaymentEntry($dr_ledger_id, $cr_ledger_id, $total_amount, 0, $customer_id, $narration, $new_invoice_no, $sale_date, $exchange_rate, $entry_id, $emp_id);
 
                         if ($total_tax_amount > 0) {
                             ///////////////
@@ -450,7 +450,7 @@ class C_sales extends MY_Controller
                             $this->M_entries->addEntries($tax_dr_ledger_id, $tax_cr_ledger_id, $total_tax_amount, $total_tax_amount, ucwords($narration), $new_invoice_no, $sale_date);
 
                             //CUSTOMER SALES TAX PAYMENT ENTRY
-                            $this->M_customers->addCustomerPaymentEntry($tax_dr_ledger_id, $tax_cr_ledger_id, $total_tax_amount, 0, $customer_id, $narration, $new_invoice_no, $sale_date, $exchange_rate, $entry_id);
+                            $this->M_customers->addCustomerPaymentEntry($tax_dr_ledger_id, $tax_cr_ledger_id, $total_tax_amount, 0, $customer_id, $narration, $new_invoice_no, $sale_date, $exchange_rate, $entry_id, $emp_id);
                             //////////////// tax
 
                         }
@@ -466,7 +466,7 @@ class C_sales extends MY_Controller
                     $cr_ledger_id = $posting_type_code[0]['cash_acc_code'];
 
                     //JOURNAL ENTRY
-                    $this->M_entries->addEntries($dr_ledger_id, $cr_ledger_id, $total_amount, $total_amount, ucwords($narration), $new_invoice_no, $sale_date);
+                    $entry_id = $this->M_entries->addEntries($dr_ledger_id, $cr_ledger_id, $total_amount, $total_amount, ucwords($narration), $new_invoice_no, $sale_date);
 
                     ///////////////
                     //TAX REVERSE JOURNAL ENTRY
@@ -474,7 +474,7 @@ class C_sales extends MY_Controller
                         $tax_dr_ledger_id = $posting_type_code[0]['salestax_acc_code'];
                         $tax_cr_ledger_id = $posting_type_code[0]['cash_acc_code'];
 
-                        $this->M_entries->addEntries($tax_dr_ledger_id, $tax_cr_ledger_id, $total_tax_amount, $total_tax_amount, ucwords($narration), $new_invoice_no, $sale_date);
+                        $this->M_entries->addEntries($tax_dr_ledger_id, $tax_cr_ledger_id, $total_tax_amount, $total_tax_amount, ucwords($narration), $new_invoice_no, $sale_date, $exchange_rate, $entry_id, $emp_id);
                     }
                     ////////////////
 
@@ -523,7 +523,7 @@ class C_sales extends MY_Controller
                         //JOURNAL ENTRY
                         $entry_id = $this->M_entries->addEntries($dr_ledger_id, $cr_ledger_id, $total_amount, $total_amount, ucwords($narration), $new_invoice_no, $sale_date);
 
-                        $this->M_suppliers->addsupplierPaymentEntry($cr_ledger_id, $dr_ledger_id, 0, $total_amount, $supplier_id, $narration, $new_invoice_no, $sale_date, $exchange_rate, $entry_id);
+                        $this->M_suppliers->addsupplierPaymentEntry($cr_ledger_id, $dr_ledger_id, 0, $total_amount, $supplier_id, $narration, $new_invoice_no, $sale_date, $exchange_rate, $entry_id, $emp_id);
 
                         /////////////////
                         //REDUCE THE PAID AMOUNT IN RECEINVING TO SHOW EXACT AMOUNT IN OUTSTANDING INVOICES
@@ -559,7 +559,7 @@ class C_sales extends MY_Controller
                         $entry_id = $this->M_entries->addEntries($dr_ledger_id, $cr_ledger_id, $total_amount, $total_amount, ucwords($narration), $new_invoice_no, $sale_date);
 
                         //customer entry
-                        $this->M_customers->addCustomerPaymentEntry($cr_ledger_id, $dr_ledger_id, 0, $total_amount, $customer_id, $narration, $new_invoice_no, $sale_date, $exchange_rate, $entry_id);
+                        $this->M_customers->addCustomerPaymentEntry($cr_ledger_id, $dr_ledger_id, 0, $total_amount, $customer_id, $narration, $new_invoice_no, $sale_date, $exchange_rate, $entry_id, $emp_id);
 
                         ///////////////
                         //TAX REVERSE JOURNAL ENTRY
@@ -570,7 +570,7 @@ class C_sales extends MY_Controller
                             $this->M_entries->addEntries($tax_dr_ledger_id, $tax_cr_ledger_id, $total_tax_amount, $total_tax_amount, ucwords($narration), $new_invoice_no, $sale_date);
 
                             //CUSTOMER SALES TAX PAYMENT ENTRY
-                            $this->M_customers->addCustomerPaymentEntry($tax_cr_ledger_id, $tax_dr_ledger_id, 0, $total_tax_amount, $customer_id, $narration, $new_invoice_no, $sale_date, $exchange_rate, $entry_id);
+                            $this->M_customers->addCustomerPaymentEntry($tax_cr_ledger_id, $tax_dr_ledger_id, 0, $total_tax_amount, $customer_id, $narration, $new_invoice_no, $sale_date, $exchange_rate, $entry_id, $emp_id);
                             ////////////////
                         }
 
@@ -859,7 +859,7 @@ class C_sales extends MY_Controller
                     $dr_ledger_id = $posting_type_code[0]['cash_acc_code'];
                     $cr_ledger_id = $posting_type_code[0]['sales_acc_code'];
 
-                    $this->M_entries->addEntries($dr_ledger_id, $cr_ledger_id, $total_amount, $total_amount, ucwords($narration), $invoice_no, $sale_date);
+                    $entry_id =  $this->M_entries->addEntries($dr_ledger_id, $cr_ledger_id, $total_amount, $total_amount, ucwords($narration), $invoice_no, $sale_date);
                     ////////////////
 
                     ///////////////
@@ -927,7 +927,7 @@ class C_sales extends MY_Controller
                         $entry_id = $this->M_entries->addEntries($dr_ledger_id, $cr_ledger_id, $total_amount, $total_amount, ucwords($narration), $invoice_no, $sale_date);
 
                         //CUSTOMER PAYMENT ENTRY
-                        $this->M_customers->addCustomerPaymentEntry($dr_ledger_id, $cr_ledger_id, $total_amount, 0, $customer_id, $narration, $invoice_no, $sale_date, $exchange_rate, $entry_id);
+                        $this->M_customers->addCustomerPaymentEntry($dr_ledger_id, $cr_ledger_id, $total_amount, 0, $customer_id, $narration, $invoice_no, $sale_date, $exchange_rate, $entry_id, $emp_id);
 
                         ///////////////
                         //TAX JOURNAL ENTRY
@@ -938,7 +938,7 @@ class C_sales extends MY_Controller
                             $this->M_entries->addEntries($tax_dr_ledger_id, $tax_cr_ledger_id, $total_tax_amount, $total_tax_amount, ucwords($narration), $invoice_no, $sale_date);
 
                             //CUSTOMER SALES TAX PAYMENT ENTRY
-                            $this->M_customers->addCustomerPaymentEntry($tax_dr_ledger_id, $tax_cr_ledger_id, $total_tax_amount, 0, $customer_id, $narration, $invoice_no, $sale_date, $exchange_rate, $entry_id);
+                            $this->M_customers->addCustomerPaymentEntry($tax_dr_ledger_id, $tax_cr_ledger_id, $total_tax_amount, 0, $customer_id, $narration, $invoice_no, $sale_date, $exchange_rate, $entry_id, $emp_id);
                             //////////////// tax
                         }
                     }
@@ -1017,7 +1017,7 @@ class C_sales extends MY_Controller
                         $entry_id = $this->M_entries->addEntries($dr_ledger_id, $cr_ledger_id, $total_amount, $total_amount, ucwords($narration), $invoice_no, $sale_date);
 
                         //customer entry
-                        $this->M_customers->addCustomerPaymentEntry($cr_ledger_id, $dr_ledger_id, 0, $total_amount, $customer_id, $narration, $invoice_no, $sale_date, $exchange_rate, $entry_id);
+                        $this->M_customers->addCustomerPaymentEntry($cr_ledger_id, $dr_ledger_id, 0, $total_amount, $customer_id, $narration, $invoice_no, $sale_date, $exchange_rate, $entry_id, $emp_id);
 
                         ///////////////
                         //TAX REVERSE JOURNAL ENTRY
@@ -1028,7 +1028,7 @@ class C_sales extends MY_Controller
                             $this->M_entries->addEntries($tax_dr_ledger_id, $tax_cr_ledger_id, $total_tax_amount, $total_tax_amount, ucwords($narration), $invoice_no, $sale_date);
 
                             //CUSTOMER SALES TAX PAYMENT ENTRY
-                            $this->M_customers->addCustomerPaymentEntry($tax_cr_ledger_id, $tax_dr_ledger_id, 0, $total_tax_amount, $customer_id, $narration, $invoice_no, $sale_date, $exchange_rate, $entry_id);
+                            $this->M_customers->addCustomerPaymentEntry($tax_cr_ledger_id, $tax_dr_ledger_id, 0, $total_tax_amount, $customer_id, $narration, $invoice_no, $sale_date, $exchange_rate, $entry_id, $emp_id);
                         }
                         ////////////////
                         //tax end

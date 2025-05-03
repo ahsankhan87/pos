@@ -179,7 +179,16 @@ var Customers = function () {
                 
                 $('td:eq(5)', nRow).css('text-align','right');
                 //$('td:eq(5)', nRow).html(parseFloat(aData['unit_price']).toFixed(2));
-  
+                // $('td:eq(6)', nRow).css('<div class="btn-group">'+
+                //                         '<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>'+
+                //                         '<div class="dropdown-menu" aria-labelledby="btnGroupDrop1"></div>'+
+                //                         '<a class="dropdown-item" href="'+site_url+'/pos/C_customers/customerDetail/' + aData['id'] + '">Customer Detail</a>'+
+                //                         '<a class="dropdown-item" href="'+site_url+'/pos/C_customers/edit/' + aData['id'] + '">Edit</a>'+
+                //                         '<a class="dropdown-item" href="'+site_url+'/pos/C_customers/delete/' + aData['id'] + '/' + aData['op_balance_dr'] + '/' + aData['op_balance_cr'] + '" onclick="return confirm(\'Are you sure you want to permanent delete customer and his account transactions?\')"; title=\'Permanent Delete\'>Permanent Delete</a>'+
+                //                         '<a class="dropdown-item" href="'+site_url+'/pos/C_customers/statement/' + aData['id'] + '">Account Statement</a>'+
+                //                         '</div>');
+                                    
+
                 return nRow;
             },
 

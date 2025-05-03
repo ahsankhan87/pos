@@ -56,6 +56,8 @@ class Items extends MY_Controller
         $this->load->view('pos/items/barcode', $data);
         $this->load->view('templates/footer');
     }
+
+    //printer setting for Zebra printer model 888-TT
     function print_pdf()
     {
         $item_id = $this->input->post('item_id');
@@ -76,8 +78,8 @@ class Items extends MY_Controller
         // $pdf->SetDisplayMode('real', 'default');
         // $pdf->Write(5, 'Product Barcode');
         // set font
-        //$pdf->SetFont('helvetica', '', 10);
-        $pdf->SetFont('aealarabiya', '', 10);
+        $pdf->SetFont('helvetica', '', 8);
+        // $pdf->SetFont('aealarabiya', '', 8);
         $pdf->SetPrintHeader(false);
         $pdf->SetPrintFooter(false);
 
@@ -86,47 +88,123 @@ class Items extends MY_Controller
             require_once(dirname(__FILE__) . '/lang/eng.php');
             $pdf->setLanguageArray($l);
         }
+
+        $style = array(
+            'border' => 0,
+            'vpadding' => 'auto',
+            'hpadding' => 'auto',
+            'fgcolor' => array(0, 0, 0),
+            'bgcolor' => false, //array(255,255,255)
+            'module_width' => 1, // width of a single module in points
+            'module_height' => 1 // height of a single module in points
+        );
+
         for ($i = 1; $i <= $print_qty; $i++) {
-            $pdf->AddPage('L', array(50.8, 21));
+            $pdf->AddPage('L', array(50.80, 30.40));
             $pdf->SetAutoPageBreak(true, 0);
 
+            $page_width = $pdf->GetPageWidth(); // Get page width dynamically
+
             // Set some content to print
-            $product = substr(@$Items[0]['name'], 0, 20);
+            $product = substr(@$Items[0]['name'], 0, 30);
             $product_id = @$Items[0]['id'];
             $rate = @$_SESSION['home_currency_code'] . ' ' . number_format(@$Items[0]['unit_price']);
+
+            // Calculate width of text elements for centering
+            $name_width = $pdf->GetStringWidth($product);
+            $rate_width = $pdf->GetStringWidth($rate);
+            $barcode_width = 35; // Fixed width for barcode (adjustable)
 
             // Print text using writeHTMLCell()
             //$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
 
-            $style = array(
-                'border' => 2,
-                'vpadding' => 'auto',
-                'hpadding' => 'auto',
-                'fgcolor' => array(0, 0, 0),
-                'bgcolor' => false, //array(255,255,255)
-                'module_width' => 1, // width of a single module in points
-                'module_height' => 1 // height of a single module in points
-            );
+            // if (!empty($Company[0]['image']) || $Company[0]['image'] != '') {
 
-            if (!empty($Company[0]['image']) || $Company[0]['image'] != '') {
-                // $html= '<div style="text-align:top;padding-bottom:100px;background-color:black;">
-                // <img src="' . base_url('images/company/thumb/' . $Company[0]['image']) . '" width="30" height="30" alt="picture"/>
-                // </div>';
-                //$pdf->writeHTML($html, true, false, true, false, '');
-                $image = base_url('images/company/thumb/' . $Company[0]['image']);
-                $pdf->SetXY(2, 5);
-                $pdf->Image($image, '', '', 40, 40, '', '', 'T', false, 300, '', false, false, 1, false, false, false);
-                $pdf->Text(25, 3, $product);
+            //     $image = base_url('images/company/thumb/' . $Company[0]['image']);
+            //     $pdf->SetXY(2, 5);
+            //     $pdf->Image($image, '', '', 40, 40, '', '', 'T', false, 300, '', false, false, 1, false, false, false);
+            //     $pdf->Text(25, 3, $product);
 
-                $pdf->write1DBarcode($product_id, "C128", 25, 8, 20, 4, $style);
-                $pdf->Text(30, 14, $rate);
-            } else {
-                $pdf->write1DBarcode($product_id, "C128", 2, 5, 20, 4, $style);
-                $pdf->Text(2, 14, $rate);
-            }
+            //     $pdf->write1DBarcode($product_id, "C128", 25, 8, 20, 4, $style);
+            //     $pdf->Text(30, 14, $rate);
+            // } else {
+            //     $pdf->Text(25, 3, $product);
+            //     $pdf->write1DBarcode($product_id, "C128", 2, 5, 20, 4, $style);
+            //     $pdf->Text(2, 14, $rate);
+            // }
 
-            //ob_end_clean();
+            // Center product name
+            $pdf->SetXY(($page_width - $name_width) / 2, 3);
+            $pdf->Text(($page_width - $name_width) / 2, 3, $product);
+
+            // Center barcode dynamically
+            $barcode_x = ($page_width - $barcode_width) / 2;
+            $pdf->write1DBarcode($product_id, "EAN13", $barcode_x, 7, $barcode_width, 10, '', $style);
+
+            // Center rate text
+            $pdf->SetXY(($page_width - $rate_width) / 2, 22);
+            $pdf->Text(($page_width - $rate_width) / 2, 18, $rate);
+
+            //$pdf->SetXY(5, 3);
+            //$pdf->Text(2, 3, $product, false, false, true, 0, 0, 'C');
+            //$pdf->write1DBarcode($product_id, "C128", 12, 6, 40, 10, '', $style);
+            //$pdf->Text(2, 16, $rate, false, false, true, 0, 0, 'C');
+
         }
+        $pdf->Output('barcode.pdf', 'I');
+    }
+
+    function print_barcode_without_logo()
+    {
+        $item_id = $this->input->post('item_id');
+        $print_qty = $this->input->post('print_qty');
+        $Items = $this->M_items->get_itemDetail($item_id);
+        $Company = $this->M_companies->get_companies($_SESSION['company_id']);
+
+        $this->load->library('Pdf');
+        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf->SetFont('helvetica', '', 8); // Adjust font size for better alignment
+        $pdf->SetPrintHeader(false);
+        $pdf->SetPrintFooter(false);
+
+        // Define barcode style
+        $style = array(
+            'border' => 0,
+            'vpadding' => 'auto',
+            'hpadding' => 'auto',
+            'fgcolor' => array(0, 0, 0),
+            'bgcolor' => false,
+            'module_width' => 1,
+            'module_height' => 1
+        );
+
+        for ($i = 1; $i <= $print_qty; $i++) {
+            $pdf->AddPage('L', array(50, 25)); // Adjusted label size
+
+            // Extract product details
+            $product = substr(@$Items[0]['name'], 0, 20); // Limit name length
+            $product_id = @$Items[0]['id'];
+            $rate = @$_SESSION['home_currency_code'] . ' ' . number_format(@$Items[0]['unit_price']);
+
+            // Set product name **above** the barcode
+            // $pdf->SetXY(5, 3); // X = 5mm, Y = 3mm (top of the label)
+            // $pdf->Cell(40, 5, $product, 0, 1, 'C'); // Center align text
+
+            // // Generate barcode **in the middle**
+            // $pdf->write1DBarcode($product_id, "C128", 5, 10, 40, 10, $style);
+
+            // // Set rate **below** the barcode
+            // $pdf->SetXY(5, 21); // X = 5mm, Y = 21mm (bottom of the label)
+            // $pdf->Cell(40, 5, $rate, 0, 1, 'C'); // Center align text
+
+            $pdf->SetXY(2, 5);
+            $pdf->Text(25, 3, $product);
+            $pdf->write1DBarcode($product_id, "C128", 2, 5, 20, 4, $style);
+            $pdf->Text(2, 14, $rate);
+        }
+
+
+
         $pdf->Output('barcode.pdf', 'I');
     }
 

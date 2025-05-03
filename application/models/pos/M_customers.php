@@ -98,7 +98,8 @@ class M_customers extends CI_Model
     public function get_activeCustomersByAccCode($acc_code)
     {
         $options = array(
-            'status' => 'active', 'company_id' => $_SESSION['company_id'],
+            'status' => 'active',
+            'company_id' => $_SESSION['company_id'],
             'acc_code' => $acc_code
         );
 
@@ -137,6 +138,50 @@ class M_customers extends CI_Model
         $data = $query->result_array();
 
         return $data;
+    }
+
+    public function get_accounts_receivable($from_date, $to_date, $city = '', $emp_id = 0)
+    {
+        $sql = "
+                    SELECT 
+                        c.id AS customer_id,
+                        CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
+                        c.city,
+                        c.emp_id,
+                        c.op_balance_dr,
+                        c.op_balance_cr,
+                        COALESCE(SUM(p.debit), 0) AS dr_balance,
+                        COALESCE(SUM(p.credit), 0) AS cr_balance,
+                        ((c.op_balance_dr + COALESCE(SUM(p.debit), 0)) - (c.op_balance_cr + COALESCE(SUM(p.credit), 0))) AS net_balance
+                    FROM pos_customers c
+                    LEFT JOIN pos_customer_payments p ON p.customer_id = c.id AND p.date BETWEEN ? AND ? AND p.company_id = ?
+                    WHERE 
+                        c.company_id = ?
+                        AND c.status = 'active'
+                        AND c.isCustomer = 1
+                        AND (? = '' OR c.city LIKE CONCAT('%', ?, '%'))
+                        AND (? = 0 OR c.emp_id = ?)
+                        AND (? = 0 OR c.emp_id = ?)
+                    GROUP BY c.id
+                    HAVING net_balance <> 0
+                    ORDER BY customer_name ASC
+                    ";
+
+        $bindings = [
+            $from_date,
+            $to_date,
+            $_SESSION['company_id'],
+            $_SESSION['company_id'],
+            $city,
+            $city,
+            $emp_id,
+            $emp_id,
+            $emp_id,
+            $emp_id
+        ];
+
+        $query = $this->db->query($sql, $bindings);
+        return $query->result_array();
     }
 
     public function get_customer_total_balance($customer_id, $fy_start_date, $fy_end_date)
@@ -274,7 +319,8 @@ class M_customers extends CI_Model
         $invoice_no = '',
         $date = null,
         $exchange_rate = 0,
-        $entry_id = 0
+        $entry_id = 0,
+        $emp_id = 0
     ) {
         $data = array(
             'customer_id' => $customer_id,
@@ -287,7 +333,8 @@ class M_customers extends CI_Model
             'entry_id' => $entry_id,
             'narration' => $narration,
             'exchange_rate' => ($exchange_rate == null ? 0 : $exchange_rate),
-            'company_id' => $_SESSION['company_id']
+            'company_id' => $_SESSION['company_id'],
+            'employee_id' => $emp_id,
         );
         $this->db->insert('pos_customer_payments', $data);
     }

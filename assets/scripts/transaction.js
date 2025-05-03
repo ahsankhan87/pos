@@ -29,21 +29,49 @@ var Transaction = function () {
                 $('td:eq(4)', nRow).html(parseFloat(aData['net_amount']).toFixed(2));
                 $('td:eq(4)', nRow).addClass('text-right');
 
-                $('td:eq(5)', nRow).html('<a href="'+site_url+'/trans/C_sales/editSales/' + aData['invoice_no'] + 
-                                '" title="Edit Sales" ><i class=\'fa fa-pencil-square-o fa-fw\'></i></a>'+
-                                ' | <a href="'+site_url+'/trans/C_sales/receipt/' + aData['invoice_no'] + 
-                                '" title="Print Invoice" target="_blank" ><i class=\'fa fa-print fa-fw\'></i></a>'+
-                                ' | <a href="'+site_url+'/trans/C_sales/ubl_xml_receipt/' + aData['invoice_no'] + 
-                                '" title="XML Invoice" target="_blank" >XML</a>'+
-                                ' | <a href="'+site_url+'/trans/C_sales/send_email_inv/'+ aData['customer_id'] + '/' + aData['invoice_no'] + 
-                                '" title="Email Invoice">Email</a>'+
-                                ' | <a href="'+site_url+'/trans/C_sales/printReceipt/'+  aData['invoice_no'] + 
-                                '" title="PDF Invoice" target="_blank" >PDF</a>'
-                                // DELETE SALES BUTTON
-                                // +' | <a href="'+
-                                // site_url+'/trans/C_sales/delete/' + aData['invoice_no'] +  
-                                // '" onclick="return confirm(\'Are you sure you want to permanent delete? All entries will be deleted permanently\')"; title="Permanent Delete"><i class=\'fa fa-trash-o fa-fw\'></i></a>'
-                                );
+                $('td:eq(5)', nRow).html(`
+                    <div class="btn-group">
+                        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Actions
+                        </button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                            <a class="dropdown-item" href="${site_url}/trans/C_sales/editSales/${aData['invoice_no']}" title="Edit Sales">
+                                Edit Sale
+                            </a>
+                            </li>
+                            <li> 
+                            <a class="dropdown-item" href="${site_url}/trans/C_sales/receipt/${aData['invoice_no']}" title="Print Invoice" target="_blank">
+                                Print Invoice
+                            </a>
+                            </li>
+                            <li>
+                            <a class="dropdown-item" href="${site_url}/trans/C_sales/ubl_xml_receipt/${aData['invoice_no']}" title="XML Invoice" target="_blank">
+                                XML Invoice
+                            </a>
+                            </li>
+                            <li>
+                            <a class="dropdown-item" href="${site_url}/trans/C_sales/send_email_inv/${aData['customer_id']}/${aData['invoice_no']}" title="Email Invoice">
+                                Email Invoice
+                            </a>
+                            </li>
+                            <li>
+                            <a class="dropdown-item" href="${site_url}/trans/C_sales/printReceipt/${aData['invoice_no']}" title="PDF Invoice" target="_blank">
+                                PDF Invoice
+                            </a>
+                            </li>
+                            <li>
+                            <!-- Uncomment the following for the delete option -->
+                            <!--
+                            <a class="dropdown-item" href="${site_url}/trans/C_sales/delete/${aData['invoice_no']}" onclick="return confirm('Are you sure you want to permanently delete? All entries will be deleted permanently');" title="Permanent Delete">
+                                <i class='fa fa-trash-o fa-fw'></i> Delete
+                            </a>
+                            -->
+                            </li>
+                        </ul>
+                    </div>
+                `);
                             
                             return nRow;
                         },

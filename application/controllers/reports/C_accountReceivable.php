@@ -19,20 +19,21 @@ class C_accountReceivable extends MY_Controller
         $data['title'] = lang('account_receivable');
         $data['main'] = lang('account_receivable');
 
-        $from_date = $this->input->post('from_date') ? $this->input->post('from_date') : FY_START_DATE;
-        $to_date = $this->input->post('to_date') ? $this->input->post('to_date') : FY_END_DATE;
+        $from_date = $this->input->post('from_date') ? $this->input->post('from_date') : date("Y-m-d");
+        $to_date = $this->input->post('to_date') ? $this->input->post('to_date') : date("Y-m-d");
         $city = $this->input->post('city') ? $this->input->post('city') : '';
-        $employee_id = $this->input->post('emp_id') ? $this->input->post('emp_id') : 0;
+        $emp_id = $this->input->post('emp_id') ? $this->input->post('emp_id') : "";
 
         $data['from_date'] = $from_date;
         $data['to_date'] = $to_date;
         $data['city'] = $city;
-        $data['employee_id'] = $employee_id;
+        $data['emp_id'] = $emp_id;
 
         $data['main_small'] = '<br />' . date('d-m-Y', strtotime($data['from_date'])) . ' To ' . date('d-m-Y', strtotime($data['to_date']));
         //$data['customers'] = $this->M_customers->get_activeCustomers();
 
-        $data['receivables'] = $this->M_customers->get_accounts_receivable($from_date, $to_date, $city, $employee_id);
+        $data['receivables'] = $this->M_customers->get_accounts_receivable($from_date, $to_date, $city, $emp_id);
+        $data['emp_DDL'] = $this->M_employees->getEmployeeDropDown();
 
         //for logging
         $msg = '';

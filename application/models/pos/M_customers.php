@@ -160,8 +160,8 @@ class M_customers extends CI_Model
                         AND c.status = 'active'
                         AND c.isCustomer = 1
                         AND (? = '' OR c.city LIKE CONCAT('%', ?, '%'))
-                        AND (? = 0 OR c.emp_id = ?)
-                        AND (? = 0 OR c.emp_id = ?)
+                        
+                        AND (? = 0 OR p.employee_id = ?)
                     GROUP BY c.id
                     HAVING net_balance <> 0
                     ORDER BY customer_name ASC
@@ -174,8 +174,6 @@ class M_customers extends CI_Model
             $_SESSION['company_id'],
             $city,
             $city,
-            $emp_id,
-            $emp_id,
             $emp_id,
             $emp_id
         ];

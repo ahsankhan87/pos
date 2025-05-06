@@ -24,12 +24,23 @@
             <div class="portlet-body">
                 <form class="form-inline" method="post" action="<?php echo site_url('reports/C_balancesheet') ?>" role="form">
                     <div class="form-group">
+
+                        <select class="form-control" id="report_period" name="report_period">
+                            <option value="custom"><?php echo lang('custom'); ?></option>
+                            <option value="this_month"><?php echo lang('this_month'); ?></option>
+                            <option value="last_month"><?php echo lang('last_month'); ?></option>
+                            <option value="last_week"><?php echo lang('last_week'); ?></option>
+                            <option value="last_year"><?php echo lang('last_year'); ?></option>
+                            <option value="this_year"><?php echo lang('this_year'); ?></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputEmail2"><?php echo lang('from') . ' ' . lang('date') ?></label>
-                        <input type="date" class="form-control" name="from_date" value="<?php echo date('Y-m-d'); ?>" placeholder="From Date">
+                        <input type="date" class="form-control" name="from_date" value="<?php echo date('Y-m-d'); ?>" id="from_date" placeholder="From Date">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword2"><?php echo lang('to') . ' ' . lang('date') ?></label>
-                        <input type="date" class="form-control" name="to_date" value="<?php echo date('Y-m-d'); ?>" placeholder="To Date">
+                        <input type="date" class="form-control" name="to_date" value="<?php echo date('Y-m-d'); ?>" id="to_date" placeholder="To Date">
                     </div>
 
                     <button type="submit" class="btn btn-default"><?php echo lang('search') ?></button>
@@ -186,3 +197,50 @@
     <!-- /.col-sm-6 -->
 </div>
 <!-- /.row -->
+<script>
+    $(document).ready(function() {
+
+        const site_url = '<?php echo site_url($langs); ?>/';
+        const path = '<?php echo base_url(); ?>';
+        const current_date = '<?php echo date("Y-m-d") ?>';
+
+        $('#report_period').on('change', function(event) {
+            // event.preventDefault();
+            if ($(this).val() == 'this_month') {
+                var this_month = '<?php echo date("Y-m-01") ?>';
+                $('#from_date').val(this_month);
+                $('#to_date').val(current_date);
+
+            } else if ($(this).val() == 'last_month') {
+                const last_month_1_day = '<?php echo date("Y-m-01", strtotime('-1 month')) ?>';
+                const last_month_last_day = '<?php echo date("Y-m-t", strtotime('-1 month')) ?>';
+                $('#from_date').val(last_month_1_day);
+                $('#to_date').val(last_month_last_day);
+            } else if ($(this).val() == 'last_week') {
+                const last_week_day = '<?php echo date("Y-m-d", strtotime('-1 week')) ?>';
+
+                $('#from_date').val(last_week_day);
+                $('#to_date').val(current_date);
+
+            } else if ($(this).val() == 'last_year') {
+                const last_year_1_day = '<?php echo date("Y-01-01", strtotime('-1 year')) ?>';
+                const last_year_last_day = '<?php echo date("Y-12-t", strtotime('-1 year')) ?>';
+                $('#from_date').val(last_year_1_day);
+                $('#to_date').val(last_year_last_day);
+
+            } else if ($(this).val() == 'this_year') {
+                const last_year_1_day = '<?php echo date("Y-01-01") ?>';
+
+                $('#from_date').val(last_year_1_day);
+                $('#to_date').val(current_date);
+
+            } else if ($(this).val() == 'custom') {
+
+                $('#from_date').val(current_date)
+                $('#to_date').val(current_date);
+
+            }
+
+        });
+    });
+</script>

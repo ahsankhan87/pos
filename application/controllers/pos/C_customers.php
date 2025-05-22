@@ -30,9 +30,9 @@ class C_customers extends MY_Controller
 
         $this->load->view('templates/header', $data);
         //$this->load->view('pos/customers/v_custWithBalance',$data);
-        // $this->load->view('pos/customers/v_customers_1',$data);
+        $this->load->view('pos/customers/v_customers_1', $data);
         // $this->load->view('pos/customers/v_customers',$data);
-        $this->load->view('pos/customers/v_customers_search', $data);
+        //$this->load->view('pos/customers/v_customers_search', $data);
         $this->load->view('templates/footer');
     }
 

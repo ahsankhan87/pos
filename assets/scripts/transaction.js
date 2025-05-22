@@ -47,8 +47,8 @@ var Transaction = function () {
                             </a>
                             </li>
                             <li>
-                            <a class="dropdown-item" href="${site_url}/trans/C_sales/ubl_xml_receipt/${aData['invoice_no']}" title="XML Invoice" target="_blank">
-                                XML Invoice
+                            <a class="dropdown-item" href="${site_url}/trans/C_sales/ubl_xml_receipt/${aData['invoice_no']}" title="XML/UBL Invoice" target="_blank">
+                                XML/UBL Invoice
                             </a>
                             </li>
                             <li>

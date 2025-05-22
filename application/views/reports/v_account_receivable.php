@@ -64,7 +64,7 @@
 <div class="row">
     <div class="col-sm-8 col-sm-offset-2 border">
         <div class="text-center">
-            <?php echo anchor('reports/C_accountReceivable/printPDF/' . $from_date . '/' . $to_date, "<i class='fa fa-print'></i> Print", "target='_blank'"); ?>
+            <?php echo anchor('reports/C_accountReceivable/printPDF/' . $from_date . '/' . $to_date . '/' . $city . '/' . $emp_id, "<i class='fa fa-print'></i> Print", "target='_blank'"); ?>
             <h3><?php echo ucfirst($this->session->userdata("company_name")); ?></h3>
             <h4 style="margin-bottom:2px;"><?php echo $main; ?></h4>
             <p><?php echo date('d-m-Y', strtotime($from_date)) . ' to ' . date('d-m-Y', strtotime($to_date)); ?></p>

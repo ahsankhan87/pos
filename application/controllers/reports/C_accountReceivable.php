@@ -46,27 +46,43 @@ class C_accountReceivable extends MY_Controller
     }
 
     //Print Invoice in PDF
-    function printPDF($from_date, $to_date)
+    function printPDF($from_date, $to_date, $city = '', $emp_id = '')
     {
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '10240M');
+
+        //for logging
+        $msg = '';
+        $this->M_logs->add_log($msg, "Account Receivable Report", "Printed", "Reports");
+        // end logging
+
+        //Get Customers
+        //$customers = $this->M_customers->get_activeCustomers();
+        //$customers = $this->M_customers->get_accounts_receivable($from_date, $to_date, $city, $emp_id);
+        //var_dump($customers);
+
+        //Get Company Name
+
         $company_name = ucfirst($this->session->userdata("company_name"));
-        $customers = $this->M_customers->get_activeCustomers();
+
+        $receivables = $this->M_customers->get_accounts_receivable($from_date, $to_date, $city, $emp_id);
 
         $this->load->library('Pdf_f');
         $pdf = new Pdf_f("P", 'mm', 'A4');
 
         $pdf->AddPage();
         //Display Company Info
-        $pdf->SetY(15);
+        $pdf->SetY(10);
         $pdf->SetX(80);
-        $pdf->SetFont('Arial', 'B', 18);
+        $pdf->SetFont('Arial', 'B', 16);
         $pdf->Cell(50, 10, $company_name, 0, 1, "C");
 
-        $pdf->SetY(22);
+        $pdf->SetY(17);
         $pdf->SetX(80);
         $pdf->SetFont('Arial', '', 12);
         $pdf->Cell(50, 10, "Account Receivable Report", 0, 1, "C");
 
-        $pdf->SetY(28);
+        $pdf->SetY(23);
         $pdf->SetX(80);
         $pdf->SetFont('Arial', '', 12);
         $pdf->Cell(50, 7, date('d-m-Y', strtotime($from_date)) . " to " . date('d-m-Y', strtotime($to_date)), 0, 1, "C");
@@ -74,50 +90,42 @@ class C_accountReceivable extends MY_Controller
         //$pdf->Cell(50, 7, "To ".$to_date, 0, 1);
 
         //Display Table headings
-        $pdf->SetY(45);
+        $pdf->SetY(32);
         $pdf->SetX(10);
-        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->SetFont('Arial', 'B', 9);
         $pdf->Cell(80, 9, "CUSTOMERS", 1, 0);
         $pdf->Cell(40, 9, "TYPE", 1, 0, "C");
         $pdf->Cell(30, 9, "", 1, 0, "C");
         $pdf->Cell(40, 9, "TOTAL", 1, 1, "C");
-        $pdf->SetFont('Arial', '', 12);
+        $pdf->SetFont('Arial', '', 9);
 
         $net_total = 0;
         $total_cost = 0;
         $total = 0;
         //Display table product rows
 
-        foreach ($customers as $key => $list) {
-
-            $op_balance_dr = ($list['op_balance_dr']);
-            $op_balance_cr = ($list['op_balance_cr']);
-            $op_balance = (($op_balance_dr - $op_balance_cr));
-
-            //CURRENT BALANCES
-            $cur_balance = $this->M_customers->get_customer_total_balance($list['id'], $from_date, $to_date);
-            $balance_dr = ($cur_balance[0]['dr_balance']);
-            $balance_cr = ($cur_balance[0]['cr_balance']);
-
-            $balance = (($op_balance_dr + $balance_dr) - ($op_balance_cr + $balance_cr));
+        foreach ($receivables as $key => $list) {
+            //$customer_name = $list['first_name'] . ' ' . $list['last_name'];
+            $customer_name = $list['customer_name'] ? $list['customer_name'] : "N/A";
+            $balance = $list['net_balance'];
             $net_total += $balance;
 
-            $pdf->Cell(80, 9, $list["first_name"] . ' ' . $list["last_name"], "LR", 0);
-            $pdf->Cell(40, 9, "Invoice", "R", 0, "C");
-            $pdf->Cell(30, 9, "", "R", 0, "C");
-            $pdf->Cell(40, 9, number_format($balance, 2), "R", 1, "R");
+            $pdf->Cell(80, 5, $customer_name, "LR", 0);
+            $pdf->Cell(40, 5, "Invoice", "R", 0, "C");
+            $pdf->Cell(30, 5, "", "R", 0, "C");
+            $pdf->Cell(40, 5, number_format($balance, 2), "R", 1, "R");
         }
 
         //Display table empty rows
-        for ($i = 0; $i < 20 - count($customers); $i++) {
-            $pdf->Cell(80, 9, "", "LR", 0);
-            $pdf->Cell(40, 9, "", "R", 0, "L");
-            $pdf->Cell(30, 9, "", "R", 0, "C");
-            $pdf->Cell(40, 9, "", "R", 1, "R");
+        for ($i = 0; $i < 20 - count($receivables); $i++) {
+            $pdf->Cell(80, 5, "", "LR", 0);
+            $pdf->Cell(40, 5, "", "R", 0, "L");
+            $pdf->Cell(30, 5, "", "R", 0, "C");
+            $pdf->Cell(40, 5, "", "R", 1, "R");
         }
 
         //Display table total row
-        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->SetFont('Arial', 'B', 9);
         $pdf->Cell(150, 9, "TOTAL", 1, 0, "R");
         $pdf->Cell(40, 9, number_format($net_total, 2), 1, 1, "R");
 
@@ -128,7 +136,7 @@ class C_accountReceivable extends MY_Controller
         //$pdf->SetFont('helvetica', 'B', 12);
         //$pdf->Cell(0, 10, "for ABC COMPUTERS", 0, 1, "R");
         $pdf->Ln(15);
-        $pdf->SetFont('helvetica', '', 12);
+        $pdf->SetFont('helvetica', '', 9);
         $pdf->Cell(0, 10, "Authorized Signature", 0, 1, "R");
         $pdf->SetFont('helvetica', '', 10);
 

@@ -1121,8 +1121,8 @@ class C_sales extends MY_Controller
         $data['Company'] = $this->M_companies->get_companies($company_id);
 
         $this->load->view('templates/header', $data);
-        $this->load->view('pos/sales/v_receipt_small', $data);
-        //$this->load->view('pos/sales/v_receipt', $data);
+        //$this->load->view('pos/sales/v_receipt_small', $data);
+        $this->load->view('pos/sales/v_receipt', $data);
         $this->load->view('templates/footer');
     }
 
@@ -1288,79 +1288,93 @@ class C_sales extends MY_Controller
         $pdf->Cell(50, 7, "PH : " . $Company[0]['contact_no'], 0, 1);
 
         //Display INVOICE text
-        $pdf->SetY(15);
+        $pdf->SetY(12);
         $pdf->SetX(-40);
         $pdf->SetFont('Arial', 'B', 18);
         $pdf->Cell(50, 10, "INVOICE", 0, 1);
 
         //Display Horizontal line
-        $pdf->Line(0, 42, 210, 42);
+        $pdf->Line(0, 38, 210, 38);
 
         //Billing Details // Body
-        $pdf->SetY(49);
+        $pdf->SetY(40);
         $pdf->SetX(10);
-        $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(50, 10, "Bill To: ", 0, 1);
-        $pdf->SetFont('Arial', '', 12);
-        $pdf->Cell(50, 7, $customer[0]["first_name"], 0, 1);
-        $pdf->Cell(50, 7, $customer[0]["address"], 0, 1);
-        //$pdf->Cell(50, 7, $customer[0]["city"], 0, 1);
+        $pdf->SetFont('Arial', 'B', 9);
+        $pdf->Cell(50, 8, "Bill To: ", 0, 1);
+        $pdf->SetFont('Arial', '', 9);
+        $pdf->Cell(50, 5, $customer[0]["first_name"] . ' ' . $customer[0]["last_name"], 0, 1);
+        ($customer[0]["address"] == "" ? '' : $pdf->Cell(70, 5, $customer[0]["address"], 0, 1));
+        ($customer[0]["mobile_no"] == "" ? '' : $pdf->Cell(50, 5, $customer[0]["mobile_no"], 0, 1));
+        ($customer[0]["city"] == "" ? '' : $pdf->Cell(50, 5, $customer[0]["city"], 0, 1));
+        ($customer[0]["country"] == "" ? '' : $pdf->Cell(50, 5, $customer[0]["country"], 0, 1));
+        ($customer[0]["email"] == "" ? '' : $pdf->Cell(50, 5, $customer[0]["email"], 0, 1));
 
         //Display Invoice no
-        $pdf->SetY(49);
+        $pdf->SetY(40);
         $pdf->SetX(-60);
         $pdf->Cell(50, 7, "Invoice No : " . $new_invoice_no);
 
         //Display Invoice date
-        $pdf->SetY(57);
+        $pdf->SetY(45);
         $pdf->SetX(-60);
-        $pdf->Cell(50, 7, "Invoice Date : " . $sales_items[0]["sale_date"]);
+        $pdf->Cell(50, 7, "Invoice Date : " . date("d M, Y H:m", strtotime($sales_items[0]["sale_date"])));
 
         //Display Table headings
-        $pdf->SetY(85);
+        $pdf->SetY(75);
         $pdf->SetX(10);
-        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->SetFont('Arial', 'B', 9);
         $pdf->Cell(80, 9, "DESCRIPTION", 1, 0);
         $pdf->Cell(40, 9, "PRICE", 1, 0, "C");
         $pdf->Cell(30, 9, "QTY", 1, 0, "C");
         $pdf->Cell(40, 9, "TOTAL", 1, 1, "C");
-        $pdf->SetFont('Arial', '', 12);
+        $pdf->SetFont('Arial', '', 9);
 
         $discount = 0;
         $total_cost = 0;
         $total = 0;
+        $tax_amount = 0;
         //Display table product rows
         foreach ($sales_items as $row) {
             $total_cost = ($row['item_unit_price'] * $row['quantity_sold']) - $row['discount_value'];
             $total += ($row['item_unit_price'] * $row['quantity_sold']);
             $discount += $row['discount_value'];
-            $tax_amount = $total_cost * $row['tax_rate'] / 100;
+            $tax_amount += $total_cost * $row['tax_rate'] / 100;
             $item = $this->M_items->get_items($row['item_id']);
 
-            $pdf->Cell(80, 9, $item[0]["name"], "LR", 0);
-            $pdf->Cell(40, 9, number_format($row["item_unit_price"], 2), "R", 0, "R");
-            $pdf->Cell(30, 9, number_format($row["quantity_sold"], 2), "R", 0, "C");
-            $pdf->Cell(40, 9, number_format(($row['item_unit_price'] * $row['quantity_sold']), 2), "R", 1, "R");
+            $pdf->Cell(80, 5, $item[0]["name"], "LR", 0);
+            $pdf->Cell(40, 5, number_format($row["item_unit_price"], 2), "R", 0, "R");
+            $pdf->Cell(30, 5, number_format($row["quantity_sold"], 2), "R", 0, "C");
+            $pdf->Cell(40, 5, number_format(($row['item_unit_price'] * $row['quantity_sold']), 2), "R", 1, "R");
         }
         //Display table empty rows
         for ($i = 0; $i < 12 - count($sales_items); $i++) {
-            $pdf->Cell(80, 9, "", "LR", 0);
-            $pdf->Cell(40, 9, "", "R", 0, "R");
-            $pdf->Cell(30, 9, "", "R", 0, "C");
-            $pdf->Cell(40, 9, "", "R", 1, "R");
+            $pdf->Cell(80, 5, "", "LR", 0);
+            $pdf->Cell(40, 5, "", "R", 0, "R");
+            $pdf->Cell(30, 5, "", "R", 0, "C");
+            $pdf->Cell(40, 5, "", "R", 1, "R");
         }
+        //Display table total discount row
+        $pdf->SetFont('Arial', 'B', 9);
+        $pdf->Cell(150, 9, "TOTAL DISCOUNT", 1, 0, "R");
+        $pdf->Cell(40, 9, $discount, 1, 1, "R");
+
+        //Display table total tax row
+        $pdf->SetFont('Arial', 'B', 9);
+        $pdf->Cell(150, 9, "TOTAL TAX", 1, 0, "R");
+        $pdf->Cell(40, 9, $tax_amount, 1, 1, "R");
+
         //Display table total row
-        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->SetFont('Arial', 'B', 9);
         $pdf->Cell(150, 9, "TOTAL", 1, 0, "R");
-        $pdf->Cell(40, 9, $total, 1, 1, "R");
+        $pdf->Cell(40, 9, ($total + $tax_amount - $discount), 1, 1, "R");
 
         //Display amount in words
-        $pdf->SetY(215);
+        $pdf->SetY(200);
         $pdf->SetX(10);
-        $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(0, 9, "Amount in Words ", 0, 1);
-        $pdf->SetFont('Arial', '', 12);
-        $pdf->Cell(0, 9, $total, 0, 1);
+        $pdf->SetFont('Arial', 'B', 9);
+        $pdf->Cell(0, 5, "Total Items ", 0, 1);
+        $pdf->SetFont('Arial', '', 9);
+        $pdf->Cell(0, 5, count((array)$sales_items), 0, 1);
         ///////////////
         ///body
 
@@ -1369,7 +1383,7 @@ class C_sales extends MY_Controller
         //$pdf->SetFont('helvetica', 'B', 12);
         //$pdf->Cell(0, 10, "for ABC COMPUTERS", 0, 1, "R");
         $pdf->Ln(15);
-        $pdf->SetFont('helvetica', '', 12);
+        $pdf->SetFont('helvetica', '', 9);
         $pdf->Cell(0, 10, "Authorized Signature", 0, 1, "R");
         $pdf->SetFont('helvetica', '', 10);
 

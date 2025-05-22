@@ -13,7 +13,7 @@
                     </tr>
                     <tr>
                         <td colspan="4"><input type="search" ng:model="search" placeholder="Search Products" class="form-control" />
-                           
+
                         </td>
                     </tr>
                     <tr>

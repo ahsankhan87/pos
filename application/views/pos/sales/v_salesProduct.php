@@ -117,7 +117,7 @@
 
                     <label class="control-label col-sm-2" for=""><?php echo lang('customer'); ?></label>
                     <div class="col-sm-4">
-                        <select id="cust" ng:model="customer_id" ng-init="customer_id='2'" class="form-control select2me"></select>
+                        <select id="cust" ng:model="customer_id" ng-init="customer_id='$customer_id'" class="form-control select2me"></select>
                         <br><?php echo anchor('#', lang('add_new') . ' <i class="fa fa-plus"></i>', ' data-toggle="modal" data-target="#customerModal"'); ?>
 
                     </div>
@@ -416,12 +416,13 @@
 
         var site_url = '<?php echo site_url($langs); ?>';
         var path = '<?php echo base_url(); ?>';
+        var customerID = '<?php echo $customer_id; ?>';
 
         ////
-        customerDDL();
+        customerDDL(customerID);
         ////////////////////////
         //GET customer DROPDOWN LIST
-        function customerDDL() {
+        function customerDDL(customerID = 1) {
 
             let customer_ddl = '';
             $.ajax({
@@ -429,13 +430,13 @@
                 type: 'GET',
                 dataType: 'json', // added data type
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     let i = 0;
                     customer_ddl += '<option value="0">Select Customer</option>';
 
                     $.each(data, function(index, value) {
 
-                        customer_ddl += '<option value="' + value.id + '" ' + (value.id == 1 ? "selected" : "") + '>' + value.first_name + '</option>';
+                        customer_ddl += '<option value="' + value.id + '" ' + (value.id == customerID ? "selected" : "") + '>' + value.first_name + ' ' + value.last_name + '</option>';
 
                     });
 

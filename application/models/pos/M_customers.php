@@ -74,7 +74,7 @@ class M_customers extends CI_Model
     public function get_actCustomers()
     {
 
-        $this->db->select('id,first_name,store_name,address,city,mobile_no,op_balance_dr,op_balance_cr');
+        $this->db->select('id,first_name,last_name,store_name,address,city,mobile_no,op_balance_dr,op_balance_cr');
         $options = array('status' => 'active', 'company_id' => $_SESSION['company_id']);
 
         $this->db->order_by('id', 'desc');

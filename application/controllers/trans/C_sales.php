@@ -9,7 +9,7 @@ class C_sales extends MY_Controller
         $this->lang->load('index');
     }
 
-    public function index($saleType = '', $customer_id = '', $estimate_no = '')
+    public function index($saleType = '', $customer_id = '1', $estimate_no = '')
     {
         $data = array('langs' => $this->session->userdata('lang'));
 
@@ -1128,7 +1128,7 @@ class C_sales extends MY_Controller
 
     function get_sales_JSON()
     {
-        $start_date = FY_START_DATE;  //date("Y-m-d", strtotime("last year"));
+        $start_date = date("Y-m-d"); //FY_START_DATE;  
         $to_date = FY_END_DATE; //date("Y-m-d");
 
         print_r(json_encode($this->M_sales->get_selected_sales($start_date, $to_date)));

@@ -19,6 +19,7 @@ var Transaction = function () {
                         { "data": "invoice_no" },
                         { "data": "sale_date" },
                         { "data": "customer" },
+                        { "data": "emp" },
                         { "data": "account" },
                         { "data": "net_amount" },
                         { "data": "customer_id" }
@@ -26,10 +27,10 @@ var Transaction = function () {
                     ],
             "createdRow": function( nRow, aData, iDisplayIndex ) {
                             
-                $('td:eq(4)', nRow).html(parseFloat(aData['net_amount']).toFixed(2));
-                $('td:eq(4)', nRow).addClass('text-right');
+                $('td:eq(5)', nRow).html(parseFloat(aData['net_amount']).toFixed(2));
+                $('td:eq(5)', nRow).addClass('text-right');
 
-                $('td:eq(5)', nRow).html(`
+                $('td:eq(6)', nRow).html(`
                     <div class="btn-group">
                         <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Actions

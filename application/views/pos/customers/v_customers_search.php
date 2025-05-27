@@ -87,24 +87,13 @@
                             echo '<td>' . $values['address'] . '</td>';
                             echo '<td>' . $values['city'] . '</td>';
                             echo '<td>';
-
-                            echo '<div class="btn-group">' .
-                                '<button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">Sales</button>' .
-                                '<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>' .
-                                '<ul class="dropdown-menu" role="menu">' .
-                                '<li><a href="' . site_url($langs) . '/trans/C_sales/index/cash/' . $values['id'] . '">Cash Sales</a></li>' .
-                                '<li><a href="' . site_url($langs) . '/trans/C_sales/index/credit/' . $values['id'] . '">Credit Sales</a></li>' .
-                                '<li><a href="' . site_url($langs) . '/trans/C_sales/index/cashReturn/' . $values['id'] . '">Cash Return</a></li>' .
-                                '<li><a href="' . site_url($langs) . '/trans/C_sales/index/creditReturn/' . $values['id'] . '">Credit Return</a></li></ul></div>';
-                        ?>
-
-                            <?php
+                            echo '<a href="' . site_url($langs) . '/trans/C_sales/index/cash/' . $values['id'] . '" class="btn btn-success btn-sm" target="_blank">Cash Sales</a>';
 
                             echo '</td>';
                             echo '<td>';
                             //echo  anchor(site_url('up_supplier_images/upload_images/'.$list['id']),' upload Images');
 
-                            ?>
+                        ?>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Action </button>
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="fa fa-angle-down"></i></button>

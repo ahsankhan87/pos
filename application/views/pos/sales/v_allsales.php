@@ -16,11 +16,11 @@
         ?>
 
         <p>
-        <?php echo anchor('trans/C_sales/index/cash', lang('cash') . ' ' . lang('sales'), 'class="btn btn-success hidden-print"'); ?>
-        <?php echo anchor('trans/C_sales/index/credit', lang('credit') . ' ' . lang('sales'), 'class="btn btn-success hidden-print"'); ?>
-        <?php echo anchor('trans/C_sales/index/cashReturn', lang('cash') . ' ' . lang('return'), 'class="btn btn-warning hidden-print"'); ?>
-        <?php echo anchor('trans/C_sales/index/creditReturn', lang('credit') . ' ' . lang('return'), 'class="btn btn-warning hidden-print"'); ?>
-       
+            <?php echo anchor('trans/C_sales/index/cash', lang('cash') . ' ' . lang('sales'), 'class="btn btn-success hidden-print"'); ?>
+            <?php echo anchor('trans/C_sales/index/credit', lang('credit') . ' ' . lang('sales'), 'class="btn btn-success hidden-print"'); ?>
+            <?php echo anchor('trans/C_sales/index/cashReturn', lang('cash') . ' ' . lang('return'), 'class="btn btn-warning hidden-print"'); ?>
+            <?php echo anchor('trans/C_sales/index/creditReturn', lang('credit') . ' ' . lang('return'), 'class="btn btn-warning hidden-print"'); ?>
+
         </p>
 
         <div class="portlet">
@@ -44,6 +44,7 @@
                             <th>Inv #</th>
                             <th><?php echo lang('date') ?></th>
                             <th><?php echo lang('customer') ?></th>
+                            <th><?php echo lang('employee') ?></th>
                             <th><?php echo lang('account') ?></th>
                             <th class="text-right"><?php echo lang('amount') ?></th>
                             <th class="hidden-print"><?php echo lang('action') ?></th>
@@ -70,13 +71,13 @@
                         //            
                         //            echo '</tbody>';
                         //echo '<tfoot>
-            //                    <tr>
-            //                        <th></th><th></th><th></th>
-            //                        <th></th><th></th>
-            //                        <th></th>
-            //                
-            //                    </tr>
-            //                </tfoot>';
+                        //                    <tr>
+                        //                        <th></th><th></th><th></th>
+                        //                        <th></th><th></th>
+                        //                        <th></th>
+                        //                
+                        //                    </tr>
+                        //                </tfoot>';
 
                         ?>
                     </tbody>

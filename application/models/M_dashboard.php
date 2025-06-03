@@ -180,7 +180,7 @@ class M_dashboard extends CI_Model
     public function today_sale_1($today = "yyyy-mm-dd", $company_id = 0)
     {
         $total = 0;
-        $this->db->select('SUM(total_amount+total_tax-discount_value) as today_sale');
+        $this->db->select('SUM(total_amount+total_tax) as today_sale');
         $this->db->where('sale_date >=', FY_START_DATE);
         $this->db->where('sale_date <=', FY_END_DATE);
 
@@ -199,7 +199,7 @@ class M_dashboard extends CI_Model
     public function cur_month_sale($month = "yyyy-mm", $company_id = 0)
     {
         $total = 0;
-        $this->db->select('SUM(total_amount+total_tax-discount_value) as today_sale');
+        $this->db->select('SUM(total_amount+total_tax) as today_sale');
         $this->db->where('sale_date >=', FY_START_DATE);
         $this->db->where('sale_date <=', FY_END_DATE);
         $this->db->like('sale_date', $month, 'right');
@@ -241,7 +241,7 @@ class M_dashboard extends CI_Model
 
     public function month_sales($company_id)
     {
-        $this->db->select('date_format(sale_date,"%Y-%m") as month,sum(total_amount+total_tax-discount_value) as amount');
+        $this->db->select('date_format(sale_date,"%Y-%m") as month,sum(total_amount+total_tax) as amount');
         //$this->db->join('acc_entry_items ei','ei.account_code=g.account_code');
         //$this->db->join('acc_entries e','e.id=ei.entry_id');        
         $options = array('company_id' => $company_id);
